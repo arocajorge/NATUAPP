@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Core.App.Views.ConfiguracionPage"
+             BindingContext="{Binding Main, Source={StaticResource Locator}}"
+             Title="Configuración">
+    <ContentPage.Content>
+        <ScrollView
+            Padding="20"
+            BindingContext="{Binding Configuracion}">
+            <StackLayout>
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="Large"                    
+                    Text="Url servidor">
+                </Label>
+                <Entry
+                    Text="{Binding UrlServidor, Mode=TwoWay}"
+                    Placeholder="Ingrese la url del servidor">
+                </Entry>
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="Large"                    
+                    Text="Usuario">
+                </Label>
+                <Entry
+                    Text="{Binding usuario, Mode=TwoWay}"
+                    Placeholder="Ingrese el usuario">
+                </Entry>
+                <ActivityIndicator
+                    VerticalOptions="CenterAndExpand"
+                    IsRunning="{Binding IsRunning, Mode=TwoWay}">                    
+                </ActivityIndicator>
+                <Button
+                    Text="Sincronizar"
+                    IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                    Command="{Binding SincronizarCommand}">                    
+                </Button>
+            </StackLayout>
+        </ScrollView>        
+    </ContentPage.Content>
+</ContentPage>
