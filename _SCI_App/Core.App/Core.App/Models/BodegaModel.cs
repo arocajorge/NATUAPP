@@ -1,7 +1,7 @@
 ﻿namespace Core.App.Models
 {
     using Newtonsoft.Json;
-    using SQLite.Net.Attributes;
+    using SQLite;
 
     public class BodegaModel
     {

@@ -25,7 +25,6 @@ namespace Core.App
             }
             else
             {
-                var dataService = new DataService();
                 MainViewModel.GetInstance().Configuracion = new ConfiguracionViewModel();
                 MainPage = new MasterPage();
             }

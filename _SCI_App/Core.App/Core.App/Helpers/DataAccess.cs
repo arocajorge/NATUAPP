@@ -1,14 +1,11 @@
 ﻿namespace Core.App.Helpers
 {
-    using Interfaces;
     using Core.App.Models;
-    using SQLite.Net;
-    using SQLiteNetExtensions.Extensions;
+    using SQLite;
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using Xamarin.Forms;
 
     public class DataAccess : IDisposable
     {
@@ -18,10 +15,9 @@
         {
             try
             {
-                var config = DependencyService.Get<IConfig>();
+                //var config = DependencyService.Get<IConfig>();
                 this.connection = new SQLiteConnection(
-                    config.Platform,
-                    Path.Combine(config.DirectoryDB, "DBSCI.db3"));
+                    Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "DBSCI.db3"));
                 connection.CreateTable<UsuarioModel>();
                 connection.CreateTable<EmpresaModel>();
                 connection.CreateTable<SucursalModel>();
@@ -35,7 +31,7 @@
             catch (Exception ex)
             {
                 ex.ToString();
-            }            
+            }
         }
 
         public void Insert<T>(T model)
@@ -53,30 +49,58 @@
             this.connection.Delete(model);
         }
 
-        public T First<T>(bool WithChildren) where T: class
+        public void DeleteAll<T>()
         {
-            if (WithChildren)
-                return connection.GetAllWithChildren<T>().FirstOrDefault();
-            else
-                return connection.Table<T>().FirstOrDefault();
+            this.connection.DeleteAll<T>();
         }
 
-        public List<T> GetList<T>(bool WithChildren) where T : class
+        public void InsertAll<T>(List<T> model)
         {
-            if (WithChildren)
-                return connection.GetAllWithChildren<T>().ToList();
-            else
-                return connection.Table<T>().ToList();
+            this.connection.InsertAll(model);
         }
 
-        public T Find<T>(int pk, bool WithChildren) where T: class
+        #region GetList
+        public List<UsuarioModel> GetListUsuario()
         {
-            if (WithChildren)
-                return connection.GetAllWithChildren<T>().FirstOrDefault(q => q.GetHashCode() == pk);
-            else
-                return connection.Table<T>().FirstOrDefault(q => q.GetHashCode() == pk);
+            return this.connection.Table<UsuarioModel>().ToList();
         }
 
+        public List<EmpresaModel> GetListEmpresa()
+        {
+            return this.connection.Table<EmpresaModel>().ToList();
+        }
+
+        public List<SucursalModel> GetListSucursal()
+        {
+            return this.connection.Table<SucursalModel>().ToList();
+        }
+
+        public List<BodegaModel> GetListBodega()
+        {
+            return this.connection.Table<BodegaModel>().ToList();
+        }
+
+        public List<CentroCostoModel> GetListCentroCosto()
+        {
+            return this.connection.Table<CentroCostoModel>().ToList();
+        }
+
+        public List<ProductoModel> GetListProducto()
+        {
+            return this.connection.Table<ProductoModel>().ToList();
+        }
+
+        public List<IngresoOrdenCompraModel> GetListIngresoOrdenCompra()
+        {
+            return this.connection.Table<IngresoOrdenCompraModel>().ToList();
+        }
+
+        public List<UnidadMedidaModel> GetListUnidadMedida()
+        {
+            return this.connection.Table<UnidadMedidaModel>().ToList();
+        }
+        #endregion
+        
         public void Dispose()
         {
             connection.Dispose();

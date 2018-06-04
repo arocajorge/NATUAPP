@@ -16,7 +16,16 @@
                 </Label>
                 <Entry
                     Text="{Binding UrlServidor, Mode=TwoWay}"
-                    Placeholder="Ingrese la url del servidor">
+                    Placeholder="http://nat-app-01.naturisa.com.ec">
+                </Entry>
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="Large"                    
+                    Text="Ruta carpeta">
+                </Label>
+                <Entry
+                    Text="{Binding RutaCarpeta, Mode=TwoWay}"
+                    Placeholder="/vzenmob/api">
                 </Entry>
                 <Label
                     FontAttributes="Bold"

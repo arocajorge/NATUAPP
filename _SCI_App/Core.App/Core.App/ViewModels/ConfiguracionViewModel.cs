@@ -14,10 +14,11 @@ namespace Core.App.ViewModels
         #region Variables
         private string _usuario;
         private string _urlServidor;
+        private string _RutaCarpeta;
         private bool _IsRunning;
         private bool _IsEnabled;
         private ApiService apiService;
-        private DataService dataService;
+        private DataAccess data = new DataAccess();
         #endregion
 
         #region Propiedades
@@ -30,6 +31,11 @@ namespace Core.App.ViewModels
         {
             get { return this._urlServidor; }
             set { SetValue(ref this._urlServidor, value); }
+        }
+        public string RutaCarpeta
+        {
+            get { return this._RutaCarpeta; }
+            set { SetValue(ref this._RutaCarpeta, value); }
         }
         public bool IsRunning
         {
@@ -48,9 +54,9 @@ namespace Core.App.ViewModels
         {
             this.IsEnabled = true;
             apiService = new ApiService();
-            dataService = new DataService();
+            data = new DataAccess();
             this.usuario = "admin";
-            this.UrlServidor = string.IsNullOrEmpty(Settings.UrlConexion) ? "http://192.168.1.115" : Settings.UrlConexion;
+            this.UrlServidor = string.IsNullOrEmpty(Settings.UrlConexion) ? "http://nat-app-01.naturisa.com.ec" : Settings.UrlConexion;
         }
         #endregion
 
@@ -99,22 +105,25 @@ namespace Core.App.ViewModels
                 return;
             }
             Settings.UrlConexion = this.UrlServidor;
-            var var_response_usuario = await apiService.GetList<UsuarioModel>(UrlServidor, "/api", "Usuario", "");
-            if (!var_response_usuario.IsSuccess)
+            Settings.RutaCarpeta = this.RutaCarpeta;
+            var response_usuario = await apiService.GetList<UsuarioModel>(UrlServidor, RutaCarpeta, "Usuario", "");
+            if (!response_usuario.IsSuccess)
             {
                 this.IsEnabled = true;
                 this.IsRunning = false;
                 await Application.Current.MainPage.DisplayAlert(
                     "Alerta",
-                    var_response_usuario.Message,
+                    response_usuario.Message,
                     "Aceptar");
                 return;
             }
-            List<UsuarioModel> list_usuario = (List<UsuarioModel>)var_response_usuario.Result;
-            this.dataService.DeleteAll<UsuarioModel>();
-            this.dataService.Save<UsuarioModel>(list_usuario);
-            
-            var response_empresa = await apiService.GetList<EmpresaModel>(UrlServidor, "/api", "Empresa", usuario);
+            int PKI = 1;
+            var list_usuario = (List<UsuarioModel>)response_usuario.Result;
+            data.DeleteAll<UsuarioModel>();
+            list_usuario.ForEach(q => q.PKSQLite = PKI++);
+            data.InsertAll<UsuarioModel>(list_usuario);
+
+            var response_empresa = await apiService.GetList<EmpresaModel>(UrlServidor, RutaCarpeta, "Empresa", usuario);
             if (!response_empresa.IsSuccess)
             {
                 this.IsEnabled = true;
@@ -125,7 +134,13 @@ namespace Core.App.ViewModels
                     "Aceptar");
                 return;
             }
-            var response_sucursal = await apiService.GetList<SucursalModel>(UrlServidor, "/api", "Sucursal",usuario);
+            var list_empresa = (List<EmpresaModel>)response_empresa.Result;
+            data.DeleteAll<EmpresaModel>();
+            PKI = 1;
+            list_empresa.ForEach(q => q.PKSQLite = PKI++);
+            data.InsertAll<EmpresaModel>(list_empresa);
+
+            var response_sucursal = await apiService.GetList<SucursalModel>(UrlServidor, RutaCarpeta, "Sucursal",usuario);
             if (!response_sucursal.IsSuccess)
             {
                 this.IsEnabled = true;
@@ -136,7 +151,13 @@ namespace Core.App.ViewModels
                     "Aceptar");
                 return;
             }
-            var response_bodega = await apiService.GetList<BodegaModel>(UrlServidor, "/api", "Bodega", usuario);
+            var list_sucursal = (List<SucursalModel>)response_sucursal.Result;
+            data.DeleteAll<SucursalModel>();
+            PKI = 1;
+            list_sucursal.ForEach(q => q.PKSQLite = PKI++);
+            data.InsertAll<SucursalModel>(list_sucursal);
+
+            var response_bodega = await apiService.GetList<BodegaModel>(UrlServidor, RutaCarpeta, "Bodega", usuario);
             if (!response_bodega.IsSuccess)
             {
                 this.IsEnabled = true;
@@ -147,7 +168,13 @@ namespace Core.App.ViewModels
                     "Aceptar");
                 return;
             }
-            var response_centro_costo = await apiService.GetList<CentroCostoModel>(UrlServidor, "/api", "CentroCosto", usuario);
+            var list_bodega = (List<BodegaModel>)response_bodega.Result;
+            data.DeleteAll<BodegaModel>();
+            PKI = 1;
+            list_bodega.ForEach(q => q.PKSQLite = PKI++);
+            data.InsertAll<BodegaModel>(list_bodega);
+
+            var response_centro_costo = await apiService.GetList<CentroCostoModel>(UrlServidor, RutaCarpeta, "CentroCosto", usuario);
             if (!response_centro_costo.IsSuccess)
             {
                 this.IsEnabled = true;
@@ -158,7 +185,13 @@ namespace Core.App.ViewModels
                     "Aceptar");
                 return;
             }
-            var response_sub_centro_costo = await apiService.GetList<SubCentroCostoModel>(UrlServidor, "/api", "SubCentroCosto", usuario);
+            var list_CentroCosto = (List<CentroCostoModel>)response_centro_costo.Result;
+            data.DeleteAll<CentroCostoModel>();
+            PKI = 1;
+            list_CentroCosto.ForEach(q => q.PKSQLite = PKI++);
+            data.InsertAll<CentroCostoModel>(list_CentroCosto);
+
+            var response_sub_centro_costo = await apiService.GetList<SubCentroCostoModel>(UrlServidor, RutaCarpeta, "SubCentroCosto", usuario);
             if (!response_sub_centro_costo.IsSuccess)
             {
                 this.IsEnabled = true;
@@ -169,7 +202,13 @@ namespace Core.App.ViewModels
                     "Aceptar");
                 return;
             }
-            var response_producto = await apiService.GetList<ProductoModel>(UrlServidor, "/api", "Producto", usuario);
+            var list_subcentro = (List<SubCentroCostoModel>)response_sub_centro_costo.Result;
+            data.DeleteAll<SubCentroCostoModel>();
+            PKI = 1;
+            list_subcentro.ForEach(q => q.PKSQLite = PKI++);
+            data.InsertAll<SubCentroCostoModel>(list_subcentro);
+
+            var response_producto = await apiService.GetList<ProductoModel>(UrlServidor, RutaCarpeta, "Producto", usuario);
             if (!response_producto.IsSuccess)
             {
                 this.IsEnabled = true;
@@ -180,12 +219,17 @@ namespace Core.App.ViewModels
                     "Aceptar");
                 return;
             }
+            var list_producto = (List<ProductoModel>)response_producto.Result;
+            data.DeleteAll<ProductoModel>();
+            PKI = 1;
+            list_producto.ForEach(q => q.PKSQLite = PKI++);
+            data.InsertAll<ProductoModel>(list_producto);
 
             this.IsEnabled = true;
             this.IsRunning = false;
             await Application.Current.MainPage.DisplayAlert(
                     "Alerta",
-                    "OK",
+                    "Configuración OK",
                     "Aceptar");
         }
 

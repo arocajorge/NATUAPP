@@ -12,6 +12,7 @@
             }
         }
         const string urlConexion = "urlConexion";
+        const string rutaCarpeta = "rutaCarpeta";
         const string idUsuario = "idUsuario";
         const string idEmpresa = "idEmpresa";
         const string idSucursal = "idSucursal";
@@ -27,6 +28,17 @@
             set
             {
                 AppSettings.AddOrUpdateValue(urlConexion, value);
+            }
+        }
+        public static string RutaCarpeta
+        {
+            get
+            {
+                return AppSettings.GetValueOrDefault(rutaCarpeta, stringDefault);
+            }
+            set
+            {
+                AppSettings.AddOrUpdateValue(rutaCarpeta, value);
             }
         }
 

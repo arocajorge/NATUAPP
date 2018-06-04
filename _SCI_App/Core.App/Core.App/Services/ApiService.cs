@@ -23,7 +23,7 @@
                 };
             }
 
-            var isReachable = await CrossConnectivity.Current.IsRemoteReachable(urlServidor);
+            var isReachable = await CrossConnectivity.Current.IsRemoteReachable("google.com");
             if (!isReachable)
             {
                 return new Response
