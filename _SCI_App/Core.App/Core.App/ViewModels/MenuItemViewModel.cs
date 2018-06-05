@@ -22,9 +22,23 @@
 
         private void Navigate()
         {
-            if (this.PageName == "LoginPage")
+            switch (this.PageName)
             {
-                Application.Current.MainPage = new LoginPage();
+                case "LoginPage":
+                    Application.Current.MainPage = new NavigationPage(new LoginPage());
+                    break;
+                case "ParametrizacionPage":
+                    Application.Current.MainPage.Navigation.PushAsync(new NavigationPage(new ParametrizacionPage()));
+                    break;
+                case "AprobacionIngresosPage":
+                    Application.Current.MainPage.Navigation.PushAsync(new NavigationPage(new AprobacionIngresosPage()));
+                    break;
+                case "EgresosPage":
+                    Application.Current.MainPage.Navigation.PushAsync(new NavigationPage(new EgresosPage()));
+                    break;
+                case "SincronizacionPage":
+                    Application.Current.MainPage.Navigation.PushAsync(new NavigationPage(new SincronizacionPage()));
+                    break;
             }
         }
         #endregion

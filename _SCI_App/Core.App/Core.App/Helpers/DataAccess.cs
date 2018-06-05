@@ -59,6 +59,11 @@
             this.connection.InsertAll(model);
         }
 
+        public UsuarioModel GetUsuario(string IdUsuario, string Contrasenia)
+        {
+            return this.connection.Table<UsuarioModel>().Where(q => q.IdUsuario == IdUsuario && q.Clave == Contrasenia).FirstOrDefault();
+        }
+
         #region GetList
         public List<UsuarioModel> GetListUsuario()
         {

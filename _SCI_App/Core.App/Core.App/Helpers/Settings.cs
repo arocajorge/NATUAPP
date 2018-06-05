@@ -16,6 +16,7 @@
         const string idUsuario = "idUsuario";
         const string idEmpresa = "idEmpresa";
         const string idSucursal = "idSucursal";
+        const string idBodega = "idBodega";
         const string idCentroCosto = "idCentroCosto";
         static readonly string stringDefault = string.Empty;
         static readonly int intDefault = 0;
@@ -75,6 +76,18 @@
             set
             {
                 AppSettings.AddOrUpdateValue(idSucursal, value);
+            }
+        }
+
+        public static int IdBodega
+        {
+            get
+            {
+                return AppSettings.GetValueOrDefault(idBodega, intDefault);
+            }
+            set
+            {
+                AppSettings.AddOrUpdateValue(idBodega, value);
             }
         }
 

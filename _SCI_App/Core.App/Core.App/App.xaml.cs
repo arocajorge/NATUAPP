@@ -20,14 +20,14 @@ namespace Core.App
         {
             InitializeComponent();
             if (string.IsNullOrEmpty(Settings.IdUsuario))
-            {                
-                MainPage = new NavigationPage(new LoginPage());
-            }
-            else
             {
-                MainViewModel.GetInstance().Configuracion = new ConfiguracionViewModel();
+                MainViewModel.GetInstance().Login = new LoginViewModel();
+                MainPage = new NavigationPage(new LoginPage());
+            }else
+            {
+                MainViewModel.GetInstance().Parametrizacion = new ParametrizacionViewModel();
                 MainPage = new MasterPage();
-            }
+            }            
         }
         #endregion
 

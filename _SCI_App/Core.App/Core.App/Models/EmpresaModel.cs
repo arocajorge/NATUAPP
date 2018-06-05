@@ -8,7 +8,7 @@
         [PrimaryKey]
         public int PKSQLite { get; set; }
         [JsonProperty("IdEmpresa")]
-        public long IdEmpresa { get; set; }
+        public int IdEmpresa { get; set; }
 
         [JsonProperty("nom_empresa")]
         public string NomEmpresa { get; set; }

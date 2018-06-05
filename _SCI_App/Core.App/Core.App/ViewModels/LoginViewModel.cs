@@ -13,6 +13,7 @@
         private string _contrasenia;
         private bool _IsEnabled;
         private bool _IsRunning;
+        private DataAccess data;
         #endregion
 
         #region Propiedades
@@ -38,8 +39,8 @@
         public LoginViewModel()
         {
             IsEnabled = true;
-            usuario = "admin";
-            contrasenia = "123";
+            usuario = string.IsNullOrEmpty(Settings.IdUsuario) ? "AdminAPP" : Settings.IdUsuario;
+            contrasenia = string.IsNullOrEmpty(Settings.IdUsuario) ? "%Natu201805*" : string.Empty;
         }
         #endregion
 
@@ -75,12 +76,42 @@
                     "Aceptar");
                 return;
             }
-
-            this.IsEnabled = true;
-            this.IsRunning = false;
-            Settings.IdUsuario = this.usuario;
-            MainViewModel.GetInstance().Configuracion = new ConfiguracionViewModel();
-            Application.Current.MainPage = new MasterPage();
+            bool validar_usuario_local = true;
+            if (this.usuario == "AdminAPP" && contrasenia == "%Natu201805*")
+            {
+                this.IsEnabled = true;
+                this.IsRunning = false;
+                this.usuario = string.Empty;
+                contrasenia = string.Empty;
+                Settings.IdUsuario = "";
+                validar_usuario_local = false;
+                MainViewModel.GetInstance().Configuracion = new ConfiguracionViewModel();                
+                await Application.Current.MainPage.Navigation.PushAsync(new ConfiguracionPage());                
+            }
+            if (validar_usuario_local)
+            {
+                data = new DataAccess();
+                var usuarioModel = data.GetUsuario(this.usuario, this.contrasenia);
+                if (usuarioModel == null)
+                {
+                    this.IsEnabled = true;
+                    this.IsRunning = false;
+                    await Application.Current.MainPage.DisplayAlert(
+                        "Alerta",
+                        "Credenciales incorrectas",
+                        "Aceptar");
+                    return;
+                }
+                else
+                {
+                    this.IsEnabled = true;
+                    this.IsRunning = false;
+                    Settings.IdUsuario = this.usuario;
+                    MainViewModel.GetInstance().Parametrizacion = new ParametrizacionViewModel();
+                    MainPage = new MasterPage();
+                }
+            }
+            
         }
         #endregion
     }

@@ -57,6 +57,7 @@ namespace Core.App.ViewModels
             data = new DataAccess();
             this.usuario = "admin";
             this.UrlServidor = string.IsNullOrEmpty(Settings.UrlConexion) ? "http://nat-app-01.naturisa.com.ec" : Settings.UrlConexion;
+            this.RutaCarpeta = string.IsNullOrEmpty(Settings.RutaCarpeta) ? "/vzenmob/Api" : Settings.RutaCarpeta;
         }
         #endregion
 
