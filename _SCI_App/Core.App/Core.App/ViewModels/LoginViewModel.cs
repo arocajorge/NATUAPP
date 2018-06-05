@@ -108,7 +108,7 @@
                     this.IsRunning = false;
                     Settings.IdUsuario = this.usuario;
                     MainViewModel.GetInstance().Parametrizacion = new ParametrizacionViewModel();
-                    MainPage = new MasterPage();
+                    Application.Current.MainPage = new MasterPage();
                 }
             }
             

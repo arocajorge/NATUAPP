@@ -5,10 +5,53 @@
              BindingContext="{Binding Main, Source={StaticResource Locator}}"
              Title="Parametrización">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Parametrización"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <ScrollView
+            Padding="5,20,5,5"
+            BindingContext="{Binding Parametrizacion}">
+            <StackLayout>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            FontAttributes="Bold"
+                            FontSize="Medium"
+                            VerticalOptions="Center"
+                            Text="Empresa">
+                    </Label>
+                    <Picker
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            ItemsSource="{Binding ListaEmpresa}"
+                            ItemDisplayBinding="{Binding NomEmpresa}"                            
+                            SelectedIndex="{Binding SelectedEmpresa, Mode=TwoWay}">
+                    </Picker>
+                    <Label                    
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            FontAttributes="Bold"
+                            FontSize="Medium"
+                            VerticalOptions="Center"
+                            Text="Sucursal">
+                    </Label>
+                    <Picker
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            ItemsSource="{Binding ListaSucursal}"
+                            ItemDisplayBinding="{Binding Nom_sucursal}"
+                            SelectedIndex="{Binding SelectedSucursal, Mode=TwoWay}">
+                    </Picker>
+                </Grid>
+                <Button
+                    Text="Aceptar"
+                    BackgroundColor="CadetBlue"
+                    IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                    Command="{Binding ParametrizarCommand}">
+                </Button>
+            </StackLayout>            
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

@@ -11,9 +11,9 @@
     <MasterDetailPage.Detail>
         <NavigationPage x:Name="Navigator">
             <x:Arguments>
-                <pages:StockPage>
+                <pages:ParametrizacionPage>
                     
-                </pages:StockPage>
+                </pages:ParametrizacionPage>
             </x:Arguments>
         </NavigationPage>
     </MasterDetailPage.Detail>

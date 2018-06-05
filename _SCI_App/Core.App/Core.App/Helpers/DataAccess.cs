@@ -79,6 +79,10 @@
         {
             return this.connection.Table<SucursalModel>().ToList();
         }
+        public List<SucursalModel> GetListSucursal(int IdEmpresa)
+        {
+            return this.connection.Table<SucursalModel>().Where(q=>q.IdEmpresa == IdEmpresa).ToList();
+        }
 
         public List<BodegaModel> GetListBodega()
         {

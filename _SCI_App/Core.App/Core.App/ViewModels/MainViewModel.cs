@@ -69,6 +69,7 @@ namespace Core.App.ViewModels
                 Title = "Cerrar sesión"
             });
         }
+
         #endregion
     }
 }

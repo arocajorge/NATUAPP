@@ -1,72 +1,123 @@
 ﻿using Core.App.Helpers;
+using Core.App.Models;
+using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Linq;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace Core.App.ViewModels
 {
     public class ParametrizacionViewModel : BaseViewModel
     {
         #region Variables
-        private int _IdEmpresa;
-        private int _IdSucursal;
-        private int _IdBodega;
-        private string _IdCentroCosto;
         private DataAccess data;
+        private List<EmpresaModel> _ListaEmpresa;
+        private EmpresaModel _SelectedEmpresa;
+        private List<SucursalModel> _ListaSucursal;
+        private SucursalModel _SelectedSucursal;
+        private bool _IsEnabled;
         #endregion
 
         #region Propiedades
-        public int IdEmpresa
+        public List<EmpresaModel> ListaEmpresa
         {
-            get { return this._IdEmpresa; }
-            set { SetValue(ref this._IdEmpresa, value); }
+            get { return this._ListaEmpresa; }
+            set { SetValue(ref this._ListaEmpresa, value); }
         }
-
-        public int IdSucursal
+        public List<SucursalModel> ListaSucursal
         {
-            get { return this._IdSucursal; }
-            set { SetValue(ref this._IdSucursal, value); }
+            get { return this._ListaSucursal; }
+            set { SetValue(ref this._ListaSucursal, value); }
         }
-
-        public int IdBodega
+        public EmpresaModel SelectedEmpresa
         {
-            get { return this._IdBodega; }
-            set { SetValue(ref this._IdBodega, value); }
+            get { return this._SelectedEmpresa; }
+            set { SetValue(ref this._SelectedEmpresa, value); }
         }
-
-        public string IdCentroCosto
+        public SucursalModel SelectedSucursal
         {
-            get { return this._IdCentroCosto; }
-            set { SetValue(ref this._IdCentroCosto, value); }
+            get { return this._SelectedSucursal; }
+            set { SetValue(ref this._SelectedSucursal, value); }
+        }
+        
+        public bool IsEnabled {
+            get { return this._IsEnabled; }
+            set { SetValue(ref this._IsEnabled, value); }
         }
         #endregion
 
         #region Constructor
         public ParametrizacionViewModel()
         {
-            if (Settings.IdEmpresa != 0)
+            data = new DataAccess();
+            IsEnabled = true;
+            SelectedEmpresa = new EmpresaModel();
+            SelectedSucursal = new SucursalModel();
+            cargar_combos();
+        }
+        #endregion
+
+        #region Comandos
+        public ICommand ParametrizarCommand
+        {
+            get
             {
-                IdEmpresa = Settings.IdEmpresa;
-                IdSucursal = Settings.IdSucursal;
-                IdBodega = Settings.IdBodega;
-                IdCentroCosto = Settings.IdCentroCosto;
+                return new RelayCommand(Parametrizar);
             }
+        }  
+        
+        public ICommand EmpresaChangedCommand
+        {
+            get
+            {
+                return new RelayCommand(EmpresaChanged);
+            }
+        }
+
+        private void EmpresaChanged()
+        {
+            ListaSucursal = data.GetListSucursal(this.SelectedEmpresa.IdEmpresa);
+            
+        }
+
+        private async void Parametrizar()
+        {
+            this.IsEnabled = false;
+            
+            if (this.SelectedEmpresa.IdEmpresa == 0)
+            {
+                this.IsEnabled = true;
+                await Application.Current.MainPage.DisplayAlert(
+                    "Alerta",
+                    "Seleccione la empresa",
+                    "Aceptar");
+                return;
+            }
+
+            if (this.SelectedSucursal.IdSucursal == 0)
+            {
+                this.IsEnabled = true;
+                await Application.Current.MainPage.DisplayAlert(
+                    "Alerta",
+                    "Seleccione la sucursal",
+                    "Aceptar");
+                return;
+            }
+            this.IsEnabled = true;
         }
         #endregion
 
         #region Metodos
         private void cargar_combos()
         {
-            var lst_empresa = data.GetListEmpresa();
-            if (lst_empresa.Count == 1)
+            ListaEmpresa = data.GetListEmpresa();
+            if (ListaEmpresa.Count == 1)
             {
-                this.IdEmpresa = lst_empresa[0].IdEmpresa;
-                Settings.IdEmpresa = this.IdEmpresa;
+                this._SelectedEmpresa = ListaEmpresa[0];
+                Settings.IdEmpresa = this.SelectedEmpresa.IdEmpresa;
+                EmpresaChanged();
             }
-
-            var lst_sucursal = data.GetListSucursal();
-            
         }
         #endregion
     }

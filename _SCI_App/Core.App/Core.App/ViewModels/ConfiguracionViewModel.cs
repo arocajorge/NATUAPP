@@ -138,7 +138,7 @@ namespace Core.App.ViewModels
             var list_empresa = (List<EmpresaModel>)response_empresa.Result;
             data.DeleteAll<EmpresaModel>();
             PKI = 1;
-            list_empresa.ForEach(q => q.PKSQLite = PKI++);
+            list_empresa.ForEach(q => { q.PKSQLite = PKI++; q.NomEmpresa = q.NomEmpresa.Trim(); });
             data.InsertAll<EmpresaModel>(list_empresa);
 
             var response_sucursal = await apiService.GetList<SucursalModel>(UrlServidor, RutaCarpeta, "Sucursal",usuario);
@@ -155,7 +155,7 @@ namespace Core.App.ViewModels
             var list_sucursal = (List<SucursalModel>)response_sucursal.Result;
             data.DeleteAll<SucursalModel>();
             PKI = 1;
-            list_sucursal.ForEach(q => q.PKSQLite = PKI++);
+            list_sucursal.ForEach(q => { q.PKSQLite = PKI++; q.Nom_sucursal = q.Nom_sucursal.Trim(); });
             data.InsertAll<SucursalModel>(list_sucursal);
 
             var response_bodega = await apiService.GetList<BodegaModel>(UrlServidor, RutaCarpeta, "Bodega", usuario);
@@ -172,7 +172,7 @@ namespace Core.App.ViewModels
             var list_bodega = (List<BodegaModel>)response_bodega.Result;
             data.DeleteAll<BodegaModel>();
             PKI = 1;
-            list_bodega.ForEach(q => q.PKSQLite = PKI++);
+            list_bodega.ForEach(q => { q.PKSQLite = PKI++; q.Nom_bodega = q.Nom_bodega.Trim(); });
             data.InsertAll<BodegaModel>(list_bodega);
 
             var response_centro_costo = await apiService.GetList<CentroCostoModel>(UrlServidor, RutaCarpeta, "CentroCosto", usuario);
@@ -189,7 +189,7 @@ namespace Core.App.ViewModels
             var list_CentroCosto = (List<CentroCostoModel>)response_centro_costo.Result;
             data.DeleteAll<CentroCostoModel>();
             PKI = 1;
-            list_CentroCosto.ForEach(q => q.PKSQLite = PKI++);
+            list_CentroCosto.ForEach(q => { q.PKSQLite = PKI++; q.Nom_centro_costo = q.Nom_centro_costo.Trim(); });
             data.InsertAll<CentroCostoModel>(list_CentroCosto);
 
             var response_sub_centro_costo = await apiService.GetList<SubCentroCostoModel>(UrlServidor, RutaCarpeta, "SubCentroCosto", usuario);
@@ -206,7 +206,7 @@ namespace Core.App.ViewModels
             var list_subcentro = (List<SubCentroCostoModel>)response_sub_centro_costo.Result;
             data.DeleteAll<SubCentroCostoModel>();
             PKI = 1;
-            list_subcentro.ForEach(q => q.PKSQLite = PKI++);
+            list_subcentro.ForEach(q => { q.PKSQLite = PKI++; q.Nom_subcentro = q.Nom_subcentro.Trim(); });
             data.InsertAll<SubCentroCostoModel>(list_subcentro);
 
             var response_producto = await apiService.GetList<ProductoModel>(UrlServidor, RutaCarpeta, "Producto", usuario);
