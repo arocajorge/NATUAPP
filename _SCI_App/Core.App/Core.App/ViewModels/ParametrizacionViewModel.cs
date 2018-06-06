@@ -106,7 +106,7 @@ namespace Core.App.ViewModels
             set
             {
                 SetValue(ref this._SucursalSelectedIndex, value);
-                SelectedSucursal = ListaSucursal[_SucursalSelectedIndex];
+                SelectedSucursal = ListaSucursal[_SucursalSelectedIndex];                
                 cargar_bodega();
             }
         }        
