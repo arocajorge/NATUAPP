@@ -9,42 +9,50 @@
             Padding="5,20,5,5"
             BindingContext="{Binding Parametrizacion}">
             <StackLayout>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="2*"/>
-                    </Grid.ColumnDefinitions>
-                    <Label
-                            Grid.Row="0"
-                            Grid.Column="0"
-                            FontAttributes="Bold"
-                            FontSize="Medium"
-                            VerticalOptions="Center"
-                            Text="Empresa">
-                    </Label>
-                    <Picker
-                            Grid.Row="0"
-                            Grid.Column="1"
-                            ItemsSource="{Binding ListaEmpresa}"
-                            ItemDisplayBinding="{Binding NomEmpresa}"                            
-                            SelectedIndex="{Binding SelectedEmpresa, Mode=TwoWay}">
-                    </Picker>
-                    <Label                    
-                            Grid.Row="1"
-                            Grid.Column="0"
-                            FontAttributes="Bold"
-                            FontSize="Medium"
-                            VerticalOptions="Center"
-                            Text="Sucursal">
-                    </Label>
-                    <Picker
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            ItemsSource="{Binding ListaSucursal}"
-                            ItemDisplayBinding="{Binding Nom_sucursal}"
-                            SelectedIndex="{Binding SelectedSucursal, Mode=TwoWay}">
-                    </Picker>
-                </Grid>
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="Medium"
+                    VerticalOptions="Center"
+                    Text="Empresa">
+                </Label>
+                <Picker
+                    ItemsSource="{Binding ListaEmpresa}"
+                    ItemDisplayBinding="{Binding NomEmpresa}"
+                    SelectedIndex="{Binding EmpresaSelectedIndex, Mode=TwoWay}">
+                </Picker>
+                <Label                    
+                    FontAttributes="Bold"
+                    FontSize="Medium"
+                    VerticalOptions="Center"
+                    Text="Sucursal">
+                </Label>
+                <Picker
+                    ItemsSource="{Binding ListaSucursal}"
+                    ItemDisplayBinding="{Binding Nom_sucursal}"
+                    SelectedIndex="{Binding SucursalSelectedIndex, Mode=TwoWay}">
+                </Picker>
+                <Label                    
+                    FontAttributes="Bold"
+                    FontSize="Medium"
+                    VerticalOptions="Center"
+                    Text="Bodega">
+                </Label>
+                <Picker
+                    ItemsSource="{Binding ListaBodega}"
+                    ItemDisplayBinding="{Binding Nom_bodega}"
+                    SelectedIndex="{Binding BodegaSelectedIndex, Mode=TwoWay}">
+                </Picker>
+                <Label                    
+                    FontAttributes="Bold"
+                    FontSize="Medium"
+                    VerticalOptions="Center"
+                    Text="Centro de costo">
+                </Label>
+                <Picker
+                    ItemsSource="{Binding ListaCentroCosto}"
+                    ItemDisplayBinding="{Binding Nom_centro_costo}"
+                    SelectedIndex="{Binding CentroCostoSelectedIndex, Mode=TwoWay}">
+                </Picker>
                 <Button
                     Text="Aceptar"
                     BackgroundColor="CadetBlue"

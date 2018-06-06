@@ -89,9 +89,18 @@
             return this.connection.Table<BodegaModel>().ToList();
         }
 
+        public List<BodegaModel> GetListBodega(int IdEmpresa, int IdSucursal)
+        {
+            return this.connection.Table<BodegaModel>().Where(q=>q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal).ToList();
+        }
+
         public List<CentroCostoModel> GetListCentroCosto()
         {
             return this.connection.Table<CentroCostoModel>().ToList();
+        }
+        public List<CentroCostoModel> GetListCentroCosto(int IdEmpresa)
+        {
+            return this.connection.Table<CentroCostoModel>().Where(q=>q.IdEmpresa == IdEmpresa).ToList();
         }
 
         public List<ProductoModel> GetListProducto()
