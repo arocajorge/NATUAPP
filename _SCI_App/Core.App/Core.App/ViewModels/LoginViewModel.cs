@@ -107,8 +107,17 @@
                     this.IsEnabled = true;
                     this.IsRunning = false;
                     Settings.IdUsuario = this.usuario;
-                    MainViewModel.GetInstance().Parametrizacion = new ParametrizacionViewModel();
-                    Application.Current.MainPage = new MasterPage();
+
+                    if (Settings.IdEmpresa == 0)
+                    {
+                        MainViewModel.GetInstance().Parametrizacion = new ParametrizacionViewModel();
+                        Application.Current.MainPage = new NavigationPage(new ParametrizacionPage());
+                    }
+                    else
+                    {
+                        MainViewModel.GetInstance().Stock = new StockViewModel();
+                        Application.Current.MainPage = new MasterPage();
+                    }
                 }
             }
             

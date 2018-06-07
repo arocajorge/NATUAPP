@@ -25,8 +25,16 @@ namespace Core.App
                 MainPage = new NavigationPage(new LoginPage());
             }else
             {
-                MainViewModel.GetInstance().Parametrizacion = new ParametrizacionViewModel();
-                MainPage = new MasterPage();
+                if (Settings.IdEmpresa == 0)
+                {
+                    MainViewModel.GetInstance().Parametrizacion = new ParametrizacionViewModel();
+                    MainPage = new NavigationPage(new ParametrizacionPage());
+                }
+                else
+                {
+                    MainViewModel.GetInstance().Stock = new StockViewModel();
+                    MainPage = new MasterPage();
+                }
             }            
         }
         #endregion

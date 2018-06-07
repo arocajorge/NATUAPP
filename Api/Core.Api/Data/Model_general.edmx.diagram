@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="fdd3f85c51d44864b72530c5a4d6ee9f" Name="Diagram1">
+        <EntityTypeShape EntityType="Model_general.ct_centro_costo" Width="1.5" PointX="7.75" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model_general.ct_centro_costo_sub_centro_costo" Width="1.5" PointX="10" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model_general.in_Producto" Width="1.5" PointX="3" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model_general.in_UnidadMedida" Width="1.5" PointX="0.75" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model_general.tb_bodega" Width="1.5" PointX="5.25" PointY="17.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model_general.tb_empresa" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model_general.tb_sucursal" Width="1.5" PointX="3" PointY="18" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model_general.tbl_bodega" Width="1.5" PointX="7.5" PointY="19.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model_general.tbl_producto" Width="1.5" PointX="5.25" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model_general.tbl_subcentro" Width="1.5" PointX="12.25" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model_general.tbl_usuario" Width="1.5" PointX="5.25" PointY="14.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model_general.tbl_usuario_x_bodega" Width="1.5" PointX="7.5" PointY="16.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model_general.tbl_usuario_x_subcentro" Width="1.5" PointX="12.25" PointY="9.125" IsExpanded="true" />
+        <AssociationConnector Association="Model_general.FK_ct_centro_costo_ct_centro_costo" ManuallyRouted="false" />
+        <AssociationConnector Association="Model_general.FK_ct_centro_costo_sub_centro_costo_ct_centro_costo" ManuallyRouted="false" />
+        <AssociationConnector Association="Model_general.FK_tbl_subcentro_ct_centro_costo_sub_centro_costo" ManuallyRouted="false" />
+        <AssociationConnector Association="Model_general.FK_tbl_usuario_x_subcentro_ct_centro_costo_sub_centro_costo" ManuallyRouted="false" />
+        <AssociationConnector Association="Model_general.FK_in_Producto_in_UnidadMedida" ManuallyRouted="false" />
+        <AssociationConnector Association="Model_general.FK_in_Producto_in_UnidadMedida1" ManuallyRouted="false" />
+        <AssociationConnector Association="Model_general.FK_in_Producto_tb_empresa" ManuallyRouted="false" />
+        <AssociationConnector Association="Model_general.FK_tbl_producto_in_Producto" ManuallyRouted="false" />
+        <AssociationConnector Association="Model_general.FK_tb_bodega_tb_sucursal" ManuallyRouted="false" />
+        <AssociationConnector Association="Model_general.FK_tbl_bodega_tb_bodega" ManuallyRouted="false" />
+        <AssociationConnector Association="Model_general.FK_tbl_usuario_x_bodega_tb_bodega" ManuallyRouted="false" />
+        <AssociationConnector Association="Model_general.FK_tb_sucursal_tb_empresa" ManuallyRouted="false" />
+        <AssociationConnector Association="Model_general.FK_tbl_usuario_x_bodega_tbl_usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="Model_general.FK_tbl_usuario_x_subcentro_tbl_usuario" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Model_general.vw_oc_x_aprobar" Width="1.5" PointX="7.375" PointY="8.75" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

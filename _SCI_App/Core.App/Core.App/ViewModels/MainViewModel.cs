@@ -9,6 +9,7 @@ namespace Core.App.ViewModels
         public LoginViewModel Login { get; set; }
         public ConfiguracionViewModel Configuracion { get; set; }
         public ParametrizacionViewModel Parametrizacion { get; set; }
+        public StockViewModel Stock { get; set; }
         public ObservableCollection<MenuItemViewModel> Menus { get; set; }
         #endregion
 
