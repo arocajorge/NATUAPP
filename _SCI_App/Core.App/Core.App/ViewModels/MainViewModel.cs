@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Core.App.Models;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace Core.App.ViewModels
@@ -11,6 +13,7 @@ namespace Core.App.ViewModels
         public ParametrizacionViewModel Parametrizacion { get; set; }
         public StockViewModel Stock { get; set; }
         public ObservableCollection<MenuItemViewModel> Menus { get; set; }
+        public List<StockModel> lst_stock { get; set; }
         #endregion
 
         #region Constructor

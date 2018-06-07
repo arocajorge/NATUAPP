@@ -27,6 +27,7 @@
                 connection.CreateTable<ProductoModel>();
                 connection.CreateTable<IngresoOrdenCompraModel>();
                 connection.CreateTable<UnidadMedidaModel>();
+                connection.CreateTable<StockModel>();
             }
             catch (Exception ex)
             {
@@ -117,8 +118,13 @@
         {
             return this.connection.Table<UnidadMedidaModel>().ToList();
         }
+
+        public List<StockModel> GetListStock(int IdEmpresa, int IdSucursal, int IdBodega)
+        {
+            return this.connection.Table<StockModel>().Where(q=>q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.IdBodega == IdBodega).OrderBy(q=>q.NomProducto).ToList();
+        }
         #endregion
-        
+
         public void Dispose()
         {
             connection.Dispose();

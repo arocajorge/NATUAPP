@@ -107,7 +107,7 @@ namespace Core.App.ViewModels
             }
             Settings.UrlConexion = this.UrlServidor;
             Settings.RutaCarpeta = this.RutaCarpeta;
-            var response_usuario = await apiService.GetList<UsuarioModel>(UrlServidor, RutaCarpeta, "Usuario", "");
+            var response_usuario = await apiService.GetList<UsuarioModel>(UrlServidor, RutaCarpeta, "Usuario", usuario);
             if (!response_usuario.IsSuccess)
             {
                 this.IsEnabled = true;
@@ -118,9 +118,20 @@ namespace Core.App.ViewModels
                     "Aceptar");
                 return;
             }
-            int PKI = 1;
+
             var list_usuario = (List<UsuarioModel>)response_usuario.Result;
+            if (list_usuario.Count == 0)
+            {
+                this.IsEnabled = true;
+                this.IsRunning = false;
+                await Application.Current.MainPage.DisplayAlert(
+                    "Alerta",
+                    "El usuario no se encuentra registrado para el uso de la aplicación",
+                    "Aceptar");
+                return;
+            }
             data.DeleteAll<UsuarioModel>();
+            int PKI = 1;
             list_usuario.ForEach(q => q.PKSQLite = PKI++);
             data.InsertAll<UsuarioModel>(list_usuario);
 
@@ -225,6 +236,23 @@ namespace Core.App.ViewModels
             PKI = 1;
             list_producto.ForEach(q => q.PKSQLite = PKI++);
             data.InsertAll<ProductoModel>(list_producto);
+
+            var response_stock = await apiService.GetList<StockModel>(UrlServidor, RutaCarpeta, "Stock", usuario);
+            if (!response_stock.IsSuccess)
+            {
+                this.IsEnabled = true;
+                this.IsRunning = false;
+                await Application.Current.MainPage.DisplayAlert(
+                    "Alerta",
+                    response_stock.Message,
+                    "Aceptar");
+                return;
+            }
+            var list_stock = (List<StockModel>)response_stock.Result;
+            data.DeleteAll<StockModel>();
+            PKI = 1;
+            list_stock.ForEach(q => q.PKSQLite = PKI++);
+            data.InsertAll<StockModel>(list_stock);
 
             Settings.IdEmpresa = 0;
             Settings.IdSucursal = 0;

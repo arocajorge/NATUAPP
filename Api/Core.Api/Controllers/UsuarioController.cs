@@ -13,10 +13,11 @@ namespace Core.Api.Controllers
     {
         Entities_general db = new Entities_general();
         // GET: api/Usuario
-        public IEnumerable<tbl_usuario_model> Get()
+        public IEnumerable<tbl_usuario_model> Get(string IdUsuario = "")
         {
             var lst = from q in db.tbl_usuario
                       where q.estado == true
+                      && q.IdUsuarioSCI == IdUsuario
                       select new tbl_usuario_model
                       {
                           IdUsuario = q.IdUsuarioSCI,

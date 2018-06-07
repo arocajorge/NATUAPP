@@ -232,6 +232,7 @@ namespace Core.App.ViewModels
             Settings.IdBodega = SelectedBodega.IdBodega;
             Settings.IdCentroCosto = SelectedCentroCosto.IdCentroCosto;
 
+            MainViewModel.GetInstance().Stock = new StockViewModel();
             Application.Current.MainPage = new MasterPage();
         }
         #endregion

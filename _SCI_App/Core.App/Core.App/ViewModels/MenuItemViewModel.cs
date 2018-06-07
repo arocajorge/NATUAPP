@@ -25,18 +25,23 @@
             switch (this.PageName)
             {
                 case "LoginPage":
+                    MainViewModel.GetInstance().Login = new LoginViewModel();
                     Application.Current.MainPage = new NavigationPage(new LoginPage());
                     break;
                 case "ParametrizacionPage":
+                    MainViewModel.GetInstance().Parametrizacion = new ParametrizacionViewModel();
                     Application.Current.MainPage = new NavigationPage(new ParametrizacionPage());
                     break;
                 case "AprobacionIngresosPage":
+                    
                     Application.Current.MainPage = new NavigationPage(new AprobacionIngresosPage());
                     break;
                 case "EgresosPage":
+                    
                     Application.Current.MainPage = new NavigationPage(new EgresosPage());
                     break;
                 case "SincronizacionPage":
+
                     Application.Current.MainPage = new NavigationPage(new SincronizacionPage());
                     break;
             }
