@@ -226,6 +226,13 @@ namespace Core.App.ViewModels
             list_producto.ForEach(q => q.PKSQLite = PKI++);
             data.InsertAll<ProductoModel>(list_producto);
 
+            Settings.IdEmpresa = 0;
+            Settings.IdSucursal = 0;
+            Settings.IdBodega = 0;
+            Settings.IdCentroCosto = "0";
+
+            Settings.IdUsuario = "";
+
             this.IsEnabled = true;
             this.IsRunning = false;
             await Application.Current.MainPage.DisplayAlert(

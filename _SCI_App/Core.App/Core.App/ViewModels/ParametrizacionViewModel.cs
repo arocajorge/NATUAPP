@@ -1,11 +1,13 @@
 ﻿using Core.App.Helpers;
 using Core.App.Models;
+using Core.App.Views;
 using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Xamarin.Forms;
+using System.Linq;
 
 namespace Core.App.ViewModels
 {
@@ -14,6 +16,7 @@ namespace Core.App.ViewModels
         #region Variables
         private DataAccess data;
         private bool _IsEnabled;
+        private bool SetSettings;
 
         private ObservableCollection<EmpresaModel> _ListaEmpresa;
         private EmpresaModel _SelectedEmpresa;
@@ -36,7 +39,14 @@ namespace Core.App.ViewModels
         public ObservableCollection<EmpresaModel> ListaEmpresa
         {
             get { return this._ListaEmpresa; }
-            set { SetValue(ref this._ListaEmpresa, value); }
+            set {
+                SetValue(ref this._ListaEmpresa, value);
+                if (SetSettings)
+                {
+                    SelectedEmpresa = ListaEmpresa.Where(q => q.IdEmpresa == Settings.IdEmpresa).FirstOrDefault();
+                    EmpresaSelectedIndex = _ListaEmpresa.IndexOf(SelectedEmpresa == null ? new EmpresaModel() : SelectedEmpresa);
+                }
+            }
         }
         public EmpresaModel SelectedEmpresa
         {
@@ -49,16 +59,54 @@ namespace Core.App.ViewModels
             set
             {
                 SetValue(ref this._EmpresaSelectedIndex, value);
-                SelectedEmpresa = ListaEmpresa[EmpresaSelectedIndex];
+                SelectedEmpresa = _EmpresaSelectedIndex < 0 ? new EmpresaModel() : ListaEmpresa[_EmpresaSelectedIndex];
                 cargar_sucursal();
                 cargar_cc();
             }
         }
 
+        public ObservableCollection<SucursalModel> ListaSucursal
+        {
+            get { return this._ListaSucursal; }
+            set
+            {
+                SetValue(ref this._ListaSucursal, value);
+                if (SetSettings)
+                {
+                    SelectedSucursal = _ListaSucursal.Where(q => q.IdSucursal == Settings.IdSucursal).FirstOrDefault();
+                    SucursalSelectedIndex = _ListaSucursal.IndexOf(SelectedSucursal == null ? new SucursalModel() : SelectedSucursal);
+                }
+            }
+        }
+        public int SucursalSelectedIndex
+        {
+            get { return this._SucursalSelectedIndex; }
+            set
+            {
+                SetValue(ref this._SucursalSelectedIndex, value);
+                SelectedSucursal = _SucursalSelectedIndex < 0 ? new SucursalModel() : ListaSucursal[_SucursalSelectedIndex];
+                cargar_bodega();
+            }
+        }
+        public SucursalModel SelectedSucursal
+        {
+            get { return this._SelectedSucursal; }
+            set { SetValue(ref this._SelectedSucursal, value); }
+        }
+
+
         public ObservableCollection<BodegaModel> ListaBodega
         {
             get { return this._ListaBodega; }
-            set { SetValue(ref this._ListaBodega, value); }
+            set
+            {
+                SetValue(ref this._ListaBodega, value);
+                if (SetSettings)
+                {
+                    SelectedBodega = _ListaBodega.Where(q => q.IdBodega == Settings.IdBodega).FirstOrDefault();
+                    BodegaSelectedIndex = _ListaBodega.IndexOf(SelectedBodega == null ? new BodegaModel() : SelectedBodega);
+                }
+            }
         }
         public BodegaModel SelectedBodega
         {
@@ -71,14 +119,22 @@ namespace Core.App.ViewModels
             set
             {
                 SetValue(ref this._BodegaSelectedIndex, value);
-                SelectedBodega = ListaBodega[_BodegaSelectedIndex];
+                SelectedBodega = _BodegaSelectedIndex < 0 ? new BodegaModel() : ListaBodega[_BodegaSelectedIndex];
             }
         }
 
         public ObservableCollection<CentroCostoModel> ListaCentroCosto
         {
             get { return this._ListaCentroCosto; }
-            set { SetValue(ref this._ListaCentroCosto, value); }
+            set
+            {
+                SetValue(ref this._ListaCentroCosto, value);
+                if (SetSettings)
+                {
+                    SelectedCentroCosto = _ListaCentroCosto.Where(q => q.IdCentroCosto == Settings.IdCentroCosto).FirstOrDefault();
+                    CentroCostoSelectedIndex = _ListaCentroCosto.IndexOf(SelectedCentroCosto == null ? new CentroCostoModel() : SelectedCentroCosto);
+                }
+            }
         }
         public CentroCostoModel SelectedCentroCosto
         {
@@ -91,29 +147,8 @@ namespace Core.App.ViewModels
             set
             {
                 SetValue(ref this._CentroCostoSelectedIndex, value);
-                SelectedCentroCosto = ListaCentroCosto[CentroCostoSelectedIndex];
+                SelectedCentroCosto = _CentroCostoSelectedIndex < 0 ? new CentroCostoModel() : ListaCentroCosto[_CentroCostoSelectedIndex];
             }
-        }
-
-        public ObservableCollection<SucursalModel> ListaSucursal
-        {
-            get { return this._ListaSucursal; }
-            set { SetValue(ref this._ListaSucursal, value); }
-        }        
-        public int SucursalSelectedIndex
-        {
-            get { return this._SucursalSelectedIndex; }
-            set
-            {
-                SetValue(ref this._SucursalSelectedIndex, value);
-                SelectedSucursal = ListaSucursal[_SucursalSelectedIndex];                
-                cargar_bodega();
-            }
-        }        
-        public SucursalModel SelectedSucursal
-        {
-            get { return this._SelectedSucursal; }
-            set { SetValue(ref this._SelectedSucursal, value); }
         }
         
         public bool IsEnabled {
@@ -131,7 +166,10 @@ namespace Core.App.ViewModels
             SelectedSucursal = new SucursalModel();
             SelectedBodega = new BodegaModel();
             SelectedCentroCosto = new CentroCostoModel();
+            if (Settings.IdEmpresa != 0)
+                SetSettings = true;
             cargar_combos();
+            SetSettings = false;
         }
         #endregion
 
@@ -188,13 +226,20 @@ namespace Core.App.ViewModels
                 return;
             }
             this.IsEnabled = true;
+
+            Settings.IdEmpresa = SelectedEmpresa.IdEmpresa;
+            Settings.IdSucursal = SelectedSucursal.IdSucursal;
+            Settings.IdBodega = SelectedBodega.IdBodega;
+            Settings.IdCentroCosto = SelectedCentroCosto.IdCentroCosto;
+
+            Application.Current.MainPage = new MasterPage();
         }
         #endregion
 
         #region Metodos
         private void cargar_combos()
         {
-            ListaEmpresa = new ObservableCollection<EmpresaModel>(data.GetListEmpresa());
+            ListaEmpresa = new ObservableCollection<EmpresaModel>(data.GetListEmpresa());           
         }
         private void cargar_sucursal()
         {

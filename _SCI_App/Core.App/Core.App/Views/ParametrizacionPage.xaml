@@ -18,7 +18,8 @@
                 <Picker
                     ItemsSource="{Binding ListaEmpresa}"
                     ItemDisplayBinding="{Binding NomEmpresa}"
-                    SelectedIndex="{Binding EmpresaSelectedIndex, Mode=TwoWay}">
+                    SelectedIndex="{Binding EmpresaSelectedIndex, Mode=TwoWay}"
+                    Title="Seleccione la empresa">
                 </Picker>
                 <Label                    
                     FontAttributes="Bold"
@@ -29,7 +30,8 @@
                 <Picker
                     ItemsSource="{Binding ListaSucursal}"
                     ItemDisplayBinding="{Binding Nom_sucursal}"
-                    SelectedIndex="{Binding SucursalSelectedIndex, Mode=TwoWay}">
+                    SelectedIndex="{Binding SucursalSelectedIndex, Mode=TwoWay}"
+                    Title="Seleccione la sucursal">
                 </Picker>
                 <Label                    
                     FontAttributes="Bold"
@@ -40,7 +42,8 @@
                 <Picker
                     ItemsSource="{Binding ListaBodega}"
                     ItemDisplayBinding="{Binding Nom_bodega}"
-                    SelectedIndex="{Binding BodegaSelectedIndex, Mode=TwoWay}">
+                    SelectedIndex="{Binding BodegaSelectedIndex, Mode=TwoWay}"
+                    Title="Seleccione la bodega">
                 </Picker>
                 <Label                    
                     FontAttributes="Bold"
@@ -51,7 +54,8 @@
                 <Picker
                     ItemsSource="{Binding ListaCentroCosto}"
                     ItemDisplayBinding="{Binding Nom_centro_costo}"
-                    SelectedIndex="{Binding CentroCostoSelectedIndex, Mode=TwoWay}">
+                    SelectedIndex="{Binding CentroCostoSelectedIndex, Mode=TwoWay}"
+                    Title="Seleccione el centro de costo">
                 </Picker>
                 <Button
                     Text="Aceptar"
