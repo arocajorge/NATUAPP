@@ -33,6 +33,7 @@
         <AssociationConnector Association="Model_general.FK_tbl_usuario_x_bodega_tbl_usuario" ManuallyRouted="false" />
         <AssociationConnector Association="Model_general.FK_tbl_usuario_x_subcentro_tbl_usuario" ManuallyRouted="false" />
         <EntityTypeShape EntityType="Model_general.vw_oc_x_aprobar" Width="1.5" PointX="7.375" PointY="8.75" />
+        <EntityTypeShape EntityType="Model_general.vw_stock" Width="1.5" PointX="9.375" PointY="8.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

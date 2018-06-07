@@ -112,6 +112,7 @@
     <Compile Include="Controllers\EmpresaController.cs" />
     <Compile Include="Controllers\IngresoOrdenCompraController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
+    <Compile Include="Controllers\StockController.cs" />
     <Compile Include="Controllers\SubCentroCostoController.cs" />
     <Compile Include="Controllers\SucursalController.cs" />
     <Compile Include="Controllers\UnidadMedidaController.cs" />
@@ -173,6 +174,9 @@
     <Compile Include="Data\vw_oc_x_aprobar.cs">
       <DependentUpon>Model_general.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\vw_stock.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -185,6 +189,7 @@
     <Compile Include="Models\tbl_sucursal_model.cs" />
     <Compile Include="Models\tbl_unidad_medida_model.cs" />
     <Compile Include="Models\tbl_usuario_model.cs" />
+    <Compile Include="Models\vw_stock_model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
