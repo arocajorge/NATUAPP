@@ -232,6 +232,9 @@ namespace Core.App.ViewModels
             Settings.IdBodega = SelectedBodega.IdBodega;
             Settings.IdCentroCosto = SelectedCentroCosto.IdCentroCosto;
 
+            App.Productos = data.GetListProducto(Settings.IdEmpresa);
+            App.SubCentros = data.GetListSubCentroCosto(Settings.IdEmpresa, Settings.IdCentroCosto);
+
             MainViewModel.GetInstance().Stock = new StockViewModel();
             Application.Current.MainPage = new MasterPage();
         }

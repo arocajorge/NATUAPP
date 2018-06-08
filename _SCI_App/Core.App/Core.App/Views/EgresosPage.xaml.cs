@@ -16,5 +16,5 @@ namespace Core.App.Views
 		{
 			InitializeComponent ();
 		}
-	}
+    }
 }

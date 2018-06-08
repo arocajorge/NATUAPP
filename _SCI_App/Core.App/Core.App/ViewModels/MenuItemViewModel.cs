@@ -22,8 +22,9 @@
 
         private void Navigate()
         {
+            App.Master.IsPresented = false;
             switch (this.PageName)
-            {
+            {                
                 case "LoginPage":
                     MainViewModel.GetInstance().Login = new LoginViewModel();
                     Application.Current.MainPage = new NavigationPage(new LoginPage());
@@ -33,16 +34,14 @@
                     Application.Current.MainPage = new NavigationPage(new ParametrizacionPage());
                     break;
                 case "AprobacionIngresosPage":
-                    
-                    Application.Current.MainPage = new NavigationPage(new AprobacionIngresosPage());
+                    App.Navigator.PushAsync(new AprobacionIngresosPage());
                     break;
                 case "EgresosPage":
-                    
-                    Application.Current.MainPage = new NavigationPage(new EgresosPage());
+                    MainViewModel.GetInstance().Egresos = new EgresosViewModel();
+                    App.Navigator.PushAsync(new EgresosPage());
                     break;
                 case "SincronizacionPage":
-
-                    Application.Current.MainPage = new NavigationPage(new SincronizacionPage());
+                    App.Navigator.PushAsync(new SincronizacionPage());
                     break;
             }
         }

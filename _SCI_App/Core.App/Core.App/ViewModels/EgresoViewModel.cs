@@ -1,0 +1,177 @@
+﻿using Core.App.Helpers;
+using Core.App.Models;
+using GalaSoft.MvvmLight.Command;
+using System;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows.Input;
+using Xamarin.Forms;
+
+namespace Core.App.ViewModels
+{
+    public class EgresoViewModel : BaseViewModel
+    {
+        #region Variables
+        private EgresoModel _Egreso;
+        private bool _IsEnabled;
+        private DataAccess data;
+
+        private ObservableCollection<ProductoModel> _ListaProducto;
+        private ProductoModel _SelectedProducto;
+        private int _ProductoSelectedIndex;
+
+        private ObservableCollection<SubCentroCostoModel> _ListaSubCentro;
+        private SubCentroCostoModel _SelectedSubcentro;
+        private int _SubCentroSelectedIndex;
+        
+        #endregion
+
+        #region Propiedades
+        public EgresoModel Egreso
+        {
+            get { return this._Egreso; }
+            set { SetValue(ref this._Egreso, value); }
+        }
+        public bool IsEnabled {
+            get { return this._IsEnabled; }
+            set { SetValue(ref this._IsEnabled, value); }
+        }
+        public ObservableCollection<ProductoModel> ListaProducto
+        {
+            get { return this._ListaProducto; }
+            set { SetValue(ref this._ListaProducto, value); }
+        }
+        public ProductoModel SelectedProducto
+        {
+            get { return this._SelectedProducto; }
+            set { SetValue(ref this._SelectedProducto, value); }
+        }
+        public int ProductoSelectedIndex
+        {
+            get { return this._ProductoSelectedIndex; }
+            set
+            {
+                SetValue(ref this._ProductoSelectedIndex, value);
+                SelectedProducto = _ProductoSelectedIndex < 0 ? new ProductoModel() : ListaProducto[_ProductoSelectedIndex];
+            }
+        }
+
+        public ObservableCollection<SubCentroCostoModel> ListaSubCentro
+        {
+            get { return this._ListaSubCentro; }
+            set { SetValue(ref this._ListaSubCentro, value); }
+        }
+        public SubCentroCostoModel SelectedSubcentro
+        {
+            get { return this._SelectedSubcentro; }
+            set { SetValue(ref this._SelectedSubcentro, value); }
+        }
+        public int SubCentroSelectedIndex
+        {
+            get { return this._SubCentroSelectedIndex; }
+            set
+            {
+                SetValue(ref this._SubCentroSelectedIndex, value);
+                SelectedSubcentro = _SubCentroSelectedIndex < 0 ? new SubCentroCostoModel() : ListaSubCentro[_SubCentroSelectedIndex];
+            }
+        }
+        #endregion
+
+        #region Constructores
+        public EgresoViewModel(EgresoModel egresoItemViewModel)
+        {
+            this.Egreso = egresoItemViewModel;
+            cargar_combos();
+            IsEnabled = true;
+            data = new DataAccess();
+        }
+        public EgresoViewModel()
+        {
+            this.Egreso = new EgresoModel
+            {
+                IdEmpresa = Settings.IdEmpresa,
+                IdSucursal = Settings.IdSucursal,
+                IdBodega = Settings.IdBodega,
+                IdCentroCosto = Settings.IdCentroCosto,
+                Fecha = DateTime.Now.Date
+            };
+            cargar_combos();
+            IsEnabled = true;
+            data = new DataAccess();
+        }
+        #endregion
+
+        #region Metodos
+        private void cargar_combos()
+        {
+            ListaProducto = new ObservableCollection<ProductoModel>(App.Productos);
+            if (Egreso.IdProducto != 0)
+            {
+                SelectedProducto = ListaProducto.Where(q => q.IdProducto == Egreso.IdProducto).FirstOrDefault();
+                ProductoSelectedIndex = ListaProducto.IndexOf(SelectedProducto);
+            }
+            ListaSubCentro = new ObservableCollection<SubCentroCostoModel>(App.SubCentros);
+            if (!string.IsNullOrEmpty(Egreso.IdSubCentroCosto))
+            {
+                SelectedSubcentro = ListaSubCentro.Where(q => q.IdSubCentroCosto == Egreso.IdSubCentroCosto).FirstOrDefault();
+                SubCentroSelectedIndex = ListaSubCentro.IndexOf(SelectedSubcentro);
+            }
+        }
+        #endregion
+
+        #region Comandos
+        public ICommand GuardarCommand
+        { get { return new RelayCommand(Guardar); }  }
+
+        private async void Guardar()
+        {
+            IsEnabled = false;
+
+            if (this.SelectedProducto.IdEmpresa == 0)
+            {
+                this.IsEnabled = true;
+                await Application.Current.MainPage.DisplayAlert(
+                    "Alerta",
+                    "Seleccione el producto",
+                    "Aceptar");
+                return;
+            }
+
+            if (this.SelectedSubcentro.IdEmpresa == 0)
+            {
+                this.IsEnabled = true;
+                await Application.Current.MainPage.DisplayAlert(
+                    "Alerta",
+                    "Seleccione el SubCentro",
+                    "Aceptar");
+                return;
+            }
+
+            if (this.Egreso.Cantidad == 0)
+            {
+                this.IsEnabled = true;
+                await Application.Current.MainPage.DisplayAlert(
+                    "Alerta",
+                    "Ingrese la cantidad",
+                    "Aceptar");
+                return;
+            }
+
+            Egreso.IdProducto = SelectedProducto.IdProducto;
+            Egreso.NomProducto = SelectedProducto.NomProducto;
+            Egreso.IdSubCentroCosto = SelectedSubcentro.IdSubCentroCosto;
+            Egreso.NomSubCentro = SelectedSubcentro.Nom_subcentro;
+            Egreso.IdUnidadMedida = SelectedProducto.IdUnidadConsumo;            
+
+            data.Guardar(Egreso);
+            this.IsEnabled = true;
+            await Application.Current.MainPage.DisplayAlert(
+                "Exito",
+                "Registro guardado exitósamente",
+                "Aceptar");
+            MainViewModel.GetInstance().Egresos.cargar_egresos();            
+            await App.Navigator.Navigation.PopAsync();
+        }
+        #endregion
+    }
+}

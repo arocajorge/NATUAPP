@@ -6,9 +6,59 @@
              Title="Egreso">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <ScrollView
+                BindingContext="{Binding Egreso}">
+                <StackLayout
+                    Padding="5">
+                    <Label      
+                            FontAttributes="Bold"
+                            Text="Fecha">
+                    </Label>
+                    <DatePicker
+                            Date="{Binding Egreso.Fecha, Mode=TwoWay}">                        
+                        </DatePicker>
+                        <Label      
+                            FontAttributes="Bold"
+                            Text="SubCentro">
+                        </Label>
+                        <Picker
+                            ItemsSource="{Binding ListaSubCentro}"
+                            FontSize="Small"
+                            ItemDisplayBinding="{Binding Nom_subcentro}"
+                            SelectedIndex="{Binding SubCentroSelectedIndex, Mode=TwoWay}"
+                            Title="Seleccione el SubCentro">
+                        </Picker>
+                        <Label      
+                            FontAttributes="Bold"
+                            Text="Producto">
+                        </Label>
+                        <Picker
+                            FontSize="Small"
+                            ItemsSource="{Binding ListaProducto}"
+                            ItemDisplayBinding="{Binding NomProducto}"
+                            SelectedIndex="{Binding ProductoSelectedIndex, Mode=TwoWay}"
+                            Title="Seleccione el producto">
+                        </Picker>
+                        <Label 
+                            FontAttributes="Bold"
+                            Text="Cantidad">
+                        </Label>
+                        <Entry
+                            Placeholder="Ingrese la cantidad"
+                            Text="{Binding Egreso.Cantidad, Mode=TwoWay}">
+                        </Entry>
+                    <ActivityIndicator
+                        IsRunning= "False"
+                        VerticalOptions="CenterAndExpand">
+                        </ActivityIndicator>
+                    <Button
+                        BackgroundColor="CadetBlue"
+                        Command="{Binding GuardarCommand}"
+                        IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                        Text="Guardar">
+                    </Button>
+                </StackLayout>
+            </ScrollView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

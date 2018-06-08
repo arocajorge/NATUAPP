@@ -3,7 +3,7 @@
     using Newtonsoft.Json;
     using SQLite;
 
-    class SubCentroCostoModel
+    public class SubCentroCostoModel
     {
         [PrimaryKey]
         public int PKSQLite { get; set; }

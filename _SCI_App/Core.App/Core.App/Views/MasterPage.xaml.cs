@@ -10,6 +10,7 @@ namespace Core.App.Views
 		{
 			InitializeComponent ();
             App.Navigator = Navigator;
+            App.Master = this;
 		}
 	}
 }

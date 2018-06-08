@@ -1,7 +1,9 @@
 ﻿using Core.App.Models;
-using System;
+using Core.App.Views;
+using GalaSoft.MvvmLight.Command;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace Core.App.ViewModels
 {
@@ -10,10 +12,12 @@ namespace Core.App.ViewModels
         #region ViewModels
         public LoginViewModel Login { get; set; }
         public ConfiguracionViewModel Configuracion { get; set; }
-        public ParametrizacionViewModel Parametrizacion { get; set; }
+        public ParametrizacionViewModel Parametrizacion { get; set; }        
         public StockViewModel Stock { get; set; }
+        public EgresosViewModel Egresos { get; set; }
+        public EgresoViewModel Egreso { get; set; }
         public ObservableCollection<MenuItemViewModel> Menus { get; set; }
-        public List<StockModel> lst_stock { get; set; }
+        public List<StockModel> lst_stock { get; set; }        
         #endregion
 
         #region Constructor
@@ -74,6 +78,25 @@ namespace Core.App.ViewModels
             });
         }
 
+        #endregion
+
+        #region Comandos
+        public ICommand NuevoEgresoCommand
+        {
+            get { return new RelayCommand(NuevoEgreso); }
+        }
+
+        private void NuevoEgreso()
+        {
+            App.Master.IsPresented = false;
+            MainViewModel.GetInstance().Egreso = new EgresoViewModel();
+            App.Navigator.PushAsync(new EgresoPage());
+        }
+
+        public void cargar_combos()
+        {
+            
+        }
         #endregion
     }
 }

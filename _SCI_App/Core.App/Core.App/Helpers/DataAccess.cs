@@ -28,6 +28,7 @@
                 connection.CreateTable<IngresoOrdenCompraModel>();
                 connection.CreateTable<UnidadMedidaModel>();
                 connection.CreateTable<StockModel>();
+                connection.CreateTable<EgresoModel>();
             }
             catch (Exception ex)
             {
@@ -38,6 +39,35 @@
         public void Insert<T>(T model)
         {
             this.connection.Insert(model);
+        }
+
+        public void Guardar(EgresoModel model)
+        {
+            EgresoModel OldModel = this.connection.Table<EgresoModel>().Where(q => q.PKSQLite == model.PKSQLite).FirstOrDefault();
+            if(OldModel == null)
+            {
+                model.PKSQLite = GetID();
+                this.connection.Insert(model);
+            }else
+            {
+                OldModel.IdProducto = model.IdProducto;
+                OldModel.IdSubCentroCosto = model.IdSubCentroCosto;
+                OldModel.Cantidad = model.Cantidad;
+                OldModel.Fecha = model.Fecha;
+                OldModel.NomProducto = model.NomProducto;
+                OldModel.NomSubCentro = model.NomSubCentro;
+                OldModel.NomUnidadMedida = model.NomUnidadMedida;
+                this.connection.Update(OldModel);
+            }
+        }
+
+        private int GetID()
+        {
+            int ID = 1;
+            var lst=  this.connection.Table<EgresoModel>().ToList();
+            if (lst.Count > 0)
+                ID = lst.Max(q => q.PKSQLite) + 1;
+            return ID;
         }
 
         public void Update<T>(T model)
@@ -104,9 +134,14 @@
             return this.connection.Table<CentroCostoModel>().Where(q=>q.IdEmpresa == IdEmpresa).ToList();
         }
 
-        public List<ProductoModel> GetListProducto()
+        public List<SubCentroCostoModel> GetListSubCentroCosto(int IdEmpresa, string IdCentroCosto)
         {
-            return this.connection.Table<ProductoModel>().ToList();
+            return this.connection.Table<SubCentroCostoModel>().Where(q => q.IdEmpresa == IdEmpresa && q.IdCentroCosto == IdCentroCosto).ToList();
+        }
+
+        public List<ProductoModel> GetListProducto(int IdEmpresa)
+        {
+            return this.connection.Table<ProductoModel>().Where(q=>q.IdEmpresa == IdEmpresa).ToList();
         }
 
         public List<IngresoOrdenCompraModel> GetListIngresoOrdenCompra()
@@ -122,6 +157,11 @@
         public List<StockModel> GetListStock(int IdEmpresa, int IdSucursal, int IdBodega)
         {
             return this.connection.Table<StockModel>().Where(q=>q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.IdBodega == IdBodega).OrderBy(q=>q.NomProducto).ToList();
+        }
+
+        public List<EgresoModel> GetListEgresos(int IdEmpresa, int IdSucursal, int IdBodega, string IdCentroCosto)
+        {
+            return this.connection.Table<EgresoModel>().Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.IdBodega == IdBodega && q.IdCentroCosto == IdCentroCosto).OrderBy(q => q.Fecha).ToList();
         }
         #endregion
 

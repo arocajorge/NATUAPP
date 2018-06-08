@@ -4,11 +4,77 @@
              x:Class="Core.App.Views.EgresosPage"
              BindingContext="{Binding Main, Source={StaticResource Locator}}"
              Title="Egresos">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+    <ContentPage.ToolbarItems>
+        <ToolbarItem 
+            Text="+"
+            Command="{Binding NuevoEgresoCommand}"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>        
+    <StackLayout
+            BindingContext="{Binding Egresos}"
+            Padding="5">
+            <ListView 
+                BackgroundColor="Silver"
+                HasUnevenRows="True"
+                ItemsSource="{Binding lst_egresos}"
+                SeparatorVisibility="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame                                
+                                HasShadow="True"
+                                CornerRadius="20"
+                                Margin="5">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackLayout
+                                    Grid.Column="0"
+                                    VerticalOptions="Center">
+                                        <Label
+                                        FontAttributes="None"
+                                        FontSize="Small"
+                                        Text="{Binding NomProducto}"
+                                        TextColor="Black">
+                                        </Label>
+                                        <StackLayout
+                                            Orientation="Horizontal">
+                                            <Label
+                                                HorizontalOptions="Start"
+                                                Text="{Binding Fecha, StringFormat='{0:dd/MM/yyyy}'}"
+                                                FontAttributes="None"
+                                                TextColor="Black">
+                                            </Label>
+                                            <Label
+                                                HorizontalOptions="CenterAndExpand"
+                                                Text="{Binding IdUnidadMedida}"
+                                                FontAttributes="None"
+                                                TextColor="Black">
+                                            </Label>
+                                            <Label
+                                                HorizontalOptions="EndAndExpand"
+                                                FontAttributes="Bold"                                            
+                                                Text= "{Binding Cantidad, StringFormat='{0:N2}'}"
+                                                TextColor="Black">
+                                            </Label>                                            
+                                        </StackLayout>
+                                    </StackLayout>
+                                    <Image
+                                        Grid.Column="1"
+                                        HorizontalOptions="End"
+                                        Source="ic_chevron_right">
+                                    </Image>
+                                </Grid>
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SelectEgresoCommand}"></TapGestureRecognizer>
+                                </Frame.GestureRecognizers>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -5,20 +5,30 @@ using Core.App.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Core.App.ViewModels;
+using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace Core.App
 {
     public partial class App : Application
 	{
+        #region Variables
+        private DataAccess data;
+        #endregion
+
         #region Propiedades
         public static NavigationPage Navigator { get; internal set; }
+        public static MasterPage Master { get; internal set; }
+        public static List<ProductoModel> Productos { get; set; }
+        public static List<SubCentroCostoModel> SubCentros { get; set; }
         #endregion
 
         #region Constructor
         public App()
         {
             InitializeComponent();
+            data = new DataAccess();
             if (string.IsNullOrEmpty(Settings.IdUsuario))
             {
                 MainViewModel.GetInstance().Login = new LoginViewModel();
@@ -32,6 +42,8 @@ namespace Core.App
                 }
                 else
                 {
+                    Productos = data.GetListProducto(Settings.IdEmpresa);
+                    SubCentros = data.GetListSubCentroCosto(Settings.IdEmpresa, Settings.IdCentroCosto);
                     MainViewModel.GetInstance().Stock = new StockViewModel();
                     MainPage = new MasterPage();
                 }
@@ -55,6 +67,5 @@ namespace Core.App
             // Handle when your app resumes
         }
         #endregion
-
     }
 }
