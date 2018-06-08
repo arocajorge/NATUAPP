@@ -130,6 +130,7 @@ namespace Core.App.ViewModels
                     "Aceptar");
                 return;
             }
+            data.DeleteAll<EgresoModel>();
             data.DeleteAll<UsuarioModel>();
             int PKI = 1;
             list_usuario.ForEach(q => q.PKSQLite = PKI++);
