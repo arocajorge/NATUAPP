@@ -21,7 +21,6 @@
                 </Label>
                 <Image
                 HeightRequest="30"
-                WidthRequest="30"
                 Source="ic_cancel"
                 HorizontalOptions="EndAndExpand">
                     <Image.GestureRecognizers>

@@ -261,10 +261,10 @@
     <AndroidResource Include="Resources\drawable-xhdpi\ic_cancel.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_cancel.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_cancel.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable-xxhdpi\ic_cancel.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_cancel.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
