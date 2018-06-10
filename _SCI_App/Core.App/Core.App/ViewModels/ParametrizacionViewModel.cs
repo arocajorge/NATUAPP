@@ -228,9 +228,13 @@ namespace Core.App.ViewModels
             this.IsEnabled = true;
 
             Settings.IdEmpresa = SelectedEmpresa.IdEmpresa;
+            Settings.NomEmpresa = SelectedEmpresa.NomEmpresa;
             Settings.IdSucursal = SelectedSucursal.IdSucursal;
+            Settings.NomSucursal = SelectedSucursal.Nom_sucursal;
             Settings.IdBodega = SelectedBodega.IdBodega;
+            Settings.NomBodega = SelectedBodega.Nom_bodega;
             Settings.IdCentroCosto = SelectedCentroCosto.IdCentroCosto;
+            Settings.NomCentroCosto = SelectedCentroCosto.Nom_centro_costo;
 
             App.Productos = data.GetListProducto(Settings.IdEmpresa);
             App.SubCentros = data.GetListSubCentroCosto(Settings.IdEmpresa, Settings.IdCentroCosto);

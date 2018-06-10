@@ -4,6 +4,11 @@
              x:Class="Core.App.Views.StockPage"
              BindingContext="{Binding Main, Source={StaticResource Locator}}"
              Title="Stock">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Icon="ic_location_on"
+            Command="{Binding MostrarUbicacionCommand}"/>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout
             BindingContext="{Binding Stock}"

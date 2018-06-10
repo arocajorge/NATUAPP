@@ -80,6 +80,11 @@
             this.connection.Delete(model);
         }
 
+        public void DeleteEgreso(int PKSQLite)
+        {
+            this.connection.Table<EgresoModel>().Delete(q => q.PKSQLite == PKSQLite);
+        }
+
         public void DeleteAll<T>()
         {
             this.connection.DeleteAll<T>();

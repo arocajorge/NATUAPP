@@ -3,10 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Core.App.Views.ParametrizacionPage"
              BindingContext="{Binding Main, Source={StaticResource Locator}}"
-             Title="Parametrización">
+             Title="Ubicación">
     <ContentPage.Content>
         <ScrollView
-            Padding="5,20,5,5"
+            Padding="20"
             BindingContext="{Binding Parametrizacion}">
             <StackLayout>
                 <Label
@@ -57,9 +57,14 @@
                     SelectedIndex="{Binding CentroCostoSelectedIndex, Mode=TwoWay}"
                     Title="Seleccione el centro de costo">
                 </Picker>
+                <ActivityIndicator
+                    IsRunning="False"
+                    VerticalOptions="CenterAndExpand">
+                </ActivityIndicator>
                 <Button
                     Text="Aceptar"
-                    BackgroundColor="CadetBlue"
+                    BackgroundColor="CornflowerBlue"
+                    TextColor="White"
                     IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
                     Command="{Binding ParametrizarCommand}">
                 </Button>

@@ -1,6 +1,8 @@
 ﻿using Core.App.Models;
 using Core.App.Views;
 using GalaSoft.MvvmLight.Command;
+using Rg.Plugins.Popup.Services;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -17,7 +19,8 @@ namespace Core.App.ViewModels
         public EgresosViewModel Egresos { get; set; }
         public EgresoViewModel Egreso { get; set; }
         public ObservableCollection<MenuItemViewModel> Menus { get; set; }
-        public List<StockModel> lst_stock { get; set; }        
+        public List<StockModel> lst_stock { get; set; }
+        public PopUpUbicacionViewModel PopUpUbicacion { get; set; }
         #endregion
 
         #region Constructor
@@ -48,9 +51,9 @@ namespace Core.App.ViewModels
             this.Menus = new ObservableCollection<MenuItemViewModel>();
             this.Menus.Add(new MenuItemViewModel
             {
-                Icon = "ic_settings",
+                Icon = "ic_location_on",
                 PageName = "ParametrizacionPage",
-                Title = "Parametrización"
+                Title = "Ubicación"
             });
             this.Menus.Add(new MenuItemViewModel
             {
@@ -84,6 +87,17 @@ namespace Core.App.ViewModels
         public ICommand NuevoEgresoCommand
         {
             get { return new RelayCommand(NuevoEgreso); }
+        }
+
+        public ICommand MostrarUbicacionCommand
+        {
+            get { return new RelayCommand(MostrarUbicacion); }
+        }
+
+        private void MostrarUbicacion()
+        {
+            PopUpUbicacion = new PopUpUbicacionViewModel();
+            PopupNavigation.PushAsync(new PopUpUbicacionPage());
         }
 
         private void NuevoEgreso()

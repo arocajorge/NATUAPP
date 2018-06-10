@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Core.App.Views.PopUpUbicacionPage"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             BindingContext="{Binding Main, Source={StaticResource Locator}}"
+             Title="Ubicación">
+    <ScrollView
+            BindingContext="{Binding PopUpUbicacion}">
+            <StackLayout
+            Padding="20"
+            BackgroundColor="White"
+            HorizontalOptions="Center"
+            VerticalOptions="Center">
+            <StackLayout
+                Orientation="Horizontal">
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="Large"
+                    Text="Ubicación">
+                </Label>
+                <Image
+                HeightRequest="30"
+                WidthRequest="30"
+                Source="ic_cancel"
+                HorizontalOptions="EndAndExpand">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding CerrarCommand}"/>
+                    </Image.GestureRecognizers>
+                </Image>
+            </StackLayout>            
+                <Label
+                    FontSize="Medium"
+                    Text="Empresa"
+                    FontAttributes="Bold">
+                </Label>
+                <Label
+                    FontSize="Medium"
+                    Text="{Binding NomEmpresa, Mode=TwoWay}">
+                </Label>
+                <Label
+                    FontSize="Medium"
+                    Text="Sucursal"
+                    FontAttributes="Bold">
+                </Label>
+                <Label
+                    FontSize="Medium"
+                    Text="{Binding NomSucursal, Mode=TwoWay}">
+                </Label>
+                <Label
+                    FontSize="Medium"
+                    Text="Bodega"
+                    FontAttributes="Bold">
+                </Label>
+                <Label
+                    FontSize="Medium"
+                    Text="{Binding NomBodega, Mode=TwoWay}">
+                </Label>
+                <Label
+                    FontSize="Medium"
+                    Text="Centro de costo"
+                    FontAttributes="Bold">
+                </Label>
+                <Label
+                    FontSize="Medium"
+                    Text="{Binding NomCentroCosto, Mode=TwoWay}">
+                </Label>
+            <ActivityIndicator
+                    IsRunning="False"
+                    VerticalOptions="CenterAndExpand">
+            </ActivityIndicator>
+            <Button
+                    BackgroundColor="CornflowerBlue"
+                    TextColor="White"
+                    Command="{Binding CambiarUbicacionCommand}"
+                    IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                    VerticalOptions="EndAndExpand"
+                    Text="Cambiar ubicación">
+                </Button>
+        </StackLayout>                
+    </ScrollView>
+</pages:PopupPage>

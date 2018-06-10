@@ -4,26 +4,31 @@
              x:Class="Core.App.Views.EgresoPage"
              BindingContext="{Binding Main, Source={StaticResource Locator}}"
              Title="Egreso">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Icon="ic_location_on"
+            Command="{Binding MostrarUbicacionCommand}"/>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout>
             <ScrollView
                 BindingContext="{Binding Egreso}">
                 <StackLayout
-                    Padding="5">
-                    <Label      
+                    Padding="20">
+                        <Label      
                             FontAttributes="Bold"
                             Text="Fecha">
-                    </Label>
-                    <DatePicker
-                            Date="{Binding Egreso.Fecha, Mode=TwoWay}">                        
+                        </Label>
+                        <DatePicker                            
+                            Date="{Binding Egreso.Fecha, Mode=TwoWay}">
+                        <DatePicker.Format>dd/MM/yyyy</DatePicker.Format>
                         </DatePicker>
                         <Label      
                             FontAttributes="Bold"
                             Text="SubCentro">
                         </Label>
                         <Picker
-                            ItemsSource="{Binding ListaSubCentro}"
-                            FontSize="Small"
+                            ItemsSource="{Binding ListaSubCentro}"                            
                             ItemDisplayBinding="{Binding Nom_subcentro}"
                             SelectedIndex="{Binding SubCentroSelectedIndex, Mode=TwoWay}"
                             Title="Seleccione el SubCentro">
@@ -33,7 +38,6 @@
                             Text="Producto">
                         </Label>
                         <Picker
-                            FontSize="Small"
                             ItemsSource="{Binding ListaProducto}"
                             ItemDisplayBinding="{Binding NomProducto}"
                             SelectedIndex="{Binding ProductoSelectedIndex, Mode=TwoWay}"
@@ -48,14 +52,25 @@
                             Text="{Binding Egreso.Cantidad, Mode=TwoWay}">
                         </Entry>
                     <ActivityIndicator
-                        IsRunning= "False"
-                        VerticalOptions="CenterAndExpand">
-                        </ActivityIndicator>
+                    IsRunning="False"
+                    VerticalOptions="CenterAndExpand">
+                    </ActivityIndicator>
                     <Button
-                        BackgroundColor="CadetBlue"
+                        BackgroundColor="CornflowerBlue"
+                        TextColor="White"
                         Command="{Binding GuardarCommand}"
                         IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                        VerticalOptions="End"
                         Text="Guardar">
+                    </Button>
+                    <Button
+                        BackgroundColor="Red"
+                        TextColor="White"
+                        IsVisible="{Binding IsVisible, Mode=TwoWay}"
+                        Command="{Binding EliminarCommand}"
+                        IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                        VerticalOptions="End"
+                        Text="Eliminar">
                     </Button>
                 </StackLayout>
             </ScrollView>

@@ -4,6 +4,11 @@
              x:Class="Core.App.Views.AprobacionIngresosPage"
              BindingContext="{Binding Main, Source={StaticResource Locator}}"
              Title="Aprobación ingresos">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Icon="ic_location_on"
+            Command="{Binding MostrarUbicacionCommand}"/>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout>
             <Label Text="Aprobación de ingresos"

@@ -5,9 +5,12 @@
              BindingContext="{Binding Main, Source={StaticResource Locator}}"
              Title="Egresos">
     <ContentPage.ToolbarItems>
-        <ToolbarItem 
-            Text="+"
-            Command="{Binding NuevoEgresoCommand}"/>
+        <ToolbarItem
+        Icon="ic_location_on"
+        Command="{Binding MostrarUbicacionCommand}"/>
+        <ToolbarItem
+            Icon="ic_add_circle"
+            Command="{Binding NuevoEgresoCommand}"/>        
     </ContentPage.ToolbarItems>
     <ContentPage.Content>        
     <StackLayout

@@ -1,5 +1,6 @@
 ﻿namespace Core.App.ViewModels
 {
+    using Core.App.Helpers;
     using Core.App.Views;
     using GalaSoft.MvvmLight.Command;
     using System.Windows.Input;
@@ -26,6 +27,17 @@
             switch (this.PageName)
             {                
                 case "LoginPage":
+                    #region Limpio los settings
+                    Settings.IdEmpresa = 0;
+                    Settings.IdSucursal = 0;
+                    Settings.IdBodega = 0;
+                    Settings.IdCentroCosto = "0";
+                    Settings.NomEmpresa = string.Empty;
+                    Settings.NomSucursal = string.Empty;
+                    Settings.NomBodega = string.Empty;
+                    Settings.NomCentroCosto = string.Empty;
+                    Settings.IdUsuario = string.Empty;
+                    #endregion
                     MainViewModel.GetInstance().Login = new LoginViewModel();
                     Application.Current.MainPage = new NavigationPage(new LoginPage());
                     break;
