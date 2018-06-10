@@ -21,6 +21,7 @@ namespace Core.App.ViewModels
         public ObservableCollection<MenuItemViewModel> Menus { get; set; }
         public List<StockModel> lst_stock { get; set; }
         public PopUpUbicacionViewModel PopUpUbicacion { get; set; }
+        public AprobacionIngresosViewModel AprobacionIngresos { get; set; }
         #endregion
 
         #region Constructor

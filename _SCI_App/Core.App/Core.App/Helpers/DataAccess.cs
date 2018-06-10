@@ -15,7 +15,6 @@
         {
             try
             {
-                //var config = DependencyService.Get<IConfig>();
                 this.connection = new SQLiteConnection(
                     Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "DBSCI.db3"));
                 connection.CreateTable<UsuarioModel>();

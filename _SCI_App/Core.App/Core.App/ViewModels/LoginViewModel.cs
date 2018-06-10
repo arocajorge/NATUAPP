@@ -39,8 +39,8 @@
         public LoginViewModel()
         {
             IsEnabled = true;
-            usuario = string.IsNullOrEmpty(Settings.IdUsuario) ? "AdminAPP" : Settings.IdUsuario;
-            contrasenia = string.IsNullOrEmpty(Settings.IdUsuario) ? "%Natu201805*" : string.Empty;
+            usuario = string.IsNullOrEmpty(Settings.IdUsuario) ? "" : Settings.IdUsuario;
+            contrasenia = string.IsNullOrEmpty(Settings.IdUsuario) ? "" : string.Empty;
         }
         #endregion
 

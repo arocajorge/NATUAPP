@@ -291,7 +291,7 @@ namespace Core.App.ViewModels
             var list_oc = (List<IngresoOrdenCompraModel>)response_oc.Result;
             data.DeleteAll<IngresoOrdenCompraModel>();
             PKI = 1;
-            list_oc.ForEach(q => q.PKSQLite = PKI++);
+            list_oc.ForEach(q => { q.PKSQLite = PKI++; q.NomProducto = q.NomProducto.Trim(); q.NomProveedor = q.NomProveedor.Trim(); q.NomUnidadMedida = q.NomUnidadMedida.Trim(); });
             data.InsertAll<IngresoOrdenCompraModel>(list_oc);
             #endregion
 
