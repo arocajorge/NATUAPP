@@ -53,6 +53,9 @@ namespace Core.App.Models
 
         [JsonProperty("oc_fecha")]
         public DateTime OcFecha { get; set; }
+
+        [JsonProperty("oc_observacion")]
+        public string OcObservacion { get; set; }
         public override int GetHashCode()
         {
             return PKSQLite;

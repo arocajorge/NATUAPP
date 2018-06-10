@@ -290,6 +290,7 @@ advertencia 6002: La tabla o vista 'DBERP_NAT_PROD.mobileSCI.vw_oc_x_aprobar' no
             <PropertyRef Name="Descripcion" />
             <PropertyRef Name="pe_nombreCompleto" />
             <PropertyRef Name="oc_fecha" />
+            <PropertyRef Name="oc_observacion" />
           </Key>
           <Property Name="IdRow" Type="bigint" Nullable="false" />
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
@@ -307,6 +308,7 @@ advertencia 6002: La tabla o vista 'DBERP_NAT_PROD.mobileSCI.vw_oc_x_aprobar' no
           <Property Name="Descripcion" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="oc_fecha" Type="datetime" Nullable="false" />
+          <Property Name="oc_observacion" Type="varchar" MaxLength="1000" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP_NAT_PROD.mobileSCI.vw_stock' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -555,7 +557,8 @@ advertencia 6002: La tabla o vista 'DBERP_NAT_PROD.mobileSCI.vw_stock' no tiene 
     [vw_oc_x_aprobar].[pr_codigo] AS [pr_codigo], 
     [vw_oc_x_aprobar].[Descripcion] AS [Descripcion], 
     [vw_oc_x_aprobar].[pe_nombreCompleto] AS [pe_nombreCompleto], 
-    [vw_oc_x_aprobar].[oc_fecha] AS [oc_fecha]
+    [vw_oc_x_aprobar].[oc_fecha] AS [oc_fecha], 
+    [vw_oc_x_aprobar].[oc_observacion] AS [oc_observacion]
     FROM [mobileSCI].[vw_oc_x_aprobar] AS [vw_oc_x_aprobar]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vw_stock" EntityType="Self.vw_stock" store:Type="Views" store:Schema="mobileSCI">
@@ -1208,6 +1211,7 @@ advertencia 6002: La tabla o vista 'DBERP_NAT_PROD.mobileSCI.vw_stock' no tiene 
             <PropertyRef Name="Descripcion" />
             <PropertyRef Name="pe_nombreCompleto" />
             <PropertyRef Name="oc_fecha" />
+            <PropertyRef Name="oc_observacion" />
           </Key>
           <Property Name="IdRow" Type="Int64" Nullable="false" />
           <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
@@ -1225,6 +1229,7 @@ advertencia 6002: La tabla o vista 'DBERP_NAT_PROD.mobileSCI.vw_stock' no tiene 
           <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="pe_nombreCompleto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="oc_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="oc_observacion" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="vw_stock">
           <Key>
@@ -1523,6 +1528,7 @@ advertencia 6002: La tabla o vista 'DBERP_NAT_PROD.mobileSCI.vw_stock' no tiene 
           <EntitySetMapping Name="vw_oc_x_aprobar">
             <EntityTypeMapping TypeName="Model_general.vw_oc_x_aprobar">
               <MappingFragment StoreEntitySet="vw_oc_x_aprobar">
+                <ScalarProperty Name="oc_observacion" ColumnName="oc_observacion" />
                 <ScalarProperty Name="oc_fecha" ColumnName="oc_fecha" />
                 <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />

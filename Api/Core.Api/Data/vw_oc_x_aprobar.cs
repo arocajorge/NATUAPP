@@ -30,5 +30,6 @@ namespace Core.Api.Data
         public string Descripcion { get; set; }
         public string pe_nombreCompleto { get; set; }
         public System.DateTime oc_fecha { get; set; }
+        public string oc_observacion { get; set; }
     }
 }

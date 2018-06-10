@@ -24,7 +24,8 @@ namespace Core.Api.Controllers
                           oc.IdEmpresa, oc.IdSucursal, oc.IdOrdenCompra, oc.Secuencia,
                           oc.IdProducto, oc.IdUnidadMedida, oc.IdProveedor, oc.cant_oc,
                           oc.cant_in, oc.saldo, oc.pr_descripcion, oc.pr_codigo,
-                          oc.Descripcion, oc.pe_nombreCompleto, oc.oc_fecha
+                          oc.Descripcion, oc.pe_nombreCompleto, oc.oc_fecha,
+                          oc.oc_observacion
                       } into grouping
                       select new tbl_ingreso_oc_model
                       {
@@ -42,7 +43,8 @@ namespace Core.Api.Controllers
                           cod_producto = grouping.Key.pr_codigo,
                           nom_proveedor = grouping.Key.pe_nombreCompleto,
                           nom_unidad_medida = grouping.Key.Descripcion,
-                          oc_fecha = grouping.Key.oc_fecha
+                          oc_fecha = grouping.Key.oc_fecha,
+                          oc_observacion = grouping.Key.oc_observacion
                       };
             return lst;
         }
