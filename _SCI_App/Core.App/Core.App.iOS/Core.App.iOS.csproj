@@ -181,9 +181,6 @@
     <Folder Include="Implementations\" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\ic_keyboard_arrow_right.png" />
-  </ItemGroup>
-  <ItemGroup>
     <BundleResource Include="Resources\ic_location_on.png" />
   </ItemGroup>
   <ItemGroup>
@@ -209,5 +206,8 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\ic_cancel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_keyboard_arrow_right.png" />
   </ItemGroup>
 </Project>

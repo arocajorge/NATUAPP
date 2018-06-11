@@ -46,6 +46,7 @@
                     Application.Current.MainPage = new NavigationPage(new ParametrizacionPage());
                     break;
                 case "AprobacionIngresosPage":
+                    MainViewModel.GetInstance().AprobacionIngresos = new AprobacionIngresosViewModel();
                     App.Navigator.PushAsync(new AprobacionIngresosPage());
                     break;
                 case "EgresosPage":

@@ -22,6 +22,7 @@ namespace Core.App.ViewModels
         public List<StockModel> lst_stock { get; set; }
         public PopUpUbicacionViewModel PopUpUbicacion { get; set; }
         public AprobacionIngresosViewModel AprobacionIngresos { get; set; }
+        public IngresoViewModel Ingreso { get; set; }
         #endregion
 
         #region Constructor

@@ -16,6 +16,7 @@
                 <StackLayout
                     Padding="20">
                         <Label      
+                            TextColor="Black"
                             FontAttributes="Bold"
                             Text="Fecha">
                         </Label>
@@ -24,6 +25,7 @@
                         <DatePicker.Format>dd/MM/yyyy</DatePicker.Format>
                         </DatePicker>
                         <Label      
+                            TextColor="Black"
                             FontAttributes="Bold"
                             Text="SubCentro">
                         </Label>
@@ -34,6 +36,7 @@
                             Title="Seleccione el SubCentro">
                         </Picker>
                         <Label      
+                            TextColor="Black"
                             FontAttributes="Bold"
                             Text="Producto">
                         </Label>
@@ -44,6 +47,7 @@
                             Title="Seleccione el producto">
                         </Picker>
                         <Label 
+                            TextColor="Black"
                             FontAttributes="Bold"
                             Text="Cantidad">
                         </Label>

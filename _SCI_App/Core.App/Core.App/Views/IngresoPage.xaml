@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Core.App.Views.IngresoPage"
+             BindingContext="{Binding Main, Source={StaticResource Locator}}"
+             Title="Ingreso">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Icon="ic_location_on"
+            Command="{Binding MostrarUbicacionCommand}"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout>
+            <ScrollView
+                BindingContext="{Binding Ingreso}">
+                <StackLayout
+                    Padding="20">
+                    <Label      
+                        FontAttributes="Bold"
+                        Text="Fecha aprobación">
+                    </Label>
+                    <DatePicker                            
+                        Date="{Binding Ingreso.FechaApro, Mode=TwoWay}">
+                        <DatePicker.Format>dd/MM/yyyy</DatePicker.Format>
+                    </DatePicker>
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="Medium"
+                        Text="{Binding Ingreso.IdOrdenCompra, Mode=TwoWay, StringFormat='OC#:{0}'}"
+                        TextColor="Black">
+                    </Label>
+                    <Label     
+                        FontAttributes="Bold"
+                        Text="Proveedor">
+                    </Label>
+                    <Label      
+                        FontSize="Medium"
+                        TextColor="Black"
+                        Text="{Binding Ingreso.NomProveedor, Mode=TwoWay}">
+                    </Label>
+                    <Label
+                        FontAttributes="Bold"
+                        Text="Producto">
+                    </Label>
+                    <Label      
+                        FontSize="Medium"
+                        TextColor="Black"
+                        Text="{Binding Ingreso.NomProducto, Mode=TwoWay}">
+                    </Label>
+                    <Label
+                        FontAttributes="Bold"
+                        Text="Observación">
+                    </Label>
+                    <Label      
+                        FontSize="Medium"
+                        TextColor="Black"
+                        Text="{Binding Ingreso.OcObservacion, Mode=TwoWay}">
+                    </Label>
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="Small"
+                        Text="Saldo">
+                    </Label>
+                    <StackLayout Orientation="Horizontal">                        
+                        <Label 
+                            FontSize="Medium"
+                            TextColor="Black"
+                            Text="{Binding Ingreso.Saldo, StringFormat='{0:N2}'}">
+                        </Label>
+                        <Label     
+                            FontSize="Medium"
+                            TextColor="Black"
+                            Text="{Binding Ingreso.NomUnidadMedida, Mode=TwoWay}">
+                        </Label>
+                    </StackLayout>
+                    <Label 
+                        FontAttributes="Bold"
+                        Text="Cantidad recibida">
+                    </Label>
+                    <Entry
+                        FontSize="Medium"
+                            Placeholder="Ingrese la cantidad"
+                            Text="{Binding Ingreso.CantidadApro, Mode=TwoWay}">
+                    </Entry>
+                    <ActivityIndicator
+                    IsRunning="False"
+                    VerticalOptions="CenterAndExpand">
+                    </ActivityIndicator>
+                    <Button
+                        BackgroundColor="CornflowerBlue"
+                        TextColor="White"
+                        Command="{Binding GuardarCommand}"
+                        IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                        VerticalOptions="End"
+                        Text="Guardar">
+                    </Button>
+                    <Button
+                        BackgroundColor="Red"
+                        TextColor="White"
+                        IsVisible="{Binding IsVisible, Mode=TwoWay}"
+                        Command="{Binding EliminarCommand}"
+                        IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                        VerticalOptions="End"
+                        Text="Eliminar">
+                    </Button>
+                </StackLayout>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

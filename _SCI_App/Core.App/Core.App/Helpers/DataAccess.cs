@@ -148,9 +148,12 @@
             return this.connection.Table<ProductoModel>().Where(q=>q.IdEmpresa == IdEmpresa).ToList();
         }
 
-        public List<IngresoOrdenCompraModel> GetListIngresoOrdenCompra()
+        public List<IngresoOrdenCompraModel> GetListIngresoOrdenCompra(int IdEmpresa, bool MostrarAprobados = false)
         {
-            return this.connection.Table<IngresoOrdenCompraModel>().ToList();
+            if(!MostrarAprobados)
+                return this.connection.Table<IngresoOrdenCompraModel>().Where(q=>q.IdEmpresa == IdEmpresa && q.Saldo > 0).ToList();
+            else
+                return this.connection.Table<IngresoOrdenCompraModel>().Where(q => q.IdEmpresa == IdEmpresa && q.CantidadApro > 0).ToList();
         }
 
         public List<UnidadMedidaModel> GetListUnidadMedida()

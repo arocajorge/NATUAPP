@@ -67,12 +67,12 @@
                                     <Image
                                         Grid.Column="1"
                                         HorizontalOptions="End"
-                                        Source="ic_chevron_right">
+                                        Source="ic_keyboard_arrow_right">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding SelectEgresoCommand}"></TapGestureRecognizer>        
+                                        </Image.GestureRecognizers>
                                     </Image>
                                 </Grid>
-                                <Frame.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding SelectEgresoCommand}"></TapGestureRecognizer>
-                                </Frame.GestureRecognizers>
                             </Frame>
                         </ViewCell>
                     </DataTemplate>
