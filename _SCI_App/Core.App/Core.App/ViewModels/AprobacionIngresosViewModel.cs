@@ -76,7 +76,10 @@
                 OcFecha = l.OcFecha,
                 OcObservacion = l.OcObservacion,
                 Saldo = l.Saldo,
-                Secuencia = l.Secuencia
+                Secuencia = l.Secuencia,
+                CantidadApro_convertida = l.CantidadApro_convertida,
+                FechaApro = l.FechaApro,
+                IdUnidadMedidaConsumo = l.IdUnidadMedidaConsumo
             });
         }
         public void CargarLista()

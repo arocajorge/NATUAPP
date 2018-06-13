@@ -64,17 +64,22 @@
         {
             IngresoOrdenCompraModel OldModel = this.connection.Table<IngresoOrdenCompraModel>().Where(q => q.PKSQLite == model.PKSQLite).FirstOrDefault();
             if (OldModel == null)
-            {
                 return;
-            }
             else
             {
+                //Si existe conversion de Uni. OC a Uni. Consumo
                 UnidadMedidaModel model_unidad = this.connection.Table<UnidadMedidaModel>().Where(q => q.IdUnidadMedida == model.IdUnidadMedida && q.IdUnidadMedidaEquiva == model.IdUnidadMedidaConsumo).FirstOrDefault();
-                if (model_unidad == null)
+                if (model_unidad != null)
+                    OldModel.CantidadApro_convertida = model.CantidadApro * model_unidad.ValorEquiv;
+                else
                 {
-
+                    //Busco si es valida la conversión al reves de Uni. Consumo a Uni. OC
+                    model_unidad = this.connection.Table<UnidadMedidaModel>().Where(q => q.IdUnidadMedida == model.IdUnidadMedidaConsumo && q.IdUnidadMedidaEquiva == model.IdUnidadMedida).FirstOrDefault();
+                    if (model_unidad != null)
+                        OldModel.CantidadApro_convertida = model.CantidadApro * model_unidad.ValorEquiv;
+                    else
+                        OldModel.CantidadApro_convertida = model.CantidadApro;
                 }
-
                 OldModel.CantidadApro = model.CantidadApro;
                 OldModel.FechaApro = model.FechaApro;
                 this.connection.Update(OldModel);

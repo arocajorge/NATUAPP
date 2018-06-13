@@ -33,7 +33,7 @@ namespace Core.App.ViewModels
         {
             data = new DataAccess();
             Ingreso = ingresoItemViewModel;
-            if (Ingreso.FechaApro == null)
+            if (Ingreso.FechaApro == DateTime.MinValue)
             {
                 Ingreso.FechaApro = DateTime.Now.Date;
                 Ingreso.CantidadApro = 0;

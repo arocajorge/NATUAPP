@@ -113,7 +113,7 @@ namespace Core.App.ViewModels
             Settings.RutaCarpeta = this.RutaCarpeta;
 
             #region Unidad de medida
-            var response_unidad = await apiService.GetList<UsuarioModel>(UrlServidor, RutaCarpeta, "UnidadMedida", "");
+            var response_unidad = await apiService.GetList<UnidadMedidaModel>(UrlServidor, RutaCarpeta, "UnidadMedida", "");
             if (!response_unidad.IsSuccess)
             {
                 this.IsEnabled = true;
@@ -158,7 +158,7 @@ namespace Core.App.ViewModels
             }
             data.DeleteAll<EgresoModel>();
             data.DeleteAll<UsuarioModel>();
-            int PKI = 1;
+            PKI = 1;
             list_usuario.ForEach(q => q.PKSQLite = PKI++);
             data.InsertAll<UsuarioModel>(list_usuario);
             #endregion
