@@ -111,6 +111,7 @@
     <Compile Include="Controllers\CentroCostoController.cs" />
     <Compile Include="Controllers\EmpresaController.cs" />
     <Compile Include="Controllers\IngresoOrdenCompraController.cs" />
+    <Compile Include="Controllers\MovimientoController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\StockController.cs" />
     <Compile Include="Controllers\SubCentroCostoController.cs" />
@@ -150,7 +151,16 @@
     <Compile Include="Data\tbl_bodega.cs">
       <DependentUpon>Model_general.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\tbl_movimientos.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\tbl_movimientos_det.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\tbl_producto.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\tbl_sincronizacion_turno.cs">
       <DependentUpon>Model_general.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\tbl_subcentro.cs">
@@ -183,11 +193,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\in_UnidadMedida_Equiv_conversion_Model.cs" />
+    <Compile Include="Models\in_UnidadMedida_Equiv_conversion_model.cs" />
     <Compile Include="Models\tbl_bodega_model.cs" />
     <Compile Include="Models\tbl_centro_costo_model.cs" />
     <Compile Include="Models\tbl_empresa_model.cs" />
     <Compile Include="Models\tbl_ingreso_oc_model.cs" />
+    <Compile Include="Models\tbl_movimientos_det_model.cs" />
+    <Compile Include="Models\tbl_movimientos_model.cs" />
     <Compile Include="Models\tbl_producto_model.cs" />
     <Compile Include="Models\tbl_subcentro_costo_model.cs" />
     <Compile Include="Models\tbl_sucursal_model.cs" />

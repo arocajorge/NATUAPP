@@ -41,5 +41,8 @@ namespace Core.Api.Data
         public virtual DbSet<vw_stock> vw_stock { get; set; }
         public virtual DbSet<in_UnidadMedida_Equiv_conversion> in_UnidadMedida_Equiv_conversion { get; set; }
         public virtual DbSet<vw_oc_x_aprobar> vw_oc_x_aprobar { get; set; }
+        public virtual DbSet<tbl_movimientos> tbl_movimientos { get; set; }
+        public virtual DbSet<tbl_movimientos_det> tbl_movimientos_det { get; set; }
+        public virtual DbSet<tbl_sincronizacion_turno> tbl_sincronizacion_turno { get; set; }
     }
 }
