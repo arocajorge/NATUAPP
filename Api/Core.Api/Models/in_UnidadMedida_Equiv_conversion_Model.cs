@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Core.Api.Models
 {
-    public class tbl_unidad_medida_model
+    public class in_UnidadMedida_Equiv_conversion_Model
     {
         public string IdUnidadMedida { get; set; }
         public string IdUnidadMedida_equiva { get; set; }

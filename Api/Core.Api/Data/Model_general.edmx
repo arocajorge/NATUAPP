@@ -124,6 +124,16 @@
           <Property Name="Fecha_UltMod" Type="datetime" />
           <Property Name="IdUsuarioUltMod" Type="varchar" MaxLength="20" />
         </EntityType>
+        <EntityType Name="in_UnidadMedida_Equiv_conversion">
+          <Key>
+            <PropertyRef Name="IdUnidadMedida" />
+            <PropertyRef Name="IdUnidadMedida_equiva" />
+          </Key>
+          <Property Name="IdUnidadMedida" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="IdUnidadMedida_equiva" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="valor_equiv" Type="float" Nullable="false" />
+          <Property Name="interpretacion" Type="varchar" MaxLength="500" />
+        </EntityType>
         <EntityType Name="tb_bodega">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -291,6 +301,7 @@ advertencia 6002: La tabla o vista 'DBERP_NAT_PROD.mobileSCI.vw_oc_x_aprobar' no
             <PropertyRef Name="pe_nombreCompleto" />
             <PropertyRef Name="oc_fecha" />
             <PropertyRef Name="oc_observacion" />
+            <PropertyRef Name="IdUnidadMedida_Consumo" />
           </Key>
           <Property Name="IdRow" Type="bigint" Nullable="false" />
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
@@ -309,6 +320,7 @@ advertencia 6002: La tabla o vista 'DBERP_NAT_PROD.mobileSCI.vw_oc_x_aprobar' no
           <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="oc_fecha" Type="datetime" Nullable="false" />
           <Property Name="oc_observacion" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="IdUnidadMedida_Consumo" Type="varchar" MaxLength="25" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP_NAT_PROD.mobileSCI.vw_stock' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -395,6 +407,30 @@ advertencia 6002: La tabla o vista 'DBERP_NAT_PROD.mobileSCI.vw_stock' no tiene 
             </Principal>
             <Dependent Role="in_Producto">
               <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_in_UnidadMedida_Equiv_conversion_in_UnidadMedida">
+          <End Role="in_UnidadMedida" Type="Self.in_UnidadMedida" Multiplicity="1" />
+          <End Role="in_UnidadMedida_Equiv_conversion" Type="Self.in_UnidadMedida_Equiv_conversion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="in_UnidadMedida">
+              <PropertyRef Name="IdUnidadMedida" />
+            </Principal>
+            <Dependent Role="in_UnidadMedida_Equiv_conversion">
+              <PropertyRef Name="IdUnidadMedida" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_in_UnidadMedida_Equiv_conversion_in_UnidadMedida1">
+          <End Role="in_UnidadMedida" Type="Self.in_UnidadMedida" Multiplicity="1" />
+          <End Role="in_UnidadMedida_Equiv_conversion" Type="Self.in_UnidadMedida_Equiv_conversion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="in_UnidadMedida">
+              <PropertyRef Name="IdUnidadMedida" />
+            </Principal>
+            <Dependent Role="in_UnidadMedida_Equiv_conversion">
+              <PropertyRef Name="IdUnidadMedida_equiva" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -531,6 +567,7 @@ advertencia 6002: La tabla o vista 'DBERP_NAT_PROD.mobileSCI.vw_stock' no tiene 
           <EntitySet Name="ct_centro_costo_sub_centro_costo" EntityType="Self.ct_centro_costo_sub_centro_costo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="in_Producto" EntityType="Self.in_Producto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="in_UnidadMedida" EntityType="Self.in_UnidadMedida" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="in_UnidadMedida_Equiv_conversion" EntityType="Self.in_UnidadMedida_Equiv_conversion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_bodega" EntityType="Self.tb_bodega" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_empresa" EntityType="Self.tb_empresa" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_sucursal" EntityType="Self.tb_sucursal" Schema="dbo" store:Type="Tables" />
@@ -558,7 +595,8 @@ advertencia 6002: La tabla o vista 'DBERP_NAT_PROD.mobileSCI.vw_stock' no tiene 
     [vw_oc_x_aprobar].[Descripcion] AS [Descripcion], 
     [vw_oc_x_aprobar].[pe_nombreCompleto] AS [pe_nombreCompleto], 
     [vw_oc_x_aprobar].[oc_fecha] AS [oc_fecha], 
-    [vw_oc_x_aprobar].[oc_observacion] AS [oc_observacion]
+    [vw_oc_x_aprobar].[oc_observacion] AS [oc_observacion], 
+    [vw_oc_x_aprobar].[IdUnidadMedida_Consumo] AS [IdUnidadMedida_Consumo]
     FROM [mobileSCI].[vw_oc_x_aprobar] AS [vw_oc_x_aprobar]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vw_stock" EntityType="Self.vw_stock" store:Type="Views" store:Schema="mobileSCI">
@@ -593,6 +631,14 @@ advertencia 6002: La tabla o vista 'DBERP_NAT_PROD.mobileSCI.vw_stock' no tiene 
           <AssociationSet Name="FK_in_Producto_tb_empresa" Association="Self.FK_in_Producto_tb_empresa">
             <End Role="tb_empresa" EntitySet="tb_empresa" />
             <End Role="in_Producto" EntitySet="in_Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_in_UnidadMedida_Equiv_conversion_in_UnidadMedida" Association="Self.FK_in_UnidadMedida_Equiv_conversion_in_UnidadMedida">
+            <End Role="in_UnidadMedida" EntitySet="in_UnidadMedida" />
+            <End Role="in_UnidadMedida_Equiv_conversion" EntitySet="in_UnidadMedida_Equiv_conversion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_in_UnidadMedida_Equiv_conversion_in_UnidadMedida1" Association="Self.FK_in_UnidadMedida_Equiv_conversion_in_UnidadMedida1">
+            <End Role="in_UnidadMedida" EntitySet="in_UnidadMedida" />
+            <End Role="in_UnidadMedida_Equiv_conversion" EntitySet="in_UnidadMedida_Equiv_conversion" />
           </AssociationSet>
           <AssociationSet Name="FK_tb_bodega_tb_sucursal" Association="Self.FK_tb_bodega_tb_sucursal">
             <End Role="tb_sucursal" EntitySet="tb_sucursal" />
@@ -765,6 +811,8 @@ advertencia 6002: La tabla o vista 'DBERP_NAT_PROD.mobileSCI.vw_stock' no tiene 
           <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="in_Producto" Relationship="Self.FK_in_Producto_in_UnidadMedida" FromRole="in_UnidadMedida" ToRole="in_Producto" />
           <NavigationProperty Name="in_Producto1" Relationship="Self.FK_in_Producto_in_UnidadMedida1" FromRole="in_UnidadMedida" ToRole="in_Producto" />
+          <NavigationProperty Name="in_UnidadMedida_Equiv_conversion" Relationship="Model_general.FK_in_UnidadMedida_Equiv_conversion_in_UnidadMedida" FromRole="in_UnidadMedida" ToRole="in_UnidadMedida_Equiv_conversion" />
+          <NavigationProperty Name="in_UnidadMedida_Equiv_conversion1" Relationship="Model_general.FK_in_UnidadMedida_Equiv_conversion_in_UnidadMedida1" FromRole="in_UnidadMedida" ToRole="in_UnidadMedida_Equiv_conversion" />
           </EntityType>
         <EntityType Name="tb_bodega">
           <Key>
@@ -1190,47 +1238,18 @@ advertencia 6002: La tabla o vista 'DBERP_NAT_PROD.mobileSCI.vw_stock' no tiene 
             <End Role="tbl_usuario" EntitySet="tbl_usuario" />
             <End Role="tbl_usuario_x_subcentro" EntitySet="tbl_usuario_x_subcentro" />
           </AssociationSet>
-          <EntitySet Name="vw_oc_x_aprobar" EntityType="Model_general.vw_oc_x_aprobar" />
           <EntitySet Name="vw_stock" EntityType="Model_general.vw_stock" />
+          <EntitySet Name="in_UnidadMedida_Equiv_conversion" EntityType="Model_general.in_UnidadMedida_Equiv_conversion" />
+          <AssociationSet Name="FK_in_UnidadMedida_Equiv_conversion_in_UnidadMedida" Association="Model_general.FK_in_UnidadMedida_Equiv_conversion_in_UnidadMedida">
+            <End Role="in_UnidadMedida" EntitySet="in_UnidadMedida" />
+            <End Role="in_UnidadMedida_Equiv_conversion" EntitySet="in_UnidadMedida_Equiv_conversion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_in_UnidadMedida_Equiv_conversion_in_UnidadMedida1" Association="Model_general.FK_in_UnidadMedida_Equiv_conversion_in_UnidadMedida1">
+            <End Role="in_UnidadMedida" EntitySet="in_UnidadMedida" />
+            <End Role="in_UnidadMedida_Equiv_conversion" EntitySet="in_UnidadMedida_Equiv_conversion" />
+          </AssociationSet>
+          <EntitySet Name="vw_oc_x_aprobar" EntityType="Model_general.vw_oc_x_aprobar" />
           </EntityContainer>
-        <EntityType Name="vw_oc_x_aprobar">
-          <Key>
-            <PropertyRef Name="IdRow" />
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdSucursal" />
-            <PropertyRef Name="IdOrdenCompra" />
-            <PropertyRef Name="Secuencia" />
-            <PropertyRef Name="IdProducto" />
-            <PropertyRef Name="IdUnidadMedida" />
-            <PropertyRef Name="IdProveedor" />
-            <PropertyRef Name="cant_oc" />
-            <PropertyRef Name="cant_in" />
-            <PropertyRef Name="saldo" />
-            <PropertyRef Name="pr_descripcion" />
-            <PropertyRef Name="pr_codigo" />
-            <PropertyRef Name="Descripcion" />
-            <PropertyRef Name="pe_nombreCompleto" />
-            <PropertyRef Name="oc_fecha" />
-            <PropertyRef Name="oc_observacion" />
-          </Key>
-          <Property Name="IdRow" Type="Int64" Nullable="false" />
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
-          <Property Name="IdOrdenCompra" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="Secuencia" Type="Int32" Nullable="false" />
-          <Property Name="IdProducto" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="IdUnidadMedida" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="IdProveedor" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="cant_oc" Type="Double" Nullable="false" />
-          <Property Name="cant_in" Type="Double" Nullable="false" />
-          <Property Name="saldo" Type="Double" Nullable="false" />
-          <Property Name="pr_descripcion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="pr_codigo" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
-          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="pe_nombreCompleto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="oc_fecha" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="oc_observacion" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="vw_stock">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1252,6 +1271,82 @@ advertencia 6002: La tabla o vista 'DBERP_NAT_PROD.mobileSCI.vw_stock' no tiene 
           <Property Name="IdUnidadMedida_Consumo" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="Stock" Type="Double" Nullable="false" />
           <Property Name="NomUnidadMedida" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="in_UnidadMedida_Equiv_conversion">
+          <Key>
+            <PropertyRef Name="IdUnidadMedida" />
+            <PropertyRef Name="IdUnidadMedida_equiva" />
+          </Key>
+          <Property Name="IdUnidadMedida" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="IdUnidadMedida_equiva" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="valor_equiv" Type="Double" Nullable="false" />
+          <Property Name="interpretacion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="in_UnidadMedida" Relationship="Model_general.FK_in_UnidadMedida_Equiv_conversion_in_UnidadMedida" FromRole="in_UnidadMedida_Equiv_conversion" ToRole="in_UnidadMedida" />
+          <NavigationProperty Name="in_UnidadMedida1" Relationship="Model_general.FK_in_UnidadMedida_Equiv_conversion_in_UnidadMedida1" FromRole="in_UnidadMedida_Equiv_conversion" ToRole="in_UnidadMedida" />
+        </EntityType>
+        <Association Name="FK_in_UnidadMedida_Equiv_conversion_in_UnidadMedida">
+          <End Type="Model_general.in_UnidadMedida" Role="in_UnidadMedida" Multiplicity="1" />
+          <End Type="Model_general.in_UnidadMedida_Equiv_conversion" Role="in_UnidadMedida_Equiv_conversion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="in_UnidadMedida">
+              <PropertyRef Name="IdUnidadMedida" />
+            </Principal>
+            <Dependent Role="in_UnidadMedida_Equiv_conversion">
+              <PropertyRef Name="IdUnidadMedida" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_in_UnidadMedida_Equiv_conversion_in_UnidadMedida1">
+          <End Type="Model_general.in_UnidadMedida" Role="in_UnidadMedida" Multiplicity="1" />
+          <End Type="Model_general.in_UnidadMedida_Equiv_conversion" Role="in_UnidadMedida_Equiv_conversion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="in_UnidadMedida">
+              <PropertyRef Name="IdUnidadMedida" />
+            </Principal>
+            <Dependent Role="in_UnidadMedida_Equiv_conversion">
+              <PropertyRef Name="IdUnidadMedida_equiva" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="vw_oc_x_aprobar">
+          <Key>
+            <PropertyRef Name="IdRow" />
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdOrdenCompra" />
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="IdProducto" />
+            <PropertyRef Name="IdUnidadMedida" />
+            <PropertyRef Name="IdProveedor" />
+            <PropertyRef Name="cant_oc" />
+            <PropertyRef Name="cant_in" />
+            <PropertyRef Name="saldo" />
+            <PropertyRef Name="pr_descripcion" />
+            <PropertyRef Name="pr_codigo" />
+            <PropertyRef Name="Descripcion" />
+            <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="oc_fecha" />
+            <PropertyRef Name="oc_observacion" />
+            <PropertyRef Name="IdUnidadMedida_Consumo" />
+          </Key>
+          <Property Name="IdRow" Type="Int64" Nullable="false" />
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdOrdenCompra" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="IdProducto" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdUnidadMedida" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="IdProveedor" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="cant_oc" Type="Double" Nullable="false" />
+          <Property Name="cant_in" Type="Double" Nullable="false" />
+          <Property Name="saldo" Type="Double" Nullable="false" />
+          <Property Name="pr_descripcion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="pr_codigo" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="pe_nombreCompleto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="oc_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="oc_observacion" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="IdUnidadMedida_Consumo" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1525,9 +1620,35 @@ advertencia 6002: La tabla o vista 'DBERP_NAT_PROD.mobileSCI.vw_stock' no tiene 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="vw_stock">
+            <EntityTypeMapping TypeName="Model_general.vw_stock">
+              <MappingFragment StoreEntitySet="vw_stock">
+                <ScalarProperty Name="NomUnidadMedida" ColumnName="NomUnidadMedida" />
+                <ScalarProperty Name="Stock" ColumnName="Stock" />
+                <ScalarProperty Name="IdUnidadMedida_Consumo" ColumnName="IdUnidadMedida_Consumo" />
+                <ScalarProperty Name="NomProducto" ColumnName="NomProducto" />
+                <ScalarProperty Name="CodProducto" ColumnName="CodProducto" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="in_UnidadMedida_Equiv_conversion">
+            <EntityTypeMapping TypeName="Model_general.in_UnidadMedida_Equiv_conversion">
+              <MappingFragment StoreEntitySet="in_UnidadMedida_Equiv_conversion">
+                <ScalarProperty Name="interpretacion" ColumnName="interpretacion" />
+                <ScalarProperty Name="valor_equiv" ColumnName="valor_equiv" />
+                <ScalarProperty Name="IdUnidadMedida_equiva" ColumnName="IdUnidadMedida_equiva" />
+                <ScalarProperty Name="IdUnidadMedida" ColumnName="IdUnidadMedida" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="vw_oc_x_aprobar">
             <EntityTypeMapping TypeName="Model_general.vw_oc_x_aprobar">
               <MappingFragment StoreEntitySet="vw_oc_x_aprobar">
+                <ScalarProperty Name="IdUnidadMedida_Consumo" ColumnName="IdUnidadMedida_Consumo" />
                 <ScalarProperty Name="oc_observacion" ColumnName="oc_observacion" />
                 <ScalarProperty Name="oc_fecha" ColumnName="oc_fecha" />
                 <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
@@ -1545,21 +1666,6 @@ advertencia 6002: La tabla o vista 'DBERP_NAT_PROD.mobileSCI.vw_stock' no tiene 
                 <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
                 <ScalarProperty Name="IdRow" ColumnName="IdRow" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vw_stock">
-            <EntityTypeMapping TypeName="Model_general.vw_stock">
-              <MappingFragment StoreEntitySet="vw_stock">
-                <ScalarProperty Name="NomUnidadMedida" ColumnName="NomUnidadMedida" />
-                <ScalarProperty Name="Stock" ColumnName="Stock" />
-                <ScalarProperty Name="IdUnidadMedida_Consumo" ColumnName="IdUnidadMedida_Consumo" />
-                <ScalarProperty Name="NomProducto" ColumnName="NomProducto" />
-                <ScalarProperty Name="CodProducto" ColumnName="CodProducto" />
-                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
-                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
-                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -112,6 +112,26 @@ namespace Core.App.ViewModels
             Settings.UrlConexion = this.UrlServidor;
             Settings.RutaCarpeta = this.RutaCarpeta;
 
+            #region Unidad de medida
+            var response_unidad = await apiService.GetList<UsuarioModel>(UrlServidor, RutaCarpeta, "UnidadMedida", "");
+            if (!response_unidad.IsSuccess)
+            {
+                this.IsEnabled = true;
+                this.IsRunning = false;
+                await Application.Current.MainPage.DisplayAlert(
+                    "Alerta",
+                    response_unidad.Message,
+                    "Aceptar");
+                return;
+            }
+
+            var list_unidades = (List<UnidadMedidaModel>)response_unidad.Result;
+            data.DeleteAll<UnidadMedidaModel>();
+            int PKI = 1;
+            list_unidades.ForEach(q => q.PKSQLite = PKI++);
+            data.InsertAll<UnidadMedidaModel>(list_unidades);
+            #endregion
+
             #region Usuario
             var response_usuario = await apiService.GetList<UsuarioModel>(UrlServidor, RutaCarpeta, "Usuario", usuario);
             if (!response_usuario.IsSuccess)
@@ -291,7 +311,7 @@ namespace Core.App.ViewModels
             var list_oc = (List<IngresoOrdenCompraModel>)response_oc.Result;
             data.DeleteAll<IngresoOrdenCompraModel>();
             PKI = 1;
-            list_oc.ForEach(q => { q.PKSQLite = PKI++; q.NomProducto = q.NomProducto.Trim(); q.NomProveedor = q.NomProveedor.Trim(); q.NomUnidadMedida = q.NomUnidadMedida.Trim(); });
+            list_oc.ForEach(q => { q.PKSQLite = PKI++; q.NomProducto = q.NomProducto.Trim(); q.NomProveedor = q.NomProveedor.Trim(); q.NomUnidadMedida = q.NomUnidadMedida.Trim(); q.CantidadApro = 0; });
             data.InsertAll<IngresoOrdenCompraModel>(list_oc);
             #endregion
 

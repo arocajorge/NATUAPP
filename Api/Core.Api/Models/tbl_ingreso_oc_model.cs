@@ -22,6 +22,7 @@ namespace Core.Api.Models
         public string nom_producto { get; set; }
         public string cod_producto { get; set; }
         public DateTime oc_fecha { get; set; }
+        public string IdUnidadMedida_Consumo { get; set; }
         public string oc_observacion { get; set; }
     }
 }

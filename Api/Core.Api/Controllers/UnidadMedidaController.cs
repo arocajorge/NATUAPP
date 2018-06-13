@@ -15,11 +15,12 @@ namespace Core.Api.Controllers
         // GET: api/UnidadMedida
         public IEnumerable<tbl_unidad_medida_model> Get()
         {
-            var lst = from q in db.in_UnidadMedida
+            var lst = from q in db.in_UnidadMedida_Equiv_conversion
                       select new tbl_unidad_medida_model
                       {
                           IdUnidadMedida = q.IdUnidadMedida,
-                          nom_unidad_medida = q.Descripcion
+                          IdUnidadMedida_equiva = q.IdUnidadMedida_equiva,
+                          valor_equiv = q.valor_equiv
                       };
             return lst;
         }

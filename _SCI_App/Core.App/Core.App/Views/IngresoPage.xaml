@@ -10,9 +10,9 @@
             Command="{Binding MostrarUbicacionCommand}"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <StackLayout>
-            <ScrollView
-                BindingContext="{Binding Ingreso}">
+        <StackLayout
+            BindingContext="{Binding Ingreso}">            
+            <ScrollView>
                 <StackLayout
                     Padding="20">
                     <Label      
@@ -79,8 +79,8 @@
                     </Label>
                     <Entry
                         FontSize="Medium"
-                            Placeholder="Ingrese la cantidad"
-                            Text="{Binding Ingreso.CantidadApro, Mode=TwoWay}">
+                        Placeholder="Ingrese la cantidad"
+                        Text="{Binding Ingreso.CantidadApro, Mode=TwoWay}">
                     </Entry>
                     <ActivityIndicator
                     IsRunning="False"
@@ -93,15 +93,6 @@
                         IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
                         VerticalOptions="End"
                         Text="Guardar">
-                    </Button>
-                    <Button
-                        BackgroundColor="Red"
-                        TextColor="White"
-                        IsVisible="{Binding IsVisible, Mode=TwoWay}"
-                        Command="{Binding EliminarCommand}"
-                        IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
-                        VerticalOptions="End"
-                        Text="Eliminar">
                     </Button>
                 </StackLayout>
             </ScrollView>

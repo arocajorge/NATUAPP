@@ -10,8 +10,12 @@
         [JsonProperty("IdUnidadMedida")]
         public string IdUnidadMedida { get; set; }
 
-        [JsonProperty("nom_unidad_medida")]
-        public string NomUnidadMedida { get; set; }
+        [JsonProperty("IdUnidadMedida_equiva")]
+        public string IdUnidadMedidaEquiva { get; set; }
+
+        [JsonProperty("valor_equiv")]
+        public double ValorEquiv { get; set; }
+
         public override int GetHashCode()
         {
             return PKSQLite;

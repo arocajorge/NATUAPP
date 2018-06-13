@@ -31,5 +31,6 @@ namespace Core.Api.Data
         public string pe_nombreCompleto { get; set; }
         public System.DateTime oc_fecha { get; set; }
         public string oc_observacion { get; set; }
+        public string IdUnidadMedida_Consumo { get; set; }
     }
 }

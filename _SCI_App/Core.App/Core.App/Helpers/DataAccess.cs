@@ -60,6 +60,27 @@
             }
         }
 
+        public void Guardar(IngresoOrdenCompraModel model)
+        {
+            IngresoOrdenCompraModel OldModel = this.connection.Table<IngresoOrdenCompraModel>().Where(q => q.PKSQLite == model.PKSQLite).FirstOrDefault();
+            if (OldModel == null)
+            {
+                return;
+            }
+            else
+            {
+                UnidadMedidaModel model_unidad = this.connection.Table<UnidadMedidaModel>().Where(q => q.IdUnidadMedida == model.IdUnidadMedida && q.IdUnidadMedidaEquiva == model.IdUnidadMedidaConsumo).FirstOrDefault();
+                if (model_unidad == null)
+                {
+
+                }
+
+                OldModel.CantidadApro = model.CantidadApro;
+                OldModel.FechaApro = model.FechaApro;
+                this.connection.Update(OldModel);
+            }
+        }
+
         private int GetID()
         {
             int ID = 1;
@@ -151,7 +172,7 @@
         public List<IngresoOrdenCompraModel> GetListIngresoOrdenCompra(int IdEmpresa, bool MostrarAprobados = false)
         {
             if(!MostrarAprobados)
-                return this.connection.Table<IngresoOrdenCompraModel>().Where(q=>q.IdEmpresa == IdEmpresa && q.Saldo > 0).ToList();
+                return this.connection.Table<IngresoOrdenCompraModel>().Where(q=>q.IdEmpresa == IdEmpresa && q.CantidadApro == 0).ToList();
             else
                 return this.connection.Table<IngresoOrdenCompraModel>().Where(q => q.IdEmpresa == IdEmpresa && q.CantidadApro > 0).ToList();
         }

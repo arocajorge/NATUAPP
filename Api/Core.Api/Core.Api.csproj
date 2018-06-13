@@ -129,6 +129,9 @@
     <Compile Include="Data\in_UnidadMedida.cs">
       <DependentUpon>Model_general.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\in_UnidadMedida_Equiv_conversion.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\Model_general.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -180,6 +183,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\in_UnidadMedida_Equiv_conversion_Model.cs" />
     <Compile Include="Models\tbl_bodega_model.cs" />
     <Compile Include="Models\tbl_centro_costo_model.cs" />
     <Compile Include="Models\tbl_empresa_model.cs" />
