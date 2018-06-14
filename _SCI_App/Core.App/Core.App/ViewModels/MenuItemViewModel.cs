@@ -54,6 +54,7 @@
                     App.Navigator.PushAsync(new EgresosPage());
                     break;
                 case "SincronizacionPage":
+                    MainViewModel.GetInstance().Sincronizacion = new SincronizacionViewModel();
                     App.Navigator.PushAsync(new SincronizacionPage());
                     break;
             }

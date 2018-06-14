@@ -84,7 +84,7 @@
         }
         public void CargarLista()
         {
-            lst_ingresos = new ObservableCollection<IngresoItemViewModel>(ToIngresoItemViewModel(data.GetListIngresoOrdenCompra(Settings.IdEmpresa, MostrarAprobados)));
+            lst_ingresos = new ObservableCollection<IngresoItemViewModel>(ToIngresoItemViewModel(data.GetListIngresoOrdenCompra(Settings.IdEmpresa, Settings.IdSucursal, Settings.IdBodega, MostrarAprobados)));
         }
         #endregion
     }

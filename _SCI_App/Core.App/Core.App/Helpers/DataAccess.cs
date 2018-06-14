@@ -80,6 +80,8 @@
                     else
                         OldModel.CantidadApro_convertida = model.CantidadApro;
                 }
+                OldModel.IdSucursal_apro = Settings.IdSucursal;
+                OldModel.IdBodega = Settings.IdBodega;
                 OldModel.CantidadApro = model.CantidadApro;
                 OldModel.FechaApro = model.FechaApro;
                 this.connection.Update(OldModel);
@@ -126,6 +128,64 @@
         }
 
         #region GetList
+        public MovimientosModel GetMovimientos()
+        {
+            MovimientosModel Model = new MovimientosModel
+            {
+                IdUsuarioSCI = Settings.IdUsuario,
+                IdFecha = Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")),
+                Fecha = DateTime.Now,
+                lst_det = new List<MovimientosDetModel>()
+            };
+            var lst_ingresos = this.connection.Table<IngresoOrdenCompraModel>().Where(q => q.CantidadApro > 0).ToList();
+            foreach (var ingreso in lst_ingresos)
+            {
+                MovimientosDetModel det = new MovimientosDetModel
+                {
+                    IdEmpresa = ingreso.IdEmpresa,
+                    IdSucursal = ingreso.IdSucursal_apro,
+                    IdBodega = ingreso.IdBodega,
+                    IdProducto = ingreso.IdProducto,
+                    cantidad = ingreso.CantidadApro,
+                    IdUnidadMedida = ingreso.IdUnidadMedida,
+                    Fecha = ingreso.FechaApro,
+
+                    IdCentroCosto = null,
+                    IdCentroCosto_sub_centro_costo = null,
+
+                    IdEmpresa_oc = ingreso.IdEmpresa,
+                    IdSucursal_oc = ingreso.IdSucursal,
+                    IdOrdenCompra = ingreso.IdOrdenCompra,
+                    secuencia_oc = ingreso.Secuencia
+                };
+                Model.lst_det.Add(det);
+            }
+            var lst_egreso = this.connection.Table<EgresoModel>().ToList();
+            foreach (var egreso in lst_egreso)
+            {
+                MovimientosDetModel det = new MovimientosDetModel
+                {
+                    IdEmpresa = egreso.IdEmpresa,
+                    IdSucursal = egreso.IdSucursal,
+                    IdBodega = egreso.IdBodega,
+                    IdProducto = egreso.IdProducto,
+                    cantidad = egreso.Cantidad,
+                    IdUnidadMedida = egreso.IdUnidadMedida,
+                    Fecha = egreso.Fecha,
+
+                    IdCentroCosto = egreso.IdCentroCosto,
+                    IdCentroCosto_sub_centro_costo = egreso.IdSubCentroCosto,
+
+                    IdEmpresa_oc = null,
+                    IdSucursal_oc = null,
+                    IdOrdenCompra = null,
+                    secuencia_oc = null
+                };
+                Model.lst_det.Add(det);
+            }
+
+            return Model;
+        }
         public List<UsuarioModel> GetListUsuario()
         {
             return this.connection.Table<UsuarioModel>().ToList();
@@ -174,12 +234,15 @@
             return this.connection.Table<ProductoModel>().Where(q=>q.IdEmpresa == IdEmpresa).ToList();
         }
 
-        public List<IngresoOrdenCompraModel> GetListIngresoOrdenCompra(int IdEmpresa, bool MostrarAprobados = false)
+        public List<IngresoOrdenCompraModel> GetListIngresoOrdenCompra(int IdEmpresa, int IdSucursal, int IdBodega, bool MostrarAprobados = false)
         {
             if(!MostrarAprobados)
                 return this.connection.Table<IngresoOrdenCompraModel>().Where(q=>q.IdEmpresa == IdEmpresa && q.CantidadApro == 0).ToList();
             else
-                return this.connection.Table<IngresoOrdenCompraModel>().Where(q => q.IdEmpresa == IdEmpresa && q.CantidadApro > 0).ToList();
+                if (IdEmpresa != 0)
+                    return this.connection.Table<IngresoOrdenCompraModel>().Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal_apro == IdSucursal && q.IdBodega == IdBodega && q.CantidadApro > 0).ToList();
+            else
+                return this.connection.Table<IngresoOrdenCompraModel>().Where(q => q.CantidadApro > 0).ToList();
         }
 
         public List<UnidadMedidaModel> GetListUnidadMedida()
@@ -194,7 +257,10 @@
 
         public List<EgresoModel> GetListEgresos(int IdEmpresa, int IdSucursal, int IdBodega, string IdCentroCosto)
         {
-            return this.connection.Table<EgresoModel>().Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.IdBodega == IdBodega && q.IdCentroCosto == IdCentroCosto).OrderBy(q => q.Fecha).ToList();
+            if(IdEmpresa != 0)
+                return this.connection.Table<EgresoModel>().Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.IdBodega == IdBodega && q.IdCentroCosto == IdCentroCosto).OrderBy(q => q.Fecha).ToList();
+            else
+                return this.connection.Table<EgresoModel>().ToList();
         }
         #endregion
 

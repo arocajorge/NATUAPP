@@ -23,6 +23,7 @@ namespace Core.App.ViewModels
         public PopUpUbicacionViewModel PopUpUbicacion { get; set; }
         public AprobacionIngresosViewModel AprobacionIngresos { get; set; }
         public IngresoViewModel Ingreso { get; set; }
+        public SincronizacionViewModel Sincronizacion { get; set; }
         #endregion
 
         #region Constructor

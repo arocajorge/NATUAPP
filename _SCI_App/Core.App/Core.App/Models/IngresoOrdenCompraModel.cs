@@ -61,11 +61,10 @@ namespace Core.App.Models
         public string IdUnidadMedidaConsumo { get; set; }
 
         public double CantidadApro { get; set; }
-
         public DateTime FechaApro { get; set; }
-        
+        public int IdSucursal_apro { get; set; }
+        public int IdBodega { get; set; }
         public double CantidadApro_convertida { get; set; }
-
         public override int GetHashCode()
         {
             return PKSQLite;

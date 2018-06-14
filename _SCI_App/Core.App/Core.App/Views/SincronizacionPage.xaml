@@ -5,10 +5,42 @@
              BindingContext="{Binding Main, Source={StaticResource Locator}}"
              Title="Sincronización">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Sincronización"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <ScrollView
+            Padding="20"            
+            BindingContext="{Binding Sincronizacion}">
+            <StackLayout
+                Spacing="25">
+                <Label                    
+                    FontAttributes="Bold"
+                    FontSize="Large"
+                    TextColor="Black"
+                    HorizontalOptions="Center"
+                    Text="Transacciones a sincronizar">
+                </Label>
+                <Label                    
+                    FontSize="Large"
+                    TextColor="Black"
+                    HorizontalOptions="Center"
+                    Text="{Binding TotalIngresos, StringFormat='{0} INGRESOS'}">                    
+                </Label>
+                <Label
+                    FontSize="Large"
+                    TextColor="Black"
+                    HorizontalOptions="Center"
+                    Text="{Binding TotalEgresos, StringFormat='{0} EGRESOS'}">
+                </Label>
+                <ActivityIndicator
+                    VerticalOptions="CenterAndExpand"
+                    IsRunning="{Binding IsRunning, Mode=TwoWay}">
+                </ActivityIndicator>
+                <Button
+                    BackgroundColor="CornflowerBlue"
+                    Text="Sincronizar"
+                    TextColor="White"
+                    IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                    Command="{Binding SincronizarCommand}">
+                </Button>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>
