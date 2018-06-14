@@ -13,6 +13,12 @@
         <StackLayout
             BindingContext="{Binding AprobacionIngresos}"
             Padding="5">
+            <SearchBar
+                SearchCommand="{Binding BuscarCommand}"
+                Text="{Binding filter, Mode=TwoWay}"
+                Placeholder="Buscar..."
+                HeightRequest="50">
+            </SearchBar>
             <StackLayout
                 Orientation="Horizontal">
                 <Label
@@ -30,6 +36,7 @@
             <ListView 
                 BackgroundColor="Silver"
                 HasUnevenRows="True"
+                IsRefreshing="{Binding IsRefreshing,Mode=TwoWay}"
                 ItemsSource="{Binding lst_ingresos}"
                 SeparatorVisibility="None">
                 <ListView.ItemTemplate>

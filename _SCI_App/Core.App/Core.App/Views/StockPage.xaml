@@ -22,6 +22,7 @@
             <ListView 
                 BackgroundColor="Silver"
                 HasUnevenRows="True"
+                IsRefreshing="{Binding IsRefreshing,Mode=TwoWay}"
                 ItemsSource="{Binding lst_stock}"
                 SeparatorVisibility="None">
                 <ListView.ItemTemplate>

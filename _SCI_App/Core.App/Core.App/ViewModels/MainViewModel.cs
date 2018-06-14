@@ -20,6 +20,7 @@ namespace Core.App.ViewModels
         public EgresoViewModel Egreso { get; set; }
         public ObservableCollection<MenuItemViewModel> Menus { get; set; }
         public List<StockModel> lst_stock { get; set; }
+        public List<IngresoOrdenCompraModel> lst_ingresos { get; set; }
         public PopUpUbicacionViewModel PopUpUbicacion { get; set; }
         public AprobacionIngresosViewModel AprobacionIngresos { get; set; }
         public IngresoViewModel Ingreso { get; set; }

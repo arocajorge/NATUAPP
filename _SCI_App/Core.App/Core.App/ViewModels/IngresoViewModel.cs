@@ -52,6 +52,16 @@ namespace Core.App.ViewModels
         {
             IsEnabled = false;
 
+            if (this.Ingreso.CantidadApro > this.Ingreso.Saldo)
+            {
+                this.IsEnabled = true;
+                await Application.Current.MainPage.DisplayAlert(
+                    "Alerta",
+                    "La cantidad aprobada debe ser menor al saldo",
+                    "Aceptar");
+                return;
+            }
+
             data.Guardar(Ingreso);
             this.IsEnabled = true;
             await Application.Current.MainPage.DisplayAlert(

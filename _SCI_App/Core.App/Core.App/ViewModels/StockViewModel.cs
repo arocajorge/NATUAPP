@@ -15,9 +15,18 @@ namespace Core.App.ViewModels
         private ObservableCollection<StockModel> _lst_stock;
         private string _filter;
         private DataAccess data;
+        private bool _IsRefreshing;
         #endregion
 
         #region Propiedades
+        public bool IsRefreshing
+        {
+            get { return this._IsRefreshing; }
+            set
+            {
+                SetValue(ref this._IsRefreshing, value);
+            }
+        }
         public ObservableCollection<StockModel> lst_stock
         {
             get { return this._lst_stock; }
@@ -48,8 +57,10 @@ namespace Core.App.ViewModels
         #region Métodos
         private void cargar_stock()
         {
+            IsRefreshing = true;
             lst_stock = new ObservableCollection<StockModel>(data.GetListStock(Settings.IdEmpresa, Settings.IdSucursal, Settings.IdBodega));
             MainViewModel.GetInstance().lst_stock = new List<StockModel>(lst_stock);
+            IsRefreshing = false;
         }
 
         private IEnumerable<StockModel> ToStockModel()

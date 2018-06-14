@@ -13,6 +13,7 @@ namespace Core.App.ViewModels
         #region variables
         private DataAccess data;
         ObservableCollection<EgresoItemViewModel> _lst_egresos;
+        private bool _IsRefreshing;
         #endregion
 
         #region Propiedades
@@ -24,8 +25,16 @@ namespace Core.App.ViewModels
                 SetValue(ref this._lst_egresos, value);
             }
         }
+        public bool IsRefreshing
+        {
+            get { return this._IsRefreshing; }
+            set
+            {
+                SetValue(ref this._IsRefreshing, value);
+            }
+        }
         #endregion
-        
+
         #region Singleton
         private static EgresosViewModel instance;
         public static EgresosViewModel GetInstance()
@@ -69,7 +78,9 @@ namespace Core.App.ViewModels
     
         public void cargar_egresos()
         {
+            IsRefreshing = true;
             lst_egresos = new ObservableCollection<EgresoItemViewModel>(ToEgresoItemViewModel(data.GetListEgresos(Settings.IdEmpresa, Settings.IdSucursal, Settings.IdBodega, Settings.IdCentroCosto)));
+            IsRefreshing = false;
         }
         #endregion
     }

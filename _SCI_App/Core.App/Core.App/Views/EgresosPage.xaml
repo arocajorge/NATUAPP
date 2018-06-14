@@ -19,6 +19,7 @@
             <ListView 
                 BackgroundColor="Silver"
                 HasUnevenRows="True"
+                IsRefreshing="{Binding IsRefreshing,Mode=TwoWay}"
                 ItemsSource="{Binding lst_egresos}"
                 SeparatorVisibility="None">
                 <ListView.ItemTemplate>
