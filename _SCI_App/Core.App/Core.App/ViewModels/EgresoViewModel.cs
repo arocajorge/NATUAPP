@@ -203,6 +203,7 @@ namespace Core.App.ViewModels
                 "Exito",
                 "Registro guardado exitósamente",
                 "Aceptar");
+            MainViewModel.GetInstance().Stock.cargar_stock();
             MainViewModel.GetInstance().Egresos.cargar_egresos();            
             await App.Navigator.Navigation.PopAsync();
         }

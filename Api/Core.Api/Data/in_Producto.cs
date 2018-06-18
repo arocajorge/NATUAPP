@@ -80,6 +80,7 @@ namespace Core.Api.Data
         public bool Aparece_modu_Compras { get; set; }
         public bool Aparece_modu_Inventario { get; set; }
         public bool Aparece_modu_Activo_F { get; set; }
+        public string mobile_cod_produccion { get; set; }
     
         public virtual in_UnidadMedida in_UnidadMedida { get; set; }
         public virtual in_UnidadMedida in_UnidadMedida1 { get; set; }

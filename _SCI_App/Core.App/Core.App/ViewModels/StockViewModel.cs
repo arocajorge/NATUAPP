@@ -55,7 +55,7 @@ namespace Core.App.ViewModels
         #endregion
 
         #region Métodos
-        private void cargar_stock()
+        public void cargar_stock()
         {
             IsRefreshing = true;
             lst_stock = new ObservableCollection<StockModel>(data.GetListStock(Settings.IdEmpresa, Settings.IdSucursal, Settings.IdBodega));
@@ -75,7 +75,10 @@ namespace Core.App.ViewModels
                 NomProducto = l.NomProducto,
                 IdUnidadMedidaConsumo = l.IdUnidadMedidaConsumo,
                 Stock = l.Stock,
-                NomUnidadMedida = l.NomUnidadMedida            
+                NomUnidadMedida = l.NomUnidadMedida,
+                Ingresos = l.Ingresos,
+                Saldo = l.Saldo,
+                Egresos = l.Egresos
             });
         }
 

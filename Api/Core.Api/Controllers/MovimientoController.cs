@@ -89,6 +89,10 @@ namespace Core.Api.Controllers
                     db.SaveChanges();
                     #endregion
 
+                    #region Actualizo estado de ingresos
+                    db.sp_revisar_estados_oc();
+                    #endregion
+
                     #region Limpio tabla de turnos
                     db.Database.ExecuteSqlCommand("DELETE mobileSCI.tbl_sincronizacion_turno");
                     #endregion

@@ -43,6 +43,7 @@
           <Property Name="Centro_costo" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="pc_Estado" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="IdCtaCble" Type="varchar" MaxLength="20" />
+          <Property Name="mobile_cod_produccion" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="in_Producto">
           <Key>
@@ -109,6 +110,7 @@
           <Property Name="Aparece_modu_Compras" Type="bit" Nullable="false" />
           <Property Name="Aparece_modu_Inventario" Type="bit" Nullable="false" />
           <Property Name="Aparece_modu_Activo_F" Type="bit" Nullable="false" />
+          <Property Name="mobile_cod_produccion" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="in_UnidadMedida">
           <Key>
@@ -614,6 +616,7 @@ advertencia 6002: La tabla o vista 'DBERP_NAT_PROD.mobileSCI.vw_stock' no tiene 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="sp_revisar_estados_oc" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="mobileSCI" />
         <EntityContainer Name="Model_generalStoreContainer">
           <EntitySet Name="ct_centro_costo" EntityType="Self.ct_centro_costo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ct_centro_costo_sub_centro_costo" EntityType="Self.ct_centro_costo_sub_centro_costo" Schema="dbo" store:Type="Tables" />
@@ -784,6 +787,7 @@ advertencia 6002: La tabla o vista 'DBERP_NAT_PROD.mobileSCI.vw_stock' no tiene 
           <NavigationProperty Name="ct_centro_costo" Relationship="Self.FK_ct_centro_costo_sub_centro_costo_ct_centro_costo" FromRole="ct_centro_costo_sub_centro_costo" ToRole="ct_centro_costo" />
           <NavigationProperty Name="tbl_subcentro" Relationship="Self.FK_tbl_subcentro_ct_centro_costo_sub_centro_costo" FromRole="ct_centro_costo_sub_centro_costo" ToRole="tbl_subcentro" />
           <NavigationProperty Name="tbl_usuario_x_subcentro" Relationship="Self.FK_tbl_usuario_x_subcentro_ct_centro_costo_sub_centro_costo" FromRole="ct_centro_costo_sub_centro_costo" ToRole="tbl_usuario_x_subcentro" />
+          <Property Name="mobile_cod_produccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="in_Producto">
           <Key>
@@ -854,6 +858,7 @@ advertencia 6002: La tabla o vista 'DBERP_NAT_PROD.mobileSCI.vw_stock' no tiene 
           <NavigationProperty Name="in_UnidadMedida1" Relationship="Self.FK_in_Producto_in_UnidadMedida1" FromRole="in_Producto" ToRole="in_UnidadMedida" />
           <NavigationProperty Name="tb_empresa" Relationship="Self.FK_in_Producto_tb_empresa" FromRole="in_Producto" ToRole="tb_empresa" />
           <NavigationProperty Name="tbl_producto" Relationship="Self.FK_tbl_producto_in_Producto" FromRole="in_Producto" ToRole="tbl_producto" />
+          <Property Name="mobile_cod_produccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="in_UnidadMedida">
           <Key>
@@ -1315,6 +1320,7 @@ advertencia 6002: La tabla o vista 'DBERP_NAT_PROD.mobileSCI.vw_stock' no tiene 
             <End Role="tbl_movimientos_det" EntitySet="tbl_movimientos_det" />
           </AssociationSet>
           <EntitySet Name="tbl_sincronizacion_turno" EntityType="Model_general.tbl_sincronizacion_turno" />
+          <FunctionImport Name="sp_revisar_estados_oc" />
           </EntityContainer>
         <EntityType Name="vw_stock">
           <Key>
@@ -1502,6 +1508,7 @@ advertencia 6002: La tabla o vista 'DBERP_NAT_PROD.mobileSCI.vw_stock' no tiene 
           <EntitySetMapping Name="ct_centro_costo_sub_centro_costo">
             <EntityTypeMapping TypeName="Model_general.ct_centro_costo_sub_centro_costo">
               <MappingFragment StoreEntitySet="ct_centro_costo_sub_centro_costo">
+                <ScalarProperty Name="mobile_cod_produccion" ColumnName="mobile_cod_produccion" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
                 <ScalarProperty Name="IdCentroCosto" ColumnName="IdCentroCosto" />
                 <ScalarProperty Name="IdCentroCosto_sub_centro_costo" ColumnName="IdCentroCosto_sub_centro_costo" />
@@ -1515,6 +1522,7 @@ advertencia 6002: La tabla o vista 'DBERP_NAT_PROD.mobileSCI.vw_stock' no tiene 
           <EntitySetMapping Name="in_Producto">
             <EntityTypeMapping TypeName="Model_general.in_Producto">
               <MappingFragment StoreEntitySet="in_Producto">
+                <ScalarProperty Name="mobile_cod_produccion" ColumnName="mobile_cod_produccion" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
                 <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
                 <ScalarProperty Name="pr_codigo" ColumnName="pr_codigo" />
@@ -1831,6 +1839,7 @@ advertencia 6002: La tabla o vista 'DBERP_NAT_PROD.mobileSCI.vw_stock' no tiene 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_revisar_estados_oc" FunctionName="Model_general.Store.sp_revisar_estados_oc" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

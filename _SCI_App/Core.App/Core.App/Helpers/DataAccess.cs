@@ -46,12 +46,13 @@
             if(OldModel == null)
             {
                 model.PKSQLite = GetID();
+                model.Cantidad = Math.Abs(model.Cantidad) * -1;
                 this.connection.Insert(model);
             }else
             {
                 OldModel.IdProducto = model.IdProducto;
                 OldModel.IdSubCentroCosto = model.IdSubCentroCosto;
-                OldModel.Cantidad = model.Cantidad;
+                OldModel.Cantidad = Math.Abs(model.Cantidad) *-1;
                 OldModel.Fecha = model.Fecha;
                 OldModel.NomProducto = model.NomProducto;
                 OldModel.NomSubCentro = model.NomSubCentro;
@@ -231,18 +232,18 @@
 
         public List<ProductoModel> GetListProducto(int IdEmpresa)
         {
-            return this.connection.Table<ProductoModel>().Where(q=>q.IdEmpresa == IdEmpresa).ToList();
+            return this.connection.Table<ProductoModel>().Where(q=>q.IdEmpresa == IdEmpresa).OrderBy(q=>q.NomProducto).ToList();
         }
 
         public List<IngresoOrdenCompraModel> GetListIngresoOrdenCompra(int IdEmpresa, int IdSucursal, int IdBodega, bool MostrarAprobados = false)
         {
             if(!MostrarAprobados)
-                return this.connection.Table<IngresoOrdenCompraModel>().Where(q=>q.IdEmpresa == IdEmpresa && q.CantidadApro == 0).ToList();
+                return this.connection.Table<IngresoOrdenCompraModel>().Where(q=>q.IdEmpresa == IdEmpresa && q.CantidadApro == 0).OrderBy(q=>q.NomProducto).ToList();
             else
                 if (IdEmpresa != 0)
-                    return this.connection.Table<IngresoOrdenCompraModel>().Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal_apro == IdSucursal && q.IdBodega == IdBodega && q.CantidadApro > 0).ToList();
+                    return this.connection.Table<IngresoOrdenCompraModel>().Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal_apro == IdSucursal && q.IdBodega == IdBodega && q.CantidadApro > 0).OrderBy(q=>q.NomProducto).ToList();
             else
-                return this.connection.Table<IngresoOrdenCompraModel>().Where(q => q.CantidadApro > 0).ToList();
+                return this.connection.Table<IngresoOrdenCompraModel>().Where(q => q.CantidadApro > 0).OrderBy(q=>q.NomProducto).ToList();
         }
 
         public List<UnidadMedidaModel> GetListUnidadMedida()
@@ -252,7 +253,54 @@
 
         public List<StockModel> GetListStock(int IdEmpresa, int IdSucursal, int IdBodega)
         {
-            return this.connection.Table<StockModel>().Where(q=>q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.IdBodega == IdBodega).OrderBy(q=>q.NomProducto).ToList();
+            var lst_stock = this.connection.Table<StockModel>().Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.IdBodega == IdBodega).ToList();
+            var lst_ingresos = this.connection.Table<IngresoOrdenCompraModel>().Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal_apro == IdSucursal && q.IdBodega == IdBodega).ToList();
+            var lst_egresos = this.connection.Table<EgresoModel>().Where(q=> q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.IdBodega == IdBodega).ToList();
+
+            lst_ingresos = (from q in lst_ingresos
+                            group q by q.IdProducto into g
+                            select new IngresoOrdenCompraModel
+                            {
+                                IdProducto = g.Key,
+                                CantidadApro_convertida = g.Sum(q=>q.CantidadApro_convertida)
+                            }).ToList();
+
+            lst_egresos = (from q in lst_egresos
+                           group q by q.IdProducto into g
+                           select new EgresoModel
+                           {
+                               IdProducto = g.Key,
+                               Cantidad = g.Sum(q => q.Cantidad)
+                           }).ToList();
+
+            var lst = (from s in lst_stock
+                       join i in lst_ingresos
+                       on s.IdProducto equals i.IdProducto into ig
+                       from ing in ig.DefaultIfEmpty()
+
+                       join e in lst_egresos                       
+                       on s.IdProducto equals e.IdProducto into eg
+                       from egr in eg.DefaultIfEmpty()
+                       
+                       select new StockModel
+                       {
+                           PKSQLite = s.PKSQLite,
+                           IdEmpresa = s.IdEmpresa,
+                           IdSucursal = s.IdSucursal,
+                           IdProducto = s.IdProducto,
+                           IdBodega = s.IdBodega,
+                           NomProducto = s.NomProducto,
+                           NomUnidadMedida = s.NomUnidadMedida,
+                           Stock = s.Stock,
+                           Ingresos = ing == null ? 0 : ing.CantidadApro_convertida,
+                           Egresos = egr == null ? 0 : egr.Cantidad
+                       }).ToList();
+
+            lst.ForEach(q => q.Saldo = q.Stock + q.Ingresos + q.Egresos);
+
+            return lst.OrderBy(q=>q.NomProducto).ToList();
+            //return this.connection.Table<StockModel>().Where(q=>q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.IdBodega == IdBodega).OrderBy(q=>q.NomProducto).ToList();
+
         }
 
         public List<EgresoModel> GetListEgresos(int IdEmpresa, int IdSucursal, int IdBodega, string IdCentroCosto)

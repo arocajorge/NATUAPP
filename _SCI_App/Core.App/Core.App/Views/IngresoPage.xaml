@@ -73,14 +73,29 @@
                             Text="{Binding Ingreso.NomUnidadMedida, Mode=TwoWay}">
                         </Label>
                     </StackLayout>
+                    <StackLayout
+                    Orientation="Horizontal">
+                        <Label
+                            VerticalOptions="Center"
+                            Text="Recibir todo"
+                            HorizontalOptions="StartAndExpand"
+                            FontAttributes="Bold"
+                            TextColor="Black">
+                        </Label>
+                        <Switch                
+                            IsToggled="{Binding RecibirTodo, Mode=TwoWay}"
+                            HorizontalOptions="End">
+                        </Switch>
+                    </StackLayout>
                     <Label 
                         FontAttributes="Bold"
                         Text="Cantidad recibida">
                     </Label>
                     <Entry
                         FontSize="Medium"
+                        Keyboard="Numeric"
                         Placeholder="Ingrese la cantidad"
-                        Text="{Binding Ingreso.CantidadApro, Mode=TwoWay}">
+                        Text="{Binding CantidadApro, Mode=TwoWay}">
                     </Entry>
                     <ActivityIndicator
                     IsRunning="False"

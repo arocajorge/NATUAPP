@@ -102,7 +102,7 @@
                 Secuencia = l.Secuencia,
                 CantidadApro_convertida = l.CantidadApro_convertida,
                 FechaApro = l.FechaApro,
-                IdUnidadMedidaConsumo = l.IdUnidadMedidaConsumo
+                IdUnidadMedidaConsumo = l.IdUnidadMedidaConsumo,               
             });
         }
         public void CargarLista()

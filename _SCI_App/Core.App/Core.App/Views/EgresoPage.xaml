@@ -53,6 +53,7 @@
                         </Label>
                         <Entry
                             Placeholder="Ingrese la cantidad"
+                            Keyboard="Numeric"
                             Text="{Binding Egreso.Cantidad, Mode=TwoWay}">
                         </Entry>
                     <ActivityIndicator

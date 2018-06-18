@@ -1,6 +1,7 @@
 ﻿using Core.App.Helpers;
 using Core.App.Models;
 using GalaSoft.MvvmLight.Command;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -59,6 +60,7 @@ namespace Core.App.ViewModels
         #region Metodos
         private IEnumerable<EgresoItemViewModel> ToEgresoItemViewModel(List<EgresoModel> lst)
         {
+            lst.ForEach(q => q.Cantidad = Math.Abs(q.Cantidad));
             return lst.Select(l => new EgresoItemViewModel
             {
                 PKSQLite = l.PKSQLite,
@@ -79,7 +81,7 @@ namespace Core.App.ViewModels
         public void cargar_egresos()
         {
             IsRefreshing = true;
-            lst_egresos = new ObservableCollection<EgresoItemViewModel>(ToEgresoItemViewModel(data.GetListEgresos(Settings.IdEmpresa, Settings.IdSucursal, Settings.IdBodega, Settings.IdCentroCosto)));
+            lst_egresos = new ObservableCollection<EgresoItemViewModel>(ToEgresoItemViewModel(data.GetListEgresos(Settings.IdEmpresa, Settings.IdSucursal, Settings.IdBodega, Settings.IdCentroCosto)));           
             IsRefreshing = false;
         }
         #endregion

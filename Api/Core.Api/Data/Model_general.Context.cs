@@ -12,6 +12,8 @@ namespace Core.Api.Data
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class Entities_general : DbContext
     {
@@ -44,5 +46,10 @@ namespace Core.Api.Data
         public virtual DbSet<tbl_movimientos> tbl_movimientos { get; set; }
         public virtual DbSet<tbl_movimientos_det> tbl_movimientos_det { get; set; }
         public virtual DbSet<tbl_sincronizacion_turno> tbl_sincronizacion_turno { get; set; }
+    
+        public virtual int sp_revisar_estados_oc()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_revisar_estados_oc");
+        }
     }
 }

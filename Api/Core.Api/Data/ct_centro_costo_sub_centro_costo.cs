@@ -28,6 +28,7 @@ namespace Core.Api.Data
         public string Centro_costo { get; set; }
         public string pc_Estado { get; set; }
         public string IdCtaCble { get; set; }
+        public string mobile_cod_produccion { get; set; }
     
         public virtual ct_centro_costo ct_centro_costo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -20,10 +20,11 @@
                 HeightRequest="50">
             </SearchBar>
             <StackLayout
+                Padding="20,0,0,0"
                 Orientation="Horizontal">
                 <Label
                     VerticalOptions="Center"
-                    Text="Mostrar aprobados"
+                    Text="Mostrar recibidos"
                     HorizontalOptions="StartAndExpand"
                     FontAttributes="Bold"
                     TextColor="Black">

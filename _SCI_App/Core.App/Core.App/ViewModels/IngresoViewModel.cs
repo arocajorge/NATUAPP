@@ -13,6 +13,8 @@ namespace Core.App.ViewModels
         private IngresoOrdenCompraModel _Ingreso;
         private bool _IsEnabled;
         private DataAccess data;
+        private bool _RecibirTodo;
+        private double _CantidadApro;
         #endregion
 
         #region Propiedades
@@ -26,6 +28,20 @@ namespace Core.App.ViewModels
             get { return this._IsEnabled; }
             set { SetValue(ref this._IsEnabled, value); }
         }
+        public double CantidadApro
+        {
+            get { return this._CantidadApro; }
+            set { SetValue(ref this._CantidadApro, value); }
+        }
+        public bool RecibirTodo
+        {
+            get { return this._RecibirTodo; }
+            set {
+                SetValue(ref this._RecibirTodo, value);
+                if (_RecibirTodo)
+                    CantidadApro = Ingreso.Saldo;
+            }
+        }
         #endregion
 
         #region Constructores
@@ -38,6 +54,8 @@ namespace Core.App.ViewModels
                 Ingreso.FechaApro = DateTime.Now.Date;
                 Ingreso.CantidadApro = 0;
             }
+            else
+                CantidadApro = Ingreso.CantidadApro;
             IsEnabled = true;
         }
         #endregion
@@ -52,7 +70,7 @@ namespace Core.App.ViewModels
         {
             IsEnabled = false;
 
-            if (this.Ingreso.CantidadApro > this.Ingreso.Saldo)
+            if (this.CantidadApro > this.Ingreso.Saldo)
             {
                 this.IsEnabled = true;
                 await Application.Current.MainPage.DisplayAlert(
@@ -61,13 +79,14 @@ namespace Core.App.ViewModels
                     "Aceptar");
                 return;
             }
-
+            this.Ingreso.CantidadApro = CantidadApro;
             data.Guardar(Ingreso);
             this.IsEnabled = true;
             await Application.Current.MainPage.DisplayAlert(
                 "Exito",
                 "Registro guardado exitósamente",
                 "Aceptar");
+            MainViewModel.GetInstance().Stock.cargar_stock();
             MainViewModel.GetInstance().AprobacionIngresos.CargarLista();
             await App.Navigator.Navigation.PopAsync();
         }

@@ -41,9 +41,9 @@
                                     Grid.Column="0"
                                     VerticalOptions="Center">
                                         <Label
-                                        FontAttributes="None"
-                                        FontSize="Small"
-                                        Text="{Binding NomProducto}"
+                                        FontAttributes="Bold"
+                                        FontSize="Medium"
+                                        Text="{Binding NomProducto}"                                            
                                         TextColor="Black">
                                         </Label>
                                         <StackLayout
@@ -51,16 +51,70 @@
                                             <Label
                                                 HorizontalOptions="StartAndExpand"
                                                 Text="{Binding NomUnidadMedida}"
-                                                FontAttributes="Bold"
                                                 TextColor="Black">                                                
                                             </Label>
+                                        </StackLayout>
+                                        <StackLayout
+                                            Orientation="Horizontal">
                                             <Label
-                                                HorizontalOptions="EndAndExpand"
-                                                FontAttributes="Bold"                                            
-                                                Text= "{Binding Stock, StringFormat='{0:N2}'}"
+                                                VerticalOptions="Center"
+                                                Text="Saldo inicial"
+                                                HorizontalOptions="StartAndExpand"
+                                                FontAttributes="Bold"
                                                 TextColor="Black">
                                             </Label>
-                                        </StackLayout>                                        
+                                            <Label                
+                                                Text="{Binding Stock, StringFormat='{0:N2}', Mode=TwoWay}"
+                                                TextColor="Black"
+                                                HorizontalOptions="End">
+                                            </Label>
+                                        </StackLayout>
+                                        <StackLayout
+                                            Orientation="Horizontal">
+                                            <Label
+                                                VerticalOptions="Center"
+                                                Text="Ingresos"
+                                                HorizontalOptions="StartAndExpand"
+                                                FontAttributes="Bold"
+                                                TextColor="Black">
+                                            </Label>
+                                            <Label                
+                                                Text="{Binding Ingresos, StringFormat='{0:N2}', Mode=TwoWay}"
+                                                TextColor="Black"
+                                                HorizontalOptions="End">
+                                            </Label>
+                                        </StackLayout>
+                                        <StackLayout
+                                            Orientation="Horizontal">
+                                            <Label
+                                                VerticalOptions="Center"
+                                                Text="Egresos"
+                                                HorizontalOptions="StartAndExpand"
+                                                FontAttributes="Bold"
+                                                TextColor="Black">
+                                            </Label>
+                                            <Label                
+                                                Text="{Binding Egresos, StringFormat='{0:N2}', Mode=TwoWay}"
+                                                TextColor="Black"
+                                                HorizontalOptions="End">
+                                            </Label>
+                                        </StackLayout>
+                                        <StackLayout
+                                            Orientation="Horizontal">
+                                            <Label
+                                                VerticalOptions="Center"
+                                                Text="Saldo"
+                                                HorizontalOptions="StartAndExpand"
+                                                FontAttributes="Bold"
+                                                TextColor="Black">
+                                            </Label>
+                                            <Label                
+                                                Text="{Binding Saldo, StringFormat='{0:N2}', Mode=TwoWay}"
+                                                FontAttributes="Bold"
+                                                TextColor="Black"
+                                                HorizontalOptions="End">
+                                            </Label>
+                                        </StackLayout>
                                     </StackLayout>
                                 </Grid>
                             </Frame>
