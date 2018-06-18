@@ -16,6 +16,7 @@ namespace Core.Api.Controllers
         // GET: api/Stock
         public IEnumerable<vw_stock_model> Get(string IdUsuario = "")
         {
+            db.SetCommandTimeOut(3000);
             var lst = from s in db.vw_stock
                       join b in db.tbl_usuario_x_bodega
                       on new { s.IdEmpresa, s.IdSucursal, s.IdBodega } equals new { b.IdEmpresa, b.IdSucursal, b.IdBodega }

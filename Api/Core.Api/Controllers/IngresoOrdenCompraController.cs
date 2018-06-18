@@ -15,6 +15,7 @@ namespace Core.Api.Controllers
         // GET: api/IngresoOrdenCompra
         public IEnumerable<tbl_ingreso_oc_model> Get(string IdUsuario = "")
         {
+            db.SetCommandTimeOut(3000);
             var lst = from oc in db.vw_oc_x_aprobar
                       join us in db.tbl_usuario_x_bodega
                       on oc.IdEmpresa equals us.IdEmpresa

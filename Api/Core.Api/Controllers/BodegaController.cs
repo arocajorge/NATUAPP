@@ -15,6 +15,7 @@ namespace Core.Api.Controllers
         Entities_general db = new Entities_general();
         public IEnumerable<tbl_bodega_model> Get(string IdUsuario)
         {
+            db.SetCommandTimeOut(3000);
             IEnumerable<tbl_bodega_model> lst = from u in db.tbl_usuario
                                                 join b in db.tbl_usuario_x_bodega
                                                 on u.IdUsuarioSCI equals b.IdUsuarioSCI

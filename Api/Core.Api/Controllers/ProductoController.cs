@@ -15,6 +15,7 @@ namespace Core.Api.Controllers
         // GET: api/Producto
         public IEnumerable<tbl_producto_model> Get(string IdUsuario)
         {
+            db.SetCommandTimeOut(3000);
             IEnumerable<tbl_producto_model> lst = from p in db.in_Producto
                                                   join tp in db.tbl_producto
                                                   on new { p.IdEmpresa, p.IdProducto} equals new { tp.IdEmpresa, tp.IdProducto}

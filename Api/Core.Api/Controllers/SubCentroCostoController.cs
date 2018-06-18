@@ -15,6 +15,7 @@ namespace Core.Api.Controllers
         // GET: api/SubCentroCosto
         public IEnumerable<tbl_subcentro_costo_model> Get(string IdUsuario)
         {
+            db.SetCommandTimeOut(3000);
             IEnumerable<tbl_subcentro_costo_model> lst = from u in db.tbl_usuario
                                                       join us in db.tbl_usuario_x_subcentro
                                                       on u.IdUsuarioSCI equals us.IdUsuarioSCI

@@ -15,6 +15,7 @@ namespace Core.Api.Controllers
         // GET: api/SCI
         public IEnumerable<tbl_sucursal_model> Get(string IdUsuario)
         {
+            db.SetCommandTimeOut(3000);
             IEnumerable<tbl_sucursal_model> lst = from u in db.tbl_usuario
                                                   join b in db.tbl_usuario_x_bodega
                                                   on u.IdUsuarioSCI equals b.IdUsuarioSCI
