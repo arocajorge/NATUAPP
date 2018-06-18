@@ -26,7 +26,11 @@ namespace Core.Api.Data
         {
             throw new UnintentionalCodeFirstException();
         }
-    
+
+        public void SetCommandTimeOut(int TimeOut)
+        {
+            ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = TimeOut;
+        }
         public virtual DbSet<ct_centro_costo> ct_centro_costo { get; set; }
         public virtual DbSet<ct_centro_costo_sub_centro_costo> ct_centro_costo_sub_centro_costo { get; set; }
         public virtual DbSet<in_Producto> in_Producto { get; set; }
