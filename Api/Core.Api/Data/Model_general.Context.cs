@@ -26,7 +26,6 @@ namespace Core.Api.Data
         {
             throw new UnintentionalCodeFirstException();
         }
-
         public void SetCommandTimeOut(int TimeOut)
         {
             ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = TimeOut;
@@ -46,7 +45,6 @@ namespace Core.Api.Data
         public virtual DbSet<tbl_usuario_x_subcentro> tbl_usuario_x_subcentro { get; set; }
         public virtual DbSet<vw_stock> vw_stock { get; set; }
         public virtual DbSet<in_UnidadMedida_Equiv_conversion> in_UnidadMedida_Equiv_conversion { get; set; }
-        public virtual DbSet<vw_oc_x_aprobar> vw_oc_x_aprobar { get; set; }
         public virtual DbSet<tbl_movimientos> tbl_movimientos { get; set; }
         public virtual DbSet<tbl_movimientos_det> tbl_movimientos_det { get; set; }
         public virtual DbSet<tbl_sincronizacion_turno> tbl_sincronizacion_turno { get; set; }
@@ -54,6 +52,11 @@ namespace Core.Api.Data
         public virtual int sp_revisar_estados_oc()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_revisar_estados_oc");
+        }
+    
+        public virtual ObjectResult<sp_oc_x_aprobar_Result> sp_oc_x_aprobar()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_oc_x_aprobar_Result>("sp_oc_x_aprobar");
         }
     }
 }

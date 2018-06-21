@@ -148,6 +148,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model_general.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Data\sp_oc_x_aprobar_Result.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\tbl_bodega.cs">
       <DependentUpon>Model_general.tt</DependentUpon>
     </Compile>
@@ -182,9 +185,6 @@
       <DependentUpon>Model_general.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\tb_sucursal.cs">
-      <DependentUpon>Model_general.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\vw_oc_x_aprobar.cs">
       <DependentUpon>Model_general.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\vw_stock.cs">

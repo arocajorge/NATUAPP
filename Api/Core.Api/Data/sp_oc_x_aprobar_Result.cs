@@ -10,9 +10,8 @@
 namespace Core.Api.Data
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class vw_oc_x_aprobar
+    public partial class sp_oc_x_aprobar_Result
     {
         public long IdRow { get; set; }
         public int IdEmpresa { get; set; }

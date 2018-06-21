@@ -16,38 +16,27 @@ namespace Core.Api.Controllers
         public IEnumerable<tbl_ingreso_oc_model> Get(string IdUsuario = "")
         {
             db.SetCommandTimeOut(3000);
-            var lst = from oc in db.vw_oc_x_aprobar
-                      join us in db.tbl_usuario_x_bodega
-                      on oc.IdEmpresa equals us.IdEmpresa
-                      where us.IdUsuarioSCI == IdUsuario
-                      group oc by new
-                      {
-                          oc.IdEmpresa, oc.IdSucursal, oc.IdOrdenCompra, oc.Secuencia,
-                          oc.IdProducto, oc.IdUnidadMedida, oc.IdProveedor, oc.cant_oc,
-                          oc.cant_in, oc.saldo, oc.pr_descripcion, oc.pr_codigo,
-                          oc.Descripcion, oc.pe_nombreCompleto, oc.oc_fecha,
-                          oc.oc_observacion, oc.IdUnidadMedida_Consumo
-                      } into grouping
-                      select new tbl_ingreso_oc_model
-                      {
-                          IdEmpresa = grouping.Key.IdEmpresa,
-                          IdSucursal = grouping.Key.IdSucursal,
-                          IdOrdenCompra = grouping.Key.IdOrdenCompra,
-                          Secuencia = grouping.Key.Secuencia,
-                          IdProducto = grouping.Key.IdProducto,
-                          IdUnidadMedida = grouping.Key.IdUnidadMedida,
-                          IdProveedor = grouping.Key.IdProveedor,
-                          cantidad_oc = grouping.Key.cant_oc,
-                          cantidad_in = grouping.Key.cant_in,
-                          saldo = grouping.Key.saldo,
-                          nom_producto = grouping.Key.pr_descripcion,
-                          cod_producto = grouping.Key.pr_codigo,
-                          nom_proveedor = grouping.Key.pe_nombreCompleto,
-                          nom_unidad_medida = grouping.Key.Descripcion,
-                          oc_fecha = grouping.Key.oc_fecha,
-                          oc_observacion = grouping.Key.oc_observacion,
-                          IdUnidadMedida_Consumo = grouping.Key.IdUnidadMedida_Consumo
-                      };
+            var lst = (from q in db.sp_oc_x_aprobar()
+                       select new tbl_ingreso_oc_model
+                       {
+                           IdEmpresa = q.IdEmpresa,
+                           IdSucursal = q.IdSucursal,
+                           IdOrdenCompra = q.IdOrdenCompra,
+                           Secuencia = q.Secuencia,
+                           IdProducto = q.IdProducto,
+                           IdUnidadMedida = q.IdUnidadMedida,
+                           cantidad_in = q.cant_in,
+                           cantidad_oc = q.cant_oc,
+                           saldo = q.saldo,
+                           IdProveedor = q.IdProveedor,
+                           nom_unidad_medida = q.Descripcion,
+                           nom_proveedor = q.pe_nombreCompleto,
+                           nom_producto = q.pr_descripcion,
+                           cod_producto = q.pr_codigo,
+                           oc_fecha = q.oc_fecha,
+                           IdUnidadMedida_Consumo = q.IdUnidadMedida_Consumo,
+                           oc_observacion = q.oc_observacion
+                       }).ToList();
             return lst;
         }
 

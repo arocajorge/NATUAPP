@@ -36,7 +36,6 @@
         <EntityTypeShape EntityType="Model_general.in_UnidadMedida_Equiv_conversion" Width="1.5" PointX="3" PointY="0.75" />
         <AssociationConnector Association="Model_general.FK_in_UnidadMedida_Equiv_conversion_in_UnidadMedida" />
         <AssociationConnector Association="Model_general.FK_in_UnidadMedida_Equiv_conversion_in_UnidadMedida1" />
-        <EntityTypeShape EntityType="Model_general.vw_oc_x_aprobar" Width="1.5" PointX="10.375" PointY="12.75" />
         <EntityTypeShape EntityType="Model_general.tbl_movimientos" Width="1.5" PointX="12.375" PointY="14.25" />
         <EntityTypeShape EntityType="Model_general.tbl_movimientos_det" Width="1.5" PointX="14.625" PointY="13" />
         <AssociationConnector Association="Model_general.FK_tbl_movimientos_det_tbl_movimientos" />
