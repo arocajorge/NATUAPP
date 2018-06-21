@@ -10,10 +10,10 @@
 namespace Core.Api.Data
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class vw_stock
+    public partial class sp_stock_Result
     {
+        public decimal IdRow { get; set; }
         public int IdEmpresa { get; set; }
         public int IdSucursal { get; set; }
         public int IdBodega { get; set; }

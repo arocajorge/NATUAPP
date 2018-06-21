@@ -17,22 +17,19 @@ namespace Core.Api.Controllers
         public IEnumerable<vw_stock_model> Get(string IdUsuario = "")
         {
             db.SetCommandTimeOut(3000);
-            var lst = from s in db.vw_stock
-                      join b in db.tbl_usuario_x_bodega
-                      on new { s.IdEmpresa, s.IdSucursal, s.IdBodega } equals new { b.IdEmpresa, b.IdSucursal, b.IdBodega }
-                      where b.IdUsuarioSCI == IdUsuario
-                      select new vw_stock_model
-                      {
-                          IdEmpresa = s.IdEmpresa,
-                          IdSucursal = s.IdSucursal,
-                          IdBodega = s.IdBodega,
-                          IdProducto = s.IdProducto,
-                          CodProducto = s.CodProducto,
-                          NomProducto = s.NomProducto,
-                          IdUnidadMedida_Consumo = s.IdUnidadMedida_Consumo,
-                          Stock = s.Stock,
-                          NomUnidadMedida = s.NomUnidadMedida
-                      };
+            var lst = (from q in db.sp_stock(IdUsuario)
+                       select new vw_stock_model
+                       {
+                           IdEmpresa = q.IdEmpresa,
+                           IdSucursal = q.IdSucursal,
+                           IdBodega = q.IdBodega,
+                           IdProducto = q.IdProducto,
+                           CodProducto = q.CodProducto,
+                           NomProducto = q.NomProducto,
+                           IdUnidadMedida_Consumo = q.IdUnidadMedida_Consumo,
+                           Stock = q.Stock,
+                           NomUnidadMedida = q.NomUnidadMedida,
+                       }).ToList();
             return lst;
         }
 

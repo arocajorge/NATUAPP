@@ -21,15 +21,16 @@ namespace Core.Api.Data
             : base("name=Entities_general")
         {
         }
-    
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            throw new UnintentionalCodeFirstException();
-        }
         public void SetCommandTimeOut(int TimeOut)
         {
             ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = TimeOut;
         }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            throw new UnintentionalCodeFirstException();
+        }
+    
         public virtual DbSet<ct_centro_costo> ct_centro_costo { get; set; }
         public virtual DbSet<ct_centro_costo_sub_centro_costo> ct_centro_costo_sub_centro_costo { get; set; }
         public virtual DbSet<in_Producto> in_Producto { get; set; }
@@ -43,7 +44,6 @@ namespace Core.Api.Data
         public virtual DbSet<tbl_usuario> tbl_usuario { get; set; }
         public virtual DbSet<tbl_usuario_x_bodega> tbl_usuario_x_bodega { get; set; }
         public virtual DbSet<tbl_usuario_x_subcentro> tbl_usuario_x_subcentro { get; set; }
-        public virtual DbSet<vw_stock> vw_stock { get; set; }
         public virtual DbSet<in_UnidadMedida_Equiv_conversion> in_UnidadMedida_Equiv_conversion { get; set; }
         public virtual DbSet<tbl_movimientos> tbl_movimientos { get; set; }
         public virtual DbSet<tbl_movimientos_det> tbl_movimientos_det { get; set; }
@@ -57,6 +57,15 @@ namespace Core.Api.Data
         public virtual ObjectResult<sp_oc_x_aprobar_Result> sp_oc_x_aprobar()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_oc_x_aprobar_Result>("sp_oc_x_aprobar");
+        }
+    
+        public virtual ObjectResult<sp_stock_Result> sp_stock(string idUsuario)
+        {
+            var idUsuarioParameter = idUsuario != null ?
+                new ObjectParameter("IdUsuario", idUsuario) :
+                new ObjectParameter("IdUsuario", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_stock_Result>("sp_stock", idUsuarioParameter);
         }
     }
 }

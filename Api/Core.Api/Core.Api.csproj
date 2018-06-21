@@ -151,6 +151,9 @@
     <Compile Include="Data\sp_oc_x_aprobar_Result.cs">
       <DependentUpon>Model_general.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\sp_stock_Result.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\tbl_bodega.cs">
       <DependentUpon>Model_general.tt</DependentUpon>
     </Compile>
@@ -185,9 +188,6 @@
       <DependentUpon>Model_general.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\tb_sucursal.cs">
-      <DependentUpon>Model_general.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\vw_stock.cs">
       <DependentUpon>Model_general.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
