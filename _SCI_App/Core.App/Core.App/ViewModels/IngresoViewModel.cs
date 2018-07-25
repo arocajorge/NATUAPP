@@ -15,6 +15,7 @@ namespace Core.App.ViewModels
         private DataAccess data;
         private bool _RecibirTodo;
         private double _CantidadApro;
+        private bool _IsVisible;
         #endregion
 
         #region Propiedades
@@ -42,6 +43,11 @@ namespace Core.App.ViewModels
                     CantidadApro = Ingreso.Saldo;
             }
         }
+        public bool IsVisible
+        {
+            get { return this._IsVisible; }
+            set { SetValue(ref this._IsVisible, value); }
+        }
         #endregion
 
         #region Constructores
@@ -53,9 +59,13 @@ namespace Core.App.ViewModels
             {
                 Ingreso.FechaApro = DateTime.Now.Date;
                 Ingreso.CantidadApro = 0;
+                IsVisible = false;
             }
             else
+            {
                 CantidadApro = Ingreso.CantidadApro;
+                IsVisible = true;
+            }
             IsEnabled = true;
         }
         #endregion
@@ -64,6 +74,11 @@ namespace Core.App.ViewModels
         public ICommand GuardarCommand
         {
             get { return new RelayCommand(Guardar); }
+        }
+
+        public ICommand EliminarCommand
+        {
+            get { return new RelayCommand(Eliminar); }
         }
 
         private async void Guardar()
@@ -89,6 +104,27 @@ namespace Core.App.ViewModels
             MainViewModel.GetInstance().Stock.cargar_stock();
             MainViewModel.GetInstance().AprobacionIngresos.CargarLista();
             await App.Navigator.Navigation.PopAsync();
+        }
+
+        private async void Eliminar()
+        {
+            IsEnabled = false;
+
+            var answer = await Application.Current.MainPage.DisplayAlert("Eliminar", "¿Está seguro que desea eliminar el registro?", "Si", "No");
+            if (answer)
+            {
+                data.DeleteIngreso(Ingreso.PKSQLite);
+                IsEnabled = true;
+                await Application.Current.MainPage.DisplayAlert(
+                "Exito",
+                "Registro eliminado exitósamente",
+                "Aceptar");
+                MainViewModel.GetInstance().Stock.cargar_stock();
+                MainViewModel.GetInstance().AprobacionIngresos.CargarLista();
+                await App.Navigator.Navigation.PopAsync();
+            }
+
+            IsEnabled = true;
         }
         #endregion
     }

@@ -182,6 +182,31 @@ namespace Core.App.ViewModels
             }
         }          
 
+        public ICommand CerrarSessionCommand
+        {
+            get
+            {
+                return new RelayCommand(CerrarSession);
+            }
+        }
+
+        private void CerrarSession()
+        {
+            #region Limpio los settings
+            Settings.IdEmpresa = 0;
+            Settings.IdSucursal = 0;
+            Settings.IdBodega = 0;
+            Settings.IdCentroCosto = "0";
+            Settings.NomEmpresa = string.Empty;
+            Settings.NomSucursal = string.Empty;
+            Settings.NomBodega = string.Empty;
+            Settings.NomCentroCosto = string.Empty;
+            Settings.IdUsuario = string.Empty;
+            #endregion
+            MainViewModel.GetInstance().Login = new LoginViewModel();
+            Application.Current.MainPage = new NavigationPage(new LoginPage());
+        }
+
         private async void Parametrizar()
         {
             this.IsEnabled = false;

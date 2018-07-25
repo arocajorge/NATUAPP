@@ -112,6 +112,16 @@
         {
             this.connection.Table<EgresoModel>().Delete(q => q.PKSQLite == PKSQLite);
         }
+        public void DeleteIngreso(int PKSQLite)
+        {
+            var ingreso = this.connection.Table<IngresoOrdenCompraModel>().Where(q => q.PKSQLite == PKSQLite).FirstOrDefault();
+            if (ingreso == null)
+                return;
+            ingreso.CantidadApro = 0;
+            ingreso.CantidadApro_convertida = 0;
+            ingreso.FechaApro = DateTime.MinValue;
+            this.connection.Update(ingreso);
+        }
 
         public void DeleteAll<T>()
         {

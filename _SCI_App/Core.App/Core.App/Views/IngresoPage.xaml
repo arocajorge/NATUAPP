@@ -109,6 +109,15 @@
                         VerticalOptions="End"
                         Text="Guardar">
                     </Button>
+                    <Button
+                        BackgroundColor="Red"
+                        TextColor="White"
+                        IsVisible="{Binding IsVisible, Mode=TwoWay}"
+                        Command="{Binding EliminarCommand}"
+                        IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                        VerticalOptions="End"
+                        Text="Eliminar">
+                    </Button>
                 </StackLayout>
             </ScrollView>
         </StackLayout>

@@ -68,6 +68,13 @@
                     IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
                     Command="{Binding ParametrizarCommand}">
                 </Button>
+                <Button
+                    Text="Cerrar Sesión"
+                    BackgroundColor="Default"
+                    TextColor="Default"
+                    IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                    Command="{Binding CerrarSessionCommand}">
+                </Button>
             </StackLayout>            
         </ScrollView>
     </ContentPage.Content>
