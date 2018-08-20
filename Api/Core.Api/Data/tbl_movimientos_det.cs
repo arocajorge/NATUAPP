@@ -31,6 +31,7 @@ namespace Core.Api.Data
         public Nullable<int> secuencia_oc { get; set; }
         public bool Aprobado { get; set; }
         public string Estado { get; set; }
+        public decimal Peso { get; set; }
     
         public virtual tbl_movimientos tbl_movimientos { get; set; }
     }

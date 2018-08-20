@@ -84,7 +84,8 @@ namespace Core.Api.Controllers
                             IdOrdenCompra = item.IdOrdenCompra,
                             secuencia_oc = item.secuencia_oc,
                             Aprobado = false,
-                            Estado = "A"
+                            Estado = "A",
+                            Peso = item.Peso
                         };
                         db.tbl_movimientos_det.Add(Entity_det);
                     }

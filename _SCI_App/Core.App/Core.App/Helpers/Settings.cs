@@ -22,6 +22,7 @@
         const string nomBodega = "nomBodega";
         const string idCentroCosto = "idCentroCosto";
         const string nomCentroCosto = "nomCentroCosto";
+        const string selectedindexSCC = "selectedindexSCC";
         static readonly string stringDefault = string.Empty;
         static readonly int intDefault = 0;
         public static string UrlConexion
@@ -68,6 +69,17 @@
             set
             {
                 AppSettings.AddOrUpdateValue(idEmpresa, value);
+            }
+        }
+        public static int SelectedIndexSCC
+        {
+            get
+            {
+                return AppSettings.GetValueOrDefault(selectedindexSCC, intDefault);
+            }
+            set
+            {
+                AppSettings.AddOrUpdateValue(selectedindexSCC, value);
             }
         }
 

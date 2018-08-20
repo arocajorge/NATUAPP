@@ -57,6 +57,7 @@
                 OldModel.NomProducto = model.NomProducto;
                 OldModel.NomSubCentro = model.NomSubCentro;
                 OldModel.NomUnidadMedida = model.NomUnidadMedida;
+                OldModel.Peso = model.Peso;
                 this.connection.Update(OldModel);
             }
         }
@@ -84,7 +85,7 @@
                 OldModel.IdSucursal_apro = Settings.IdSucursal;
                 OldModel.IdBodega = Settings.IdBodega;
                 OldModel.CantidadApro = model.CantidadApro;
-                OldModel.FechaApro = model.FechaApro;
+                OldModel.FechaApro = model.FechaApro;                
                 this.connection.Update(OldModel);
             }
         }
@@ -167,7 +168,9 @@
                     IdEmpresa_oc = ingreso.IdEmpresa,
                     IdSucursal_oc = ingreso.IdSucursal,
                     IdOrdenCompra = ingreso.IdOrdenCompra,
-                    secuencia_oc = ingreso.Secuencia
+                    secuencia_oc = ingreso.Secuencia,
+
+                    Peso = 0
                 };
                 Model.lst_det.Add(det);
             }
@@ -190,7 +193,9 @@
                     IdEmpresa_oc = null,
                     IdSucursal_oc = null,
                     IdOrdenCompra = null,
-                    secuencia_oc = null
+                    secuencia_oc = null,
+
+                    Peso = egreso.Peso
                 };
                 Model.lst_det.Add(det);
             }
@@ -237,7 +242,7 @@
 
         public List<SubCentroCostoModel> GetListSubCentroCosto(int IdEmpresa, string IdCentroCosto)
         {
-            return this.connection.Table<SubCentroCostoModel>().Where(q => q.IdEmpresa == IdEmpresa && q.IdCentroCosto == IdCentroCosto).ToList();
+            return this.connection.Table<SubCentroCostoModel>().Where(q => q.IdEmpresa == IdEmpresa && q.IdCentroCosto == IdCentroCosto).OrderBy(q=>q.Nom_subcentro).ToList();
         }
 
         public List<ProductoModel> GetListProducto(int IdEmpresa)
@@ -247,13 +252,20 @@
 
         public List<IngresoOrdenCompraModel> GetListIngresoOrdenCompra(int IdEmpresa, int IdSucursal, int IdBodega, bool MostrarAprobados = false)
         {
-            if(!MostrarAprobados)
-                return this.connection.Table<IngresoOrdenCompraModel>().Where(q=>q.IdEmpresa == IdEmpresa && q.CantidadApro == 0).OrderBy(q=>q.NomProducto).ToList();
+            List<IngresoOrdenCompraModel> Lista;
+            if (!MostrarAprobados)
+            {
+                Lista = this.connection.Table<IngresoOrdenCompraModel>().Where(q => q.IdEmpresa == IdEmpresa && q.CantidadApro == 0).OrderBy(q => q.NomProducto).ToList();
+            }
             else
+            {
                 if (IdEmpresa != 0)
-                    return this.connection.Table<IngresoOrdenCompraModel>().Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal_apro == IdSucursal && q.IdBodega == IdBodega && q.CantidadApro > 0).OrderBy(q=>q.NomProducto).ToList();
-            else
-                return this.connection.Table<IngresoOrdenCompraModel>().Where(q => q.CantidadApro > 0).OrderBy(q=>q.NomProducto).ToList();
+                    Lista = this.connection.Table<IngresoOrdenCompraModel>().Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal_apro == IdSucursal && q.IdBodega == IdBodega && q.CantidadApro > 0).OrderBy(q => q.NomProducto).ToList();
+                else
+                    Lista = this.connection.Table<IngresoOrdenCompraModel>().Where(q => q.CantidadApro > 0).OrderBy(q => q.NomProducto).ToList();
+            }
+            Lista.ForEach(q => q.CantidadOcConsulta = q.CantidadApro > 0 ? q.CantidadApro : q.Saldo);
+            return Lista;
         }
 
         public List<UnidadMedidaModel> GetListUnidadMedida()

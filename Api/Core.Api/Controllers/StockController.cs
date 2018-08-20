@@ -29,6 +29,7 @@ namespace Core.Api.Controllers
                            IdUnidadMedida_Consumo = q.IdUnidadMedida_Consumo,
                            Stock = q.Stock,
                            NomUnidadMedida = q.NomUnidadMedida,
+                           CodProdProducto = q.CodProdProducto
                        }).ToList();
             return lst;
         }

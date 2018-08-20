@@ -49,6 +49,16 @@
                                         <StackLayout
                                             Orientation="Horizontal">
                                             <Label
+                                                FontAttributes="Bold"
+                                                Text="{Binding CodProdProducto}"
+                                                TextColor="Black">                                                
+                                            </Label>
+                                            <Label                                                
+                                                Text="{Binding CodProducto}"
+                                                TextColor="Black">
+                                            </Label>
+                                            <Label
+                                                HorizontalTextAlignment="End"
                                                 HorizontalOptions="StartAndExpand"
                                                 Text="{Binding NomUnidadMedida}"
                                                 TextColor="Black">                                                

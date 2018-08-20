@@ -93,7 +93,7 @@
                                             <Label
                                                 HorizontalOptions="EndAndExpand"
                                                 FontAttributes="Bold"                                            
-                                                Text= "{Binding Saldo, StringFormat='{0:N2}'}"
+                                                Text= "{Binding CantidadOcConsulta, StringFormat='{0:N2}'}"
                                                 TextColor="Black">
                                             </Label>
                                         </StackLayout>

@@ -23,5 +23,7 @@ namespace Core.Api.Data
         public string IdUnidadMedida_Consumo { get; set; }
         public double Stock { get; set; }
         public string NomUnidadMedida { get; set; }
+        public string CodProdProducto { get; set; }
+        public string CodProdSubcentro { get; set; }
     }
 }

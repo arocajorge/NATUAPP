@@ -261,6 +261,7 @@
           <Property Name="secuencia_oc" Type="int" />
           <Property Name="Aprobado" Type="bit" Nullable="false" />
           <Property Name="Estado" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="Peso" Type="numeric" Precision="18" Scale="0" Nullable="false" />
         </EntityType>
         <EntityType Name="tbl_producto">
           <Key>
@@ -322,8 +323,6 @@
           <Property Name="IdCentroCosto" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="IdCentroCosto_sub_centro_costo" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_NAT_PROD.mobileSCI.vw_stock' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <Association Name="FK_ct_centro_costo_ct_centro_costo">
           <End Role="ct_centro_costo" Type="Self.ct_centro_costo" Multiplicity="0..1" />
           <End Role="ct_centro_costo1" Type="Self.ct_centro_costo" Multiplicity="*" />
@@ -1217,14 +1216,14 @@ advertencia 6002: La tabla o vista 'DBERP_NAT_PROD.mobileSCI.vw_stock' no tiene 
             <End Role="in_UnidadMedida_Equiv_conversion" EntitySet="in_UnidadMedida_Equiv_conversion" />
           </AssociationSet>
           <EntitySet Name="tbl_movimientos" EntityType="Model_general.tbl_movimientos" />
+          <EntitySet Name="tbl_sincronizacion_turno" EntityType="Model_general.tbl_sincronizacion_turno" />
+          <FunctionImport Name="sp_revisar_estados_oc" />
+          <FunctionImport Name="sp_oc_x_aprobar" ReturnType="Collection(Model_general.sp_oc_x_aprobar_Result)" />
           <EntitySet Name="tbl_movimientos_det" EntityType="Model_general.tbl_movimientos_det" />
           <AssociationSet Name="FK_tbl_movimientos_det_tbl_movimientos" Association="Model_general.FK_tbl_movimientos_det_tbl_movimientos">
             <End Role="tbl_movimientos" EntitySet="tbl_movimientos" />
             <End Role="tbl_movimientos_det" EntitySet="tbl_movimientos_det" />
           </AssociationSet>
-          <EntitySet Name="tbl_sincronizacion_turno" EntityType="Model_general.tbl_sincronizacion_turno" />
-          <FunctionImport Name="sp_revisar_estados_oc" />
-          <FunctionImport Name="sp_oc_x_aprobar" ReturnType="Collection(Model_general.sp_oc_x_aprobar_Result)" />
           <FunctionImport Name="sp_stock" ReturnType="Collection(Model_general.sp_stock_Result)">
             <Parameter Name="IdUsuario" Mode="In" Type="String" />
           </FunctionImport>
@@ -1275,42 +1274,6 @@ advertencia 6002: La tabla o vista 'DBERP_NAT_PROD.mobileSCI.vw_stock' no tiene 
           <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="tbl_movimientos_det" Relationship="Model_general.FK_tbl_movimientos_det_tbl_movimientos" FromRole="tbl_movimientos" ToRole="tbl_movimientos_det" />
         </EntityType>
-        <EntityType Name="tbl_movimientos_det">
-          <Key>
-            <PropertyRef Name="IdSincronizacion" />
-            <PropertyRef Name="IdSecuencia" />
-          </Key>
-          <Property Name="IdSincronizacion" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="IdSecuencia" Type="Int32" Nullable="false" />
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
-          <Property Name="IdBodega" Type="Int32" Nullable="false" />
-          <Property Name="IdProducto" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="IdUnidadMedida" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="IdCentroCosto" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="IdCentroCosto_sub_centro_costo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="cantidad" Type="Double" Nullable="false" />
-          <Property Name="IdEmpresa_oc" Type="Int32" />
-          <Property Name="IdSucursal_oc" Type="Int32" />
-          <Property Name="IdOrdenCompra" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="secuencia_oc" Type="Int32" />
-          <Property Name="Aprobado" Type="Boolean" Nullable="false" />
-          <Property Name="Estado" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="tbl_movimientos" Relationship="Model_general.FK_tbl_movimientos_det_tbl_movimientos" FromRole="tbl_movimientos_det" ToRole="tbl_movimientos" />
-        </EntityType>
-        <Association Name="FK_tbl_movimientos_det_tbl_movimientos">
-          <End Type="Model_general.tbl_movimientos" Role="tbl_movimientos" Multiplicity="1" />
-          <End Type="Model_general.tbl_movimientos_det" Role="tbl_movimientos_det" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tbl_movimientos">
-              <PropertyRef Name="IdSincronizacion" />
-            </Principal>
-            <Dependent Role="tbl_movimientos_det">
-              <PropertyRef Name="IdSincronizacion" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="tbl_sincronizacion_turno">
           <Key>
             <PropertyRef Name="IdSincronizacion" />
@@ -1339,6 +1302,43 @@ advertencia 6002: La tabla o vista 'DBERP_NAT_PROD.mobileSCI.vw_stock' no tiene 
           <Property Type="String" Name="oc_observacion" Nullable="false" MaxLength="1000" />
           <Property Type="String" Name="IdUnidadMedida_Consumo" Nullable="false" MaxLength="25" />
         </ComplexType>
+        <EntityType Name="tbl_movimientos_det">
+          <Key>
+            <PropertyRef Name="IdSincronizacion" />
+            <PropertyRef Name="IdSecuencia" />
+          </Key>
+          <Property Name="IdSincronizacion" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdSecuencia" Type="Int32" Nullable="false" />
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdBodega" Type="Int32" Nullable="false" />
+          <Property Name="IdProducto" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdUnidadMedida" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="IdCentroCosto" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdCentroCosto_sub_centro_costo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="cantidad" Type="Double" Nullable="false" />
+          <Property Name="IdEmpresa_oc" Type="Int32" />
+          <Property Name="IdSucursal_oc" Type="Int32" />
+          <Property Name="IdOrdenCompra" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="secuencia_oc" Type="Int32" />
+          <Property Name="Aprobado" Type="Boolean" Nullable="false" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Peso" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <NavigationProperty Name="tbl_movimientos" Relationship="Model_general.FK_tbl_movimientos_det_tbl_movimientos" FromRole="tbl_movimientos_det" ToRole="tbl_movimientos" />
+        </EntityType>
+        <Association Name="FK_tbl_movimientos_det_tbl_movimientos">
+          <End Type="Model_general.tbl_movimientos" Role="tbl_movimientos" Multiplicity="1" />
+          <End Type="Model_general.tbl_movimientos_det" Role="tbl_movimientos_det" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_movimientos">
+              <PropertyRef Name="IdSincronizacion" />
+            </Principal>
+            <Dependent Role="tbl_movimientos_det">
+              <PropertyRef Name="IdSincronizacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <ComplexType Name="sp_stock_Result">
           <Property Type="Decimal" Name="IdRow" Nullable="false" Precision="18" Scale="0" />
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -1350,6 +1350,8 @@ advertencia 6002: La tabla o vista 'DBERP_NAT_PROD.mobileSCI.vw_stock' no tiene 
           <Property Type="String" Name="IdUnidadMedida_Consumo" Nullable="false" MaxLength="25" />
           <Property Type="Double" Name="Stock" Nullable="false" />
           <Property Type="String" Name="NomUnidadMedida" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="CodProdProducto" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CodProdSubcentro" Nullable="true" MaxLength="50" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1645,29 +1647,6 @@ advertencia 6002: La tabla o vista 'DBERP_NAT_PROD.mobileSCI.vw_stock' no tiene 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tbl_movimientos_det">
-            <EntityTypeMapping TypeName="Model_general.tbl_movimientos_det">
-              <MappingFragment StoreEntitySet="tbl_movimientos_det">
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="Aprobado" ColumnName="Aprobado" />
-                <ScalarProperty Name="secuencia_oc" ColumnName="secuencia_oc" />
-                <ScalarProperty Name="IdOrdenCompra" ColumnName="IdOrdenCompra" />
-                <ScalarProperty Name="IdSucursal_oc" ColumnName="IdSucursal_oc" />
-                <ScalarProperty Name="IdEmpresa_oc" ColumnName="IdEmpresa_oc" />
-                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
-                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-                <ScalarProperty Name="IdCentroCosto_sub_centro_costo" ColumnName="IdCentroCosto_sub_centro_costo" />
-                <ScalarProperty Name="IdCentroCosto" ColumnName="IdCentroCosto" />
-                <ScalarProperty Name="IdUnidadMedida" ColumnName="IdUnidadMedida" />
-                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
-                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
-                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-                <ScalarProperty Name="IdSecuencia" ColumnName="IdSecuencia" />
-                <ScalarProperty Name="IdSincronizacion" ColumnName="IdSincronizacion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tbl_sincronizacion_turno">
             <EntityTypeMapping TypeName="Model_general.tbl_sincronizacion_turno">
               <MappingFragment StoreEntitySet="tbl_sincronizacion_turno">
@@ -1702,6 +1681,30 @@ advertencia 6002: La tabla o vista 'DBERP_NAT_PROD.mobileSCI.vw_stock' no tiene 
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="tbl_movimientos_det">
+            <EntityTypeMapping TypeName="Model_general.tbl_movimientos_det">
+              <MappingFragment StoreEntitySet="tbl_movimientos_det">
+                <ScalarProperty Name="Peso" ColumnName="Peso" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Aprobado" ColumnName="Aprobado" />
+                <ScalarProperty Name="secuencia_oc" ColumnName="secuencia_oc" />
+                <ScalarProperty Name="IdOrdenCompra" ColumnName="IdOrdenCompra" />
+                <ScalarProperty Name="IdSucursal_oc" ColumnName="IdSucursal_oc" />
+                <ScalarProperty Name="IdEmpresa_oc" ColumnName="IdEmpresa_oc" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="IdCentroCosto_sub_centro_costo" ColumnName="IdCentroCosto_sub_centro_costo" />
+                <ScalarProperty Name="IdCentroCosto" ColumnName="IdCentroCosto" />
+                <ScalarProperty Name="IdUnidadMedida" ColumnName="IdUnidadMedida" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdSecuencia" ColumnName="IdSecuencia" />
+                <ScalarProperty Name="IdSincronizacion" ColumnName="IdSincronizacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="sp_stock" FunctionName="Model_general.Store.sp_stock">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Model_general.sp_stock_Result">
@@ -1715,6 +1718,8 @@ advertencia 6002: La tabla o vista 'DBERP_NAT_PROD.mobileSCI.vw_stock' no tiene 
                 <ScalarProperty Name="IdUnidadMedida_Consumo" ColumnName="IdUnidadMedida_Consumo" />
                 <ScalarProperty Name="Stock" ColumnName="Stock" />
                 <ScalarProperty Name="NomUnidadMedida" ColumnName="NomUnidadMedida" />
+                <ScalarProperty Name="CodProdProducto" ColumnName="CodProdProducto" />
+                <ScalarProperty Name="CodProdSubcentro" ColumnName="CodProdSubcentro" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

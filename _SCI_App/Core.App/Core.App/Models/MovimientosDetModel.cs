@@ -35,5 +35,7 @@ namespace Core.App.Models
         public Nullable<decimal> IdOrdenCompra { get; set; }
         [JsonProperty("secuencia_oc")]
         public Nullable<int> secuencia_oc { get; set; }
+        [JsonProperty("Peso")]
+        public decimal Peso { get; set; }
     }
 }

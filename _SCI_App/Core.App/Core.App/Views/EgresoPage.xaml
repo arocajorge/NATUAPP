@@ -56,6 +56,16 @@
                             Keyboard="Numeric"
                             Text="{Binding Egreso.Cantidad, Mode=TwoWay}">
                         </Entry>
+                        <Label 
+                            TextColor="Black"
+                            FontAttributes="Bold"
+                            Text="Peso">
+                        </Label>
+                        <Entry
+                            Placeholder="Ingrese el peso"
+                            Keyboard="Numeric"
+                            Text="{Binding Egreso.Peso, Mode=TwoWay}">
+                        </Entry>
                     <ActivityIndicator
                     IsRunning="False"
                     VerticalOptions="CenterAndExpand">

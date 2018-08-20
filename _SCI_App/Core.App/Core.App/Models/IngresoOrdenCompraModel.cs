@@ -65,6 +65,7 @@ namespace Core.App.Models
         public int IdSucursal_apro { get; set; }
         public int IdBodega { get; set; }
         public double CantidadApro_convertida { get; set; }
+        public double CantidadOcConsulta { get; set; }
         public override int GetHashCode()
         {
             return PKSQLite;

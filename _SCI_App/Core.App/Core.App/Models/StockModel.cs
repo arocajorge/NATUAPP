@@ -33,6 +33,9 @@ namespace Core.App.Models
 
         [JsonProperty("NomUnidadMedida")]
         public string NomUnidadMedida { get; set; }
+        [JsonProperty("CodProdProducto")]
+        public string CodProdProducto { get; set; }
+
         public double Ingresos { get; set; }
         public double Egresos { get; set; }
         public double Saldo { get; set; }
