@@ -28,6 +28,7 @@
                 connection.CreateTable<UnidadMedidaModel>();
                 connection.CreateTable<StockModel>();
                 connection.CreateTable<EgresoModel>();
+                connection.CreateTable<ConsumoSemanalModel>();
             }
             catch (Exception ex)
             {
@@ -272,7 +273,10 @@
         {
             return this.connection.Table<UnidadMedidaModel>().ToList();
         }
-
+        public List<ConsumoSemanalModel> GetListConsumoSemanal(int IdEmpresa, int IdSucursal, int IdBodega, string IdCentroCosto)
+        {
+            return this.connection.Table<ConsumoSemanalModel>().Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.IdBodega == IdBodega && q.IdCentroCosto == IdCentroCosto).OrderBy(q => q.NomProducto).ThenBy(q=>q.NomSubCentro).ToList();
+        }
         public List<StockModel> GetListStock(int IdEmpresa, int IdSucursal, int IdBodega)
         {
             var lst_stock = this.connection.Table<StockModel>().Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.IdBodega == IdBodega).ToList();

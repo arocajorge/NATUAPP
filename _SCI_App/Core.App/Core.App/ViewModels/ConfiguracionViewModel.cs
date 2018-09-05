@@ -315,6 +315,25 @@ namespace Core.App.ViewModels
             data.InsertAll<IngresoOrdenCompraModel>(list_oc);
             #endregion
 
+            #region ConsumoSemanal
+            var response_cs = await apiService.GetList<ConsumoSemanalModel>(UrlServidor, RutaCarpeta, "ConsumoSemanal", usuario);
+            if (!response_cs.IsSuccess)
+            {
+                this.IsEnabled = true;
+                this.IsRunning = false;
+                await Application.Current.MainPage.DisplayAlert(
+                    "Alerta",
+                    response_cs.Message,
+                    "Aceptar");
+                return;
+            }
+            var list_cs = (List<ConsumoSemanalModel>)response_cs.Result;
+            data.DeleteAll<ConsumoSemanalModel>();
+            PKI = 1;
+            list_cs.ForEach(q => { q.PKSQLite = PKI++; q.Lunes = Math.Abs(q.Lunes); q.Martes = Math.Abs(q.Martes); q.Miercoles = Math.Abs(q.Miercoles); q.Jueves = Math.Abs(q.Jueves); q.Viernes = Math.Abs(q.Viernes); q.Sabado = Math.Abs(q.Sabado); q.Domingo = Math.Abs(q.Domingo); });
+            data.InsertAll<ConsumoSemanalModel>(list_cs);
+            #endregion
+
             #region Limpio los settings
             Settings.IdEmpresa = 0;
             Settings.IdSucursal = 0;

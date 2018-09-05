@@ -1,11 +1,8 @@
-﻿using System;
+﻿using Core.Api.Data;
+using Core.Api.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
-using Core.Api.Data;
-using Core.Api.Models;
 
 namespace Core.Api.Controllers
 {

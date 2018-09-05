@@ -66,5 +66,14 @@ namespace Core.Api.Data
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_stock_Result>("sp_stock", idUsuarioParameter);
         }
+    
+        public virtual ObjectResult<sp_get_consumo_semanal_Result> sp_get_consumo_semanal(string idUsuario)
+        {
+            var idUsuarioParameter = idUsuario != null ?
+                new ObjectParameter("IdUsuario", idUsuario) :
+                new ObjectParameter("IdUsuario", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_get_consumo_semanal_Result>("sp_get_consumo_semanal", idUsuarioParameter);
+        }
     }
 }

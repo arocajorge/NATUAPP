@@ -261,7 +261,7 @@
           <Property Name="secuencia_oc" Type="int" />
           <Property Name="Aprobado" Type="bit" Nullable="false" />
           <Property Name="Estado" Type="varchar" MaxLength="1" Nullable="false" />
-          <Property Name="Peso" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Peso" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="tbl_producto">
           <Key>
@@ -551,6 +551,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="sp_get_consumo_semanal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="mobileSCI">
+          <Parameter Name="IdUsuario" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="sp_oc_x_aprobar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="mobileSCI" />
         <Function Name="sp_revisar_estados_oc" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="mobileSCI" />
         <Function Name="sp_stock" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="mobileSCI">
@@ -1219,12 +1222,15 @@
           <EntitySet Name="tbl_sincronizacion_turno" EntityType="Model_general.tbl_sincronizacion_turno" />
           <FunctionImport Name="sp_revisar_estados_oc" />
           <FunctionImport Name="sp_oc_x_aprobar" ReturnType="Collection(Model_general.sp_oc_x_aprobar_Result)" />
+          <FunctionImport Name="sp_stock" ReturnType="Collection(Model_general.sp_stock_Result)">
+          <Parameter Name="IdUsuario" Mode="In" Type="String" />
+          </FunctionImport>
           <EntitySet Name="tbl_movimientos_det" EntityType="Model_general.tbl_movimientos_det" />
           <AssociationSet Name="FK_tbl_movimientos_det_tbl_movimientos" Association="Model_general.FK_tbl_movimientos_det_tbl_movimientos">
             <End Role="tbl_movimientos" EntitySet="tbl_movimientos" />
             <End Role="tbl_movimientos_det" EntitySet="tbl_movimientos_det" />
           </AssociationSet>
-          <FunctionImport Name="sp_stock" ReturnType="Collection(Model_general.sp_stock_Result)">
+          <FunctionImport Name="sp_get_consumo_semanal" ReturnType="Collection(Model_general.sp_get_consumo_semanal_Result)">
             <Parameter Name="IdUsuario" Mode="In" Type="String" />
           </FunctionImport>
           </EntityContainer>
@@ -1302,6 +1308,20 @@
           <Property Type="String" Name="oc_observacion" Nullable="false" MaxLength="1000" />
           <Property Type="String" Name="IdUnidadMedida_Consumo" Nullable="false" MaxLength="25" />
         </ComplexType>
+        <ComplexType Name="sp_stock_Result">
+          <Property Type="Decimal" Name="IdRow" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
+          <Property Type="Int32" Name="IdSucursal" Nullable="false" />
+          <Property Type="Int32" Name="IdBodega" Nullable="false" />
+          <Property Type="Decimal" Name="IdProducto" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="String" Name="CodProducto" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="NomProducto" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="IdUnidadMedida_Consumo" Nullable="false" MaxLength="25" />
+          <Property Type="Double" Name="Stock" Nullable="false" />
+          <Property Type="String" Name="NomUnidadMedida" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="CodProdProducto" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CodProdSubcentro" Nullable="true" MaxLength="50" />
+        </ComplexType>
         <EntityType Name="tbl_movimientos_det">
           <Key>
             <PropertyRef Name="IdSincronizacion" />
@@ -1324,7 +1344,7 @@
           <Property Name="secuencia_oc" Type="Int32" />
           <Property Name="Aprobado" Type="Boolean" Nullable="false" />
           <Property Name="Estado" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="Peso" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Peso" Type="Double" Nullable="false" />
           <NavigationProperty Name="tbl_movimientos" Relationship="Model_general.FK_tbl_movimientos_det_tbl_movimientos" FromRole="tbl_movimientos_det" ToRole="tbl_movimientos" />
         </EntityType>
         <Association Name="FK_tbl_movimientos_det_tbl_movimientos">
@@ -1339,19 +1359,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <ComplexType Name="sp_stock_Result">
-          <Property Type="Decimal" Name="IdRow" Nullable="false" Precision="18" Scale="0" />
+        <ComplexType Name="sp_get_consumo_semanal_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
           <Property Type="Int32" Name="IdSucursal" Nullable="false" />
           <Property Type="Int32" Name="IdBodega" Nullable="false" />
           <Property Type="Decimal" Name="IdProducto" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="String" Name="CodProducto" Nullable="false" MaxLength="40" />
-          <Property Type="String" Name="NomProducto" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="IdUnidadMedida_Consumo" Nullable="false" MaxLength="25" />
-          <Property Type="Double" Name="Stock" Nullable="false" />
-          <Property Type="String" Name="NomUnidadMedida" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="CodProdProducto" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="CodProdSubcentro" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="IdCentroCosto" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="IdCentroCosto_sub_centro_costo" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="NomProducto" Nullable="false" MaxLength="1000" />
+          <Property Type="String" Name="NomSubCentro" Nullable="false" MaxLength="1000" />
+          <Property Type="Double" Name="LUNES" Nullable="false" />
+          <Property Type="Double" Name="MARTES" Nullable="false" />
+          <Property Type="Double" Name="MIERCOLES" Nullable="false" />
+          <Property Type="Double" Name="JUEVES" Nullable="false" />
+          <Property Type="Double" Name="VIERNES" Nullable="false" />
+          <Property Type="Double" Name="SABADO" Nullable="false" />
+          <Property Type="Double" Name="DOMINGO" Nullable="false" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1681,6 +1704,24 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_stock" FunctionName="Model_general.Store.sp_stock">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model_general.sp_stock_Result">
+                <ScalarProperty Name="IdRow" ColumnName="IdRow" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="CodProducto" ColumnName="CodProducto" />
+                <ScalarProperty Name="NomProducto" ColumnName="NomProducto" />
+                <ScalarProperty Name="IdUnidadMedida_Consumo" ColumnName="IdUnidadMedida_Consumo" />
+                <ScalarProperty Name="Stock" ColumnName="Stock" />
+                <ScalarProperty Name="NomUnidadMedida" ColumnName="NomUnidadMedida" />
+                <ScalarProperty Name="CodProdProducto" ColumnName="CodProdProducto" />
+                <ScalarProperty Name="CodProdSubcentro" ColumnName="CodProdSubcentro" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <EntitySetMapping Name="tbl_movimientos_det">
             <EntityTypeMapping TypeName="Model_general.tbl_movimientos_det">
               <MappingFragment StoreEntitySet="tbl_movimientos_det">
@@ -1705,21 +1746,24 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="sp_stock" FunctionName="Model_general.Store.sp_stock">
+          <FunctionImportMapping FunctionImportName="sp_get_consumo_semanal" FunctionName="Model_general.Store.sp_get_consumo_semanal">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="Model_general.sp_stock_Result">
-                <ScalarProperty Name="IdRow" ColumnName="IdRow" />
+              <ComplexTypeMapping TypeName="Model_general.sp_get_consumo_semanal_Result">
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
                 <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
                 <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
                 <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
-                <ScalarProperty Name="CodProducto" ColumnName="CodProducto" />
+                <ScalarProperty Name="IdCentroCosto" ColumnName="IdCentroCosto" />
+                <ScalarProperty Name="IdCentroCosto_sub_centro_costo" ColumnName="IdCentroCosto_sub_centro_costo" />
                 <ScalarProperty Name="NomProducto" ColumnName="NomProducto" />
-                <ScalarProperty Name="IdUnidadMedida_Consumo" ColumnName="IdUnidadMedida_Consumo" />
-                <ScalarProperty Name="Stock" ColumnName="Stock" />
-                <ScalarProperty Name="NomUnidadMedida" ColumnName="NomUnidadMedida" />
-                <ScalarProperty Name="CodProdProducto" ColumnName="CodProdProducto" />
-                <ScalarProperty Name="CodProdSubcentro" ColumnName="CodProdSubcentro" />
+                <ScalarProperty Name="NomSubCentro" ColumnName="NomSubCentro" />
+                <ScalarProperty Name="LUNES" ColumnName="LUNES" />
+                <ScalarProperty Name="MARTES" ColumnName="MARTES" />
+                <ScalarProperty Name="MIERCOLES" ColumnName="MIERCOLES" />
+                <ScalarProperty Name="JUEVES" ColumnName="JUEVES" />
+                <ScalarProperty Name="VIERNES" ColumnName="VIERNES" />
+                <ScalarProperty Name="SABADO" ColumnName="SABADO" />
+                <ScalarProperty Name="DOMINGO" ColumnName="DOMINGO" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

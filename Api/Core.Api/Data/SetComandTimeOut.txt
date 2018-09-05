@@ -1,0 +1,15 @@
+﻿ public partial class EntitiesContabilidadRptGeneral : DbContext
+    {
+        public EntitiesContabilidadRptGeneral()
+            : base("name=EntitiesContabilidadRptGeneral")
+        {
+            
+        }
+
+
+		//poner esta funcion dentro de la clase entities no viene por defecto
+        public void SetCommandTimeOut(int TimeOut)
+        {
+            ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = TimeOut;
+        }
+    
