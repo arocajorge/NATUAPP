@@ -275,7 +275,9 @@
         }
         public List<ConsumoSemanalModel> GetListConsumoSemanal(int IdEmpresa, int IdSucursal, int IdBodega, string IdCentroCosto)
         {
-            return this.connection.Table<ConsumoSemanalModel>().Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.IdBodega == IdBodega && q.IdCentroCosto == IdCentroCosto).OrderBy(q => q.NomProducto).ThenBy(q=>q.NomSubCentro).ToList();
+            return this.connection.Table<ConsumoSemanalModel>().Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.IdBodega == IdBodega && q.IdCentroCosto == IdCentroCosto
+            && (q.Lunes > 0 || q.Martes > 0 || q.Miercoles > 0 || q.Jueves > 0 || q.Viernes > 0 || q.Domingo > 0 || q.Sabado > 0)
+            ).OrderBy(q => q.NomProducto).ThenBy(q=>q.NomSubCentro).ToList();
         }
         public List<StockModel> GetListStock(int IdEmpresa, int IdSucursal, int IdBodega)
         {

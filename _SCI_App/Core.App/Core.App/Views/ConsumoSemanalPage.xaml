@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Core.App.Views.ConsumoSemanalPage"
+             BindingContext="{Binding Main, Source={StaticResource Locator}}"
+             Title="Consumos semanales"
+             xmlns:dxGrid="clr-namespace:DevExpress.Mobile.DataGrid;assembly=DevExpress.Mobile.Grid.v18.1">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Icon="ic_location_on"
+            Command="{Binding MostrarUbicacionCommand}"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout>
+            <ListView>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <dxGrid:GridControl x:Name="grid" ItemsSource="{Binding lst_consumos}">
+                            <dxGrid:GridControl.Columns>
+                                <dxGrid:TextColumn FieldName="NomProducto" Caption="Producto" IsReadOnly="True" IsGrouped="True"/>
+                                <dxGrid:TextColumn FieldName="NomSubCentro" Caption="SubCentro" IsReadOnly="True"/>
+                                <dxGrid:NumberColumn FieldName="Lunes" Caption="Lunes" IsReadOnly="True" DisplayFormat="N2"/>
+                                <dxGrid:NumberColumn FieldName="Martes" Caption="Martes" IsReadOnly="True" DisplayFormat="N2"/>
+                                <dxGrid:NumberColumn FieldName="Miercoles" Caption="Miercoles" IsReadOnly="True" DisplayFormat="N2"/>
+                                <dxGrid:NumberColumn FieldName="Jueves" Caption="Jueves" IsReadOnly="True" DisplayFormat="N2"/>
+                                <dxGrid:NumberColumn FieldName="Viernes" Caption="Viernes" IsReadOnly="True" DisplayFormat="N2"/>
+                                <dxGrid:NumberColumn FieldName="Sabado" Caption="Sabado" IsReadOnly="True" DisplayFormat="N2"/>
+                                <dxGrid:NumberColumn FieldName="Domingo" Caption="Domingo" IsReadOnly="True" DisplayFormat="N2"/>
+                            </dxGrid:GridControl.Columns>
+                        </dxGrid:GridControl>
+                    </DataTemplate>
+                </ListView.ItemTemplate>                
+            </ListView>            
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
