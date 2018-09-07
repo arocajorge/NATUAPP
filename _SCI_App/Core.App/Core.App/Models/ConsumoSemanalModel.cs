@@ -51,5 +51,7 @@ namespace Core.App.Models
 
         [JsonProperty("DOMINGO")]
         public double Domingo { get; set; }
+        [JsonProperty("TOTAL")]
+        public double Total { get; set; }
     }
 }

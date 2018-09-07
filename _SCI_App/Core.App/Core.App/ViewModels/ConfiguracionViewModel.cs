@@ -330,7 +330,7 @@ namespace Core.App.ViewModels
             var list_cs = (List<ConsumoSemanalModel>)response_cs.Result;
             data.DeleteAll<ConsumoSemanalModel>();
             PKI = 1;
-            list_cs.ForEach(q => { q.PKSQLite = PKI++; q.Lunes = Math.Abs(q.Lunes); q.Martes = Math.Abs(q.Martes); q.Miercoles = Math.Abs(q.Miercoles); q.Jueves = Math.Abs(q.Jueves); q.Viernes = Math.Abs(q.Viernes); q.Sabado = Math.Abs(q.Sabado); q.Domingo = Math.Abs(q.Domingo); });
+            list_cs.ForEach(q => { q.PKSQLite = PKI++; q.Lunes = Math.Abs(q.Lunes); q.Martes = Math.Abs(q.Martes); q.Miercoles = Math.Abs(q.Miercoles); q.Jueves = Math.Abs(q.Jueves); q.Viernes = Math.Abs(q.Viernes); q.Sabado = Math.Abs(q.Sabado); q.Domingo = Math.Abs(q.Domingo); q.Total = Math.Abs(q.Total); });
             data.InsertAll<ConsumoSemanalModel>(list_cs);
             #endregion
 

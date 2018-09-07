@@ -26,7 +26,7 @@ namespace Core.App.ViewModels
         public IngresoViewModel Ingreso { get; set; }
         public SincronizacionViewModel Sincronizacion { get; set; }
         public ConsumoSemanalViewModel ConsumoSemanal { get; set; }
-        public List<ConsumoSemanalModel> lst_consumos { get; set; }
+        public ObservableCollection<ConsumoSemanalModel> lst_consumos { get; set; }
         #endregion
 
         #region Constructor
@@ -84,12 +84,6 @@ namespace Core.App.ViewModels
                 Icon = "ic_exit_to_app",
                 PageName = "LoginPage",
                 Title = "Cerrar sesión"
-            });
-            this.Menus.Add(new MenuItemViewModel
-            {
-                Icon = "ic_exit_to_app",
-                PageName = "ConsumoSemanalPage",
-                Title = "Consumo semanal"
             });
         }
 

@@ -1375,6 +1375,7 @@
           <Property Type="Double" Name="VIERNES" Nullable="false" />
           <Property Type="Double" Name="SABADO" Nullable="false" />
           <Property Type="Double" Name="DOMINGO" Nullable="false" />
+          <Property Type="Double" Name="TOTAL" Nullable="false" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1764,6 +1765,7 @@
                 <ScalarProperty Name="VIERNES" ColumnName="VIERNES" />
                 <ScalarProperty Name="SABADO" ColumnName="SABADO" />
                 <ScalarProperty Name="DOMINGO" ColumnName="DOMINGO" />
+                <ScalarProperty Name="TOTAL" ColumnName="TOTAL" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

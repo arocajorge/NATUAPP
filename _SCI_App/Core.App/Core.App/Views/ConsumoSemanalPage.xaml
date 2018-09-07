@@ -11,26 +11,27 @@
             Command="{Binding MostrarUbicacionCommand}"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <StackLayout>
-            <ListView>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <dxGrid:GridControl x:Name="grid" ItemsSource="{Binding lst_consumos}">
-                            <dxGrid:GridControl.Columns>
-                                <dxGrid:TextColumn FieldName="NomProducto" Caption="Producto" IsReadOnly="True" IsGrouped="True"/>
-                                <dxGrid:TextColumn FieldName="NomSubCentro" Caption="SubCentro" IsReadOnly="True"/>
-                                <dxGrid:NumberColumn FieldName="Lunes" Caption="Lunes" IsReadOnly="True" DisplayFormat="N2"/>
-                                <dxGrid:NumberColumn FieldName="Martes" Caption="Martes" IsReadOnly="True" DisplayFormat="N2"/>
-                                <dxGrid:NumberColumn FieldName="Miercoles" Caption="Miercoles" IsReadOnly="True" DisplayFormat="N2"/>
-                                <dxGrid:NumberColumn FieldName="Jueves" Caption="Jueves" IsReadOnly="True" DisplayFormat="N2"/>
-                                <dxGrid:NumberColumn FieldName="Viernes" Caption="Viernes" IsReadOnly="True" DisplayFormat="N2"/>
-                                <dxGrid:NumberColumn FieldName="Sabado" Caption="Sabado" IsReadOnly="True" DisplayFormat="N2"/>
-                                <dxGrid:NumberColumn FieldName="Domingo" Caption="Domingo" IsReadOnly="True" DisplayFormat="N2"/>
-                            </dxGrid:GridControl.Columns>
-                        </dxGrid:GridControl>
-                    </DataTemplate>
-                </ListView.ItemTemplate>                
-            </ListView>            
-        </StackLayout>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <dxGrid:GridControl x:Name="grid" ItemsSource="{Binding lst_consumos}">
+                <dxGrid:GridControl.Columns>
+                    <dxGrid:TextColumn FieldName="NomProducto" Caption="Producto" IsReadOnly="True" IsGrouped="True"/>
+                    <dxGrid:TextColumn FieldName="NomSubCentro" Caption="SubCentro" IsReadOnly="True" Width="150" FixedStyle="Left"/>
+                    <dxGrid:NumberColumn FieldName="Sabado" Caption="Sabado" IsReadOnly="True" DisplayFormat="N2"/>
+                    <dxGrid:NumberColumn FieldName="Domingo" Caption="Domingo" IsReadOnly="True" DisplayFormat="N2"/>
+                    <dxGrid:NumberColumn FieldName="Lunes" Caption="Lunes" IsReadOnly="True" DisplayFormat="N2"/>
+                    <dxGrid:NumberColumn FieldName="Martes" Caption="Martes" IsReadOnly="True" DisplayFormat="N2"/>
+                    <dxGrid:NumberColumn FieldName="Miercoles" Caption="Miercoles" IsReadOnly="True" DisplayFormat="N2"/>
+                    <dxGrid:NumberColumn FieldName="Jueves" Caption="Jueves" IsReadOnly="True" DisplayFormat="N2"/>
+                    <dxGrid:NumberColumn FieldName="Viernes" Caption="Viernes" IsReadOnly="True" DisplayFormat="N2"/>
+                    <dxGrid:NumberColumn FieldName="Total" Caption="Total" IsReadOnly="True" DisplayFormat="N2" FixedStyle="Right"/>
+                </dxGrid:GridControl.Columns>
+            </dxGrid:GridControl>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

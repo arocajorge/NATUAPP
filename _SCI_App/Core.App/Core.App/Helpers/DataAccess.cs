@@ -49,8 +49,104 @@
                 model.PKSQLite = GetID();
                 model.Cantidad = Math.Abs(model.Cantidad) * -1;
                 this.connection.Insert(model);
+
+                var ConsumoSemanal = this.connection.Table<ConsumoSemanalModel>().Where(q => q.IdEmpresa == model.IdEmpresa && q.IdSucursal == model.IdSucursal && q.IdBodega == model.IdBodega && q.IdCentroCosto == model.IdCentroCosto && q.IdCentroCostoSubCentroCosto == model.IdSubCentroCosto && q.IdProducto == model.IdProducto).FirstOrDefault();
+                if(ConsumoSemanal != null)
+                {
+                    int dia = (int)(model.Fecha.DayOfWeek + 6) % 7;
+                    switch (dia)
+                    {
+                        case 1:
+                            ConsumoSemanal.Lunes += Math.Abs(model.Cantidad);
+                            break;
+                        case 2:
+                            ConsumoSemanal.Martes += Math.Abs(model.Cantidad);
+                            break;
+                        case 3:
+                            ConsumoSemanal.Miercoles += Math.Abs(model.Cantidad);
+                            break;
+                        case 4:
+                            ConsumoSemanal.Jueves += Math.Abs(model.Cantidad);
+                            break;
+                        case 5:
+                            ConsumoSemanal.Viernes += Math.Abs(model.Cantidad);
+                            break;
+                        case 6:
+                            ConsumoSemanal.Sabado += Math.Abs(model.Cantidad);
+                            break;
+                        case 7:
+                            ConsumoSemanal.Domingo += Math.Abs(model.Cantidad);
+                            break;
+                    }
+                    ConsumoSemanal.Total = ConsumoSemanal.Lunes + ConsumoSemanal.Martes + ConsumoSemanal.Miercoles + ConsumoSemanal.Jueves + ConsumoSemanal.Viernes + ConsumoSemanal.Sabado + ConsumoSemanal.Domingo;
+                    this.connection.Update(ConsumoSemanal);
+                }
             }else
             {
+                var ConsumoSemanal = this.connection.Table<ConsumoSemanalModel>().Where(q => q.IdEmpresa == OldModel.IdEmpresa && q.IdSucursal == OldModel.IdSucursal && q.IdBodega == OldModel.IdBodega && q.IdCentroCosto == OldModel.IdCentroCosto && q.IdCentroCostoSubCentroCosto == OldModel.IdSubCentroCosto && q.IdProducto == OldModel.IdProducto).FirstOrDefault();
+                if (ConsumoSemanal != null)
+                {
+                    int dia = (int)(OldModel.Fecha.DayOfWeek + 6) % 7;
+                    switch (dia)
+                    {
+                        case 1:
+                            ConsumoSemanal.Lunes -= Math.Abs(OldModel.Cantidad);
+                            break;
+                        case 2:
+                            ConsumoSemanal.Martes -= Math.Abs(OldModel.Cantidad);
+                            break;
+                        case 3:
+                            ConsumoSemanal.Miercoles -= Math.Abs(OldModel.Cantidad);
+                            break;
+                        case 4:
+                            ConsumoSemanal.Jueves -= Math.Abs(OldModel.Cantidad);
+                            break;
+                        case 5:
+                            ConsumoSemanal.Viernes -= Math.Abs(OldModel.Cantidad);
+                            break;
+                        case 6:
+                            ConsumoSemanal.Sabado -= Math.Abs(OldModel.Cantidad);
+                            break;
+                        case 7:
+                            ConsumoSemanal.Domingo -= Math.Abs(OldModel.Cantidad);
+                            break;
+                    }
+                    ConsumoSemanal.Total = ConsumoSemanal.Lunes + ConsumoSemanal.Martes + ConsumoSemanal.Miercoles + ConsumoSemanal.Jueves + ConsumoSemanal.Viernes + ConsumoSemanal.Sabado + ConsumoSemanal.Domingo;
+                    this.connection.Update(ConsumoSemanal);
+                }
+
+                ConsumoSemanal = this.connection.Table<ConsumoSemanalModel>().Where(q => q.IdEmpresa == model.IdEmpresa && q.IdSucursal == model.IdSucursal && q.IdBodega == model.IdBodega && q.IdCentroCosto == model.IdCentroCosto && q.IdCentroCostoSubCentroCosto == model.IdSubCentroCosto && q.IdProducto == model.IdProducto).FirstOrDefault();
+                if (ConsumoSemanal != null)
+                {
+                    int dia = (int)(model.Fecha.DayOfWeek + 6) % 7;
+                    switch (dia)
+                    {
+                        case 1:
+                            ConsumoSemanal.Lunes += Math.Abs(model.Cantidad);
+                            break;
+                        case 2:
+                            ConsumoSemanal.Martes += Math.Abs(model.Cantidad);
+                            break;
+                        case 3:
+                            ConsumoSemanal.Miercoles += Math.Abs(model.Cantidad);
+                            break;
+                        case 4:
+                            ConsumoSemanal.Jueves += Math.Abs(model.Cantidad);
+                            break;
+                        case 5:
+                            ConsumoSemanal.Viernes += Math.Abs(model.Cantidad);
+                            break;
+                        case 6:
+                            ConsumoSemanal.Sabado += Math.Abs(model.Cantidad);
+                            break;
+                        case 7:
+                            ConsumoSemanal.Domingo += Math.Abs(model.Cantidad);
+                            break;
+                    }
+                    ConsumoSemanal.Total = ConsumoSemanal.Lunes + ConsumoSemanal.Martes + ConsumoSemanal.Miercoles + ConsumoSemanal.Jueves + ConsumoSemanal.Viernes + ConsumoSemanal.Sabado + ConsumoSemanal.Domingo;
+                    this.connection.Update(ConsumoSemanal);
+                }
+
                 OldModel.IdProducto = model.IdProducto;
                 OldModel.IdSubCentroCosto = model.IdSubCentroCosto;
                 OldModel.Cantidad = Math.Abs(model.Cantidad) *-1;
@@ -60,6 +156,8 @@
                 OldModel.NomUnidadMedida = model.NomUnidadMedida;
                 OldModel.Peso = model.Peso;
                 this.connection.Update(OldModel);
+
+                
             }
         }
 
@@ -112,7 +210,43 @@
 
         public void DeleteEgreso(int PKSQLite)
         {
+            var model = this.connection.Table<EgresoModel>().Where(q => q.PKSQLite == PKSQLite).FirstOrDefault();
+            if (model != null)
+            {
+                var ConsumoSemanal = this.connection.Table<ConsumoSemanalModel>().Where(q => q.IdEmpresa == model.IdEmpresa && q.IdSucursal == model.IdSucursal && q.IdBodega == model.IdBodega && q.IdCentroCosto == model.IdCentroCosto && q.IdCentroCostoSubCentroCosto == model.IdSubCentroCosto && q.IdProducto == model.IdProducto).FirstOrDefault();
+                if (ConsumoSemanal != null)
+                {
+                    int dia = (int)(model.Fecha.DayOfWeek + 6) % 7;
+                    switch (dia)
+                    {
+                        case 1:
+                            ConsumoSemanal.Lunes -= Math.Abs(model.Cantidad);
+                            break;
+                        case 2:
+                            ConsumoSemanal.Martes -= Math.Abs(model.Cantidad);
+                            break;
+                        case 3:
+                            ConsumoSemanal.Miercoles -= Math.Abs(model.Cantidad);
+                            break;
+                        case 4:
+                            ConsumoSemanal.Jueves -= Math.Abs(model.Cantidad);
+                            break;
+                        case 5:
+                            ConsumoSemanal.Viernes -= Math.Abs(model.Cantidad);
+                            break;
+                        case 6:
+                            ConsumoSemanal.Sabado -= Math.Abs(model.Cantidad);
+                            break;
+                        case 7:
+                            ConsumoSemanal.Domingo -= Math.Abs(model.Cantidad);
+                            break;
+                    }
+                    ConsumoSemanal.Total = ConsumoSemanal.Lunes + ConsumoSemanal.Martes + ConsumoSemanal.Miercoles + ConsumoSemanal.Jueves + ConsumoSemanal.Viernes + ConsumoSemanal.Sabado + ConsumoSemanal.Domingo;
+                    this.connection.Update(ConsumoSemanal);
+                }
+            }
             this.connection.Table<EgresoModel>().Delete(q => q.PKSQLite == PKSQLite);
+
         }
         public void DeleteIngreso(int PKSQLite)
         {
@@ -273,10 +407,10 @@
         {
             return this.connection.Table<UnidadMedidaModel>().ToList();
         }
-        public List<ConsumoSemanalModel> GetListConsumoSemanal(int IdEmpresa, int IdSucursal, int IdBodega, string IdCentroCosto)
+        public List<ConsumoSemanalModel> GetListConsumoSemanal(int IdEmpresa, int IdSucursal, int IdBodega, string IdCentroCosto, decimal IdProducto)
         {
             return this.connection.Table<ConsumoSemanalModel>().Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.IdBodega == IdBodega && q.IdCentroCosto == IdCentroCosto
-            && (q.Lunes > 0 || q.Martes > 0 || q.Miercoles > 0 || q.Jueves > 0 || q.Viernes > 0 || q.Domingo > 0 || q.Sabado > 0)
+            && q.Total > 0 && q.IdProducto == IdProducto
             ).OrderBy(q => q.NomProducto).ThenBy(q=>q.NomSubCentro).ToList();
         }
         public List<StockModel> GetListStock(int IdEmpresa, int IdSucursal, int IdBodega)

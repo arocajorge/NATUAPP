@@ -28,5 +28,6 @@ namespace Core.Api.Data
         public double VIERNES { get; set; }
         public double SABADO { get; set; }
         public double DOMINGO { get; set; }
+        public double TOTAL { get; set; }
     }
 }

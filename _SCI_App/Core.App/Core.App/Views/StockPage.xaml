@@ -126,6 +126,14 @@
                                             </Label>
                                         </StackLayout>
                                     </StackLayout>
+                                    <Image
+                                        Grid.Column="1"
+                                        HorizontalOptions="End"
+                                        Source="ic_keyboard_arrow_right">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding SelectStockCommand}"></TapGestureRecognizer>
+                                        </Image.GestureRecognizers>
+                                    </Image>
                                 </Grid>
                             </Frame>
                         </ViewCell>

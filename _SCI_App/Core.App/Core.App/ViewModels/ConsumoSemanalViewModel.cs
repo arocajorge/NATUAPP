@@ -24,33 +24,20 @@ namespace Core.App.ViewModels
             }
         }
         #endregion
-
-        #region Singleton
-        private static ConsumoSemanalViewModel instance;
-        public static ConsumoSemanalViewModel GetInstance()
-        {
-            if (instance == null)
-            {
-                return new ConsumoSemanalViewModel();
-            }
-            else
-                return instance;
-        }
-        #endregion
-
+        
         #region Constructor
-        public ConsumoSemanalViewModel()
+        public ConsumoSemanalViewModel(StockItemViewModel model)
         {
             data = new DataAccess();
-            CargarList();
+            CargarList(model.IdProducto);
         }
         #endregion
 
         #region Metodos
         
-        public void CargarList()
+        public void CargarList(decimal IdProducto)
         {
-            MainViewModel.GetInstance().lst_consumos = data.GetListConsumoSemanal(Settings.IdEmpresa, Settings.IdSucursal, Settings.IdBodega, Settings.IdCentroCosto);
+            MainViewModel.GetInstance().lst_consumos = new ObservableCollection<ConsumoSemanalModel>(data.GetListConsumoSemanal(Settings.IdEmpresa, Settings.IdSucursal, Settings.IdBodega, Settings.IdCentroCosto, IdProducto));
             lst_consumos = new ObservableCollection<ConsumoSemanalModel>(MainViewModel.GetInstance().lst_consumos);
         }
         #endregion

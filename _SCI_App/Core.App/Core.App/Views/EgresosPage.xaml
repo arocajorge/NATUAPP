@@ -43,6 +43,12 @@
                                         Text="{Binding NomProducto}"
                                         TextColor="Black">
                                         </Label>
+                                        <Label
+                                        FontAttributes="None"
+                                        FontSize="Small"
+                                        Text="{Binding NomSubCentro}"
+                                        TextColor="Black">
+                                        </Label>
                                         <StackLayout
                                             Orientation="Horizontal">
                                             <Label

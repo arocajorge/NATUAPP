@@ -74,6 +74,7 @@ namespace Core.App.ViewModels
                 NomUnidadMedida = l.NomUnidadMedida,
                 IdCentroCosto = l.IdCentroCosto,
                 IdSubCentroCosto = l.IdSubCentroCosto,
+                NomSubCentro = l.NomSubCentro,
                 Fecha = l.Fecha
             });
         }

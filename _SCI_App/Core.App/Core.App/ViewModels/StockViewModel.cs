@@ -12,7 +12,7 @@ namespace Core.App.ViewModels
     public class StockViewModel : BaseViewModel
     {
         #region Variables
-        private ObservableCollection<StockModel> _lst_stock;
+        private ObservableCollection<StockItemViewModel> _lst_stock;
         private string _filter;
         private DataAccess data;
         private bool _IsRefreshing;
@@ -27,7 +27,7 @@ namespace Core.App.ViewModels
                 SetValue(ref this._IsRefreshing, value);
             }
         }
-        public ObservableCollection<StockModel> lst_stock
+        public ObservableCollection<StockItemViewModel> lst_stock
         {
             get { return this._lst_stock; }
             set
@@ -58,14 +58,14 @@ namespace Core.App.ViewModels
         public void cargar_stock()
         {
             IsRefreshing = true;
-            lst_stock = new ObservableCollection<StockModel>(data.GetListStock(Settings.IdEmpresa, Settings.IdSucursal, Settings.IdBodega));
-            MainViewModel.GetInstance().lst_stock = new List<StockModel>(lst_stock);
+            MainViewModel.GetInstance().lst_stock = data.GetListStock(Settings.IdEmpresa, Settings.IdSucursal, Settings.IdBodega);
+            lst_stock = new ObservableCollection<StockItemViewModel>(ToStockItemModel());
             IsRefreshing = false;
         }
 
-        private IEnumerable<StockModel> ToStockModel()
+        private IEnumerable<StockItemViewModel> ToStockItemModel()
         {
-            return MainViewModel.GetInstance().lst_stock.Select(l => new StockModel
+            return MainViewModel.GetInstance().lst_stock.Select(l => new StockItemViewModel
             {
                 IdEmpresa = l.IdEmpresa,
                 IdSucursal = l.IdSucursal,
@@ -93,10 +93,10 @@ namespace Core.App.ViewModels
         private void Buscar()
         {
             if (string.IsNullOrEmpty(filter))
-                this.lst_stock = new ObservableCollection<StockModel>(ToStockModel());
+                this.lst_stock = new ObservableCollection<StockItemViewModel>(ToStockItemModel());
             else
-                this.lst_stock = new ObservableCollection<StockModel>(
-                    ToStockModel().Where(q => q.NomProducto.ToLower().Contains(filter.ToLower())).OrderBy(q=>q.NomProducto));
+                this.lst_stock = new ObservableCollection<StockItemViewModel>(
+                    ToStockItemModel().Where(q => q.NomProducto.ToLower().Contains(filter.ToLower())).OrderBy(q=>q.NomProducto));
         }
         #endregion
     }

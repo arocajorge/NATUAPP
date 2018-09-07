@@ -57,10 +57,6 @@
                     MainViewModel.GetInstance().Sincronizacion = new SincronizacionViewModel();
                     App.Navigator.PushAsync(new SincronizacionPage());
                     break;
-                case "ConsumoSemanalPage":
-                    MainViewModel.GetInstance().ConsumoSemanal = new ConsumoSemanalViewModel();
-                    App.Navigator.PushAsync(new ConsumoSemanalPage());
-                    break;
             }
         }
         #endregion

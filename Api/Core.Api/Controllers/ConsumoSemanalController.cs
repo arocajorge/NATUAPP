@@ -1,10 +1,7 @@
 ﻿using Core.Api.Data;
 using Core.Api.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace Core.Api.Controllers
@@ -30,7 +27,8 @@ namespace Core.Api.Controllers
                 JUEVES = q.JUEVES,
                 VIERNES = q.VIERNES,
                 SABADO = q.SABADO,
-                DOMINGO = q.DOMINGO
+                DOMINGO = q.DOMINGO,
+                TOTAL = q.TOTAL
             }).ToList();
 
             return lst;
