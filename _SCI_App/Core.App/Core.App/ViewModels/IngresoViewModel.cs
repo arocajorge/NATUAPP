@@ -60,6 +60,9 @@ namespace Core.App.ViewModels
                 Ingreso.FechaApro = DateTime.Now.Date;
                 Ingreso.CantidadApro = 0;
                 IsVisible = false;
+
+                Ingreso.PKSQLitePadre = Ingreso.PKSQLite;
+                Ingreso.PKSQLite = 0;                
             }
             else
             {

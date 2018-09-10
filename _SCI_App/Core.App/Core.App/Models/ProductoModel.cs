@@ -21,6 +21,10 @@
 
         [JsonProperty("IdUnidad_consumo")]
         public string IdUnidadConsumo { get; set; }
+        [JsonProperty("MuestraObservacionAPP")]
+        public bool MuestraObservacionAPP { get; set; }
+        [JsonProperty("MuestraPesoAPP")]
+        public bool MuestraPesoAPP { get; set; }
         public override int GetHashCode()
         {
             return PKSQLite;

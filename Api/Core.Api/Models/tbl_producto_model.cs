@@ -12,5 +12,7 @@ namespace Core.Api.Models
         public string nom_producto { get; set; }
         public string cod_producto { get; set; }
         public string IdUnidad_consumo { get; set; }
+        public bool MuestraObservacionAPP { get; set; }
+        public bool MuestraPesoAPP { get; set; }
     }
 }

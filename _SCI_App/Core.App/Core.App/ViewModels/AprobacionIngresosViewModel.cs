@@ -103,7 +103,8 @@
                 CantidadApro_convertida = l.CantidadApro_convertida,
                 FechaApro = l.FechaApro,
                 IdUnidadMedidaConsumo = l.IdUnidadMedidaConsumo,  
-                CantidadOcConsulta = l.CantidadOcConsulta
+                CantidadOcConsulta = l.CantidadOcConsulta,
+                PKSQLitePadre = l.PKSQLitePadre
             });
         }
         public void CargarLista()

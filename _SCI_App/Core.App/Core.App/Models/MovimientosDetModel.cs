@@ -36,6 +36,8 @@ namespace Core.App.Models
         [JsonProperty("secuencia_oc")]
         public Nullable<int> secuencia_oc { get; set; }
         [JsonProperty("Peso")]
-        public decimal Peso { get; set; }
+        public float Peso { get; set; }
+        [JsonProperty("Observacion")]
+        public string Observacion { get; set; }
     }
 }

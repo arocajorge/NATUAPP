@@ -16,6 +16,8 @@ namespace Core.Api.Controllers
             IEnumerable<tbl_producto_model> lst = from p in db.in_Producto
                                                   join tp in db.tbl_producto
                                                   on new { p.IdEmpresa, p.IdProducto} equals new { tp.IdEmpresa, tp.IdProducto}
+                                                  join li in db.in_linea
+                                                  on new { p.IdEmpresa, p.IdCategoria, p.IdLinea} equals new { li.IdEmpresa, li.IdCategoria, li.IdLinea}
                                                   where p.Aparece_modu_Inventario == true
                                                   select new tbl_producto_model
                                                   {
@@ -23,7 +25,9 @@ namespace Core.Api.Controllers
                                                       IdProducto = p.IdProducto,
                                                       nom_producto = p.pr_descripcion,
                                                       IdUnidad_consumo = p.IdUnidadMedida_Consumo,
-                                                      cod_producto = p.pr_codigo
+                                                      cod_producto = p.pr_codigo,
+                                                      MuestraObservacionAPP = li.MuestraObservacionAPP,
+                                                      MuestraPesoAPP = li.MuestraPesoAPP
                                                   };
             return lst;
         }

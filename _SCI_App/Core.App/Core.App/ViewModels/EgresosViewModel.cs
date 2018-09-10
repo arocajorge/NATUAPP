@@ -75,7 +75,9 @@ namespace Core.App.ViewModels
                 IdCentroCosto = l.IdCentroCosto,
                 IdSubCentroCosto = l.IdSubCentroCosto,
                 NomSubCentro = l.NomSubCentro,
-                Fecha = l.Fecha
+                Fecha = l.Fecha,
+                Observacion = l.Observacion,
+                Peso = l.Peso
             });
         }
     

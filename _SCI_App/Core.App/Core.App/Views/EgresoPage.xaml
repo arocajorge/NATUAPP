@@ -59,12 +59,25 @@
                         <Label 
                             TextColor="Black"
                             FontAttributes="Bold"
-                            Text="Peso">
+                            Text="Peso"
+                            IsVisible="{Binding IsVisiblePeso, Mode=TwoWay}">
                         </Label>
                         <Entry
                             Placeholder="Ingrese el peso"
                             Keyboard="Numeric"
-                            Text="{Binding Egreso.Peso, Mode=TwoWay}">
+                            Text="{Binding Egreso.Peso, Mode=TwoWay}"
+                            IsVisible="{Binding IsVisiblePeso, Mode=TwoWay}">
+                        </Entry>
+                        <Label 
+                            TextColor="Black"
+                            FontAttributes="Bold"
+                            Text="Observación"
+                            IsVisible="{Binding IsVisibleObservacion, Mode=TwoWay}">
+                        </Label>
+                        <Entry
+                            Placeholder="Ingrese la observación"
+                            Text="{Binding Egreso.Observacion, Mode=TwoWay}"
+                            IsVisible="{Binding IsVisibleObservacion, Mode=TwoWay}">                            
                         </Entry>
                     <ActivityIndicator
                     IsRunning="False"

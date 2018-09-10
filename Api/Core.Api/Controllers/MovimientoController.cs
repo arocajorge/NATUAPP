@@ -85,7 +85,8 @@ namespace Core.Api.Controllers
                             secuencia_oc = item.secuencia_oc,
                             Aprobado = false,
                             Estado = "A",
-                            Peso = item.Peso
+                            Peso = item.Peso,
+                            Observacion = item.Observacion                            
                         };
                         db.tbl_movimientos_det.Add(Entity_det);
                     }

@@ -19,6 +19,7 @@ namespace Core.App.Models
         public string IdCentroCosto { get; set; }
         public string IdSubCentroCosto { get; set; }
         public string NomSubCentro { get; set; }
-        public decimal Peso { get; set; }
+        public float Peso { get; set; }
+        public string Observacion { get; set; }
     }
 }

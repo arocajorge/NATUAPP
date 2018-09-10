@@ -23,5 +23,6 @@ namespace Core.Api.Models
         public Nullable<decimal> IdOrdenCompra { get; set; }
         public Nullable<int> secuencia_oc { get; set; }
         public double Peso { get; set; }
+        public string Observacion { get; set; }
     }
 }

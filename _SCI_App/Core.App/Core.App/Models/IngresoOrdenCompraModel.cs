@@ -9,6 +9,7 @@ namespace Core.App.Models
     {
         [PrimaryKey]
         public int PKSQLite { get; set; }
+        public int? PKSQLitePadre { get; set; }
         [JsonProperty("IdEmpresa")]
         public int IdEmpresa { get; set; }
 

@@ -32,6 +32,7 @@ namespace Core.Api.Data
         public bool Aprobado { get; set; }
         public string Estado { get; set; }
         public double Peso { get; set; }
+        public string Observacion { get; set; }
     
         public virtual tbl_movimientos tbl_movimientos { get; set; }
     }

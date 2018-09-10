@@ -16,6 +16,8 @@ namespace Core.App.ViewModels
         private EgresoModel Egreso_original;
         private bool _IsEnabled;
         private bool _IsVisible;
+        private bool _IsVisiblePeso;
+        private bool _IsVisibleObservacion;
         private DataAccess data;
 
         private ObservableCollection<ProductoModel> _ListaProducto;
@@ -43,6 +45,16 @@ namespace Core.App.ViewModels
             get { return this._IsVisible; }
             set { SetValue(ref this._IsVisible, value); }
         }
+        public bool IsVisiblePeso
+        {
+            get { return this._IsVisiblePeso; }
+            set { SetValue(ref this._IsVisiblePeso, value); }
+        }
+        public bool IsVisibleObservacion
+        {
+            get { return this._IsVisibleObservacion; }
+            set { SetValue(ref this._IsVisibleObservacion, value); }
+        }
         public ObservableCollection<ProductoModel> ListaProducto
         {
             get { return this._ListaProducto; }
@@ -51,7 +63,19 @@ namespace Core.App.ViewModels
         public ProductoModel SelectedProducto
         {
             get { return this._SelectedProducto; }
-            set { SetValue(ref this._SelectedProducto, value); }
+            set {
+                SetValue(ref this._SelectedProducto, value);
+
+                if (_SelectedProducto.MuestraObservacionAPP)
+                    this.IsVisibleObservacion = true;
+                else
+                    this.IsVisibleObservacion = false;
+
+                if (_SelectedProducto.MuestraPesoAPP)
+                    this.IsVisiblePeso = true;
+                else
+                    this.IsVisiblePeso = false;
+            }
         }
         public int ProductoSelectedIndex
         {
@@ -91,6 +115,8 @@ namespace Core.App.ViewModels
             this.Egreso = egresoItemViewModel;            
             this.IsVisible = true;
             this.IsEnabled = true;
+            this.IsVisiblePeso = true;
+            this.IsVisibleObservacion = true;
             data = new DataAccess();
             cargar_combos();
         }
@@ -107,6 +133,8 @@ namespace Core.App.ViewModels
             };            
             this.IsVisible = false;
             this.IsEnabled = true;
+            this.IsVisiblePeso = true;
+            this.IsVisibleObservacion = true;
             data = new DataAccess();
             cargar_combos();
         }

@@ -45,6 +45,32 @@
           <Property Name="IdCtaCble" Type="varchar" MaxLength="20" />
           <Property Name="mobile_cod_produccion" Type="varchar" MaxLength="100" />
         </EntityType>
+        <EntityType Name="in_linea">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdCategoria" />
+            <PropertyRef Name="IdLinea" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdCategoria" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="IdLinea" Type="int" Nullable="false" />
+          <Property Name="cod_linea" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="nom_linea" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="abreviatura" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="observacion" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="Estado" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="IdUsuario" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Fecha_Transac" Type="datetime" Nullable="false" />
+          <Property Name="nom_pc" Type="varchar" MaxLength="50" />
+          <Property Name="ip" Type="varchar" MaxLength="25" />
+          <Property Name="MotiAnula" Type="varchar" MaxLength="200" />
+          <Property Name="IdUsuarioUltMod" Type="varchar" MaxLength="20" />
+          <Property Name="Fecha_UltMod" Type="datetime" />
+          <Property Name="IdUsuarioUltAnu" Type="varchar" MaxLength="20" />
+          <Property Name="Fecha_UltAnu" Type="datetime" />
+          <Property Name="MuestraObservacionAPP" Type="bit" Nullable="false" />
+          <Property Name="MuestraPesoAPP" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="in_Producto">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -262,6 +288,7 @@
           <Property Name="Aprobado" Type="bit" Nullable="false" />
           <Property Name="Estado" Type="varchar" MaxLength="1" Nullable="false" />
           <Property Name="Peso" Type="float" Nullable="false" />
+          <Property Name="Observacion" Type="varchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="tbl_producto">
           <Key>
@@ -562,6 +589,7 @@
         <EntityContainer Name="Model_generalStoreContainer">
           <EntitySet Name="ct_centro_costo" EntityType="Self.ct_centro_costo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ct_centro_costo_sub_centro_costo" EntityType="Self.ct_centro_costo_sub_centro_costo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="in_linea" EntityType="Self.in_linea" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="in_Producto" EntityType="Self.in_Producto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="in_UnidadMedida" EntityType="Self.in_UnidadMedida" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="in_UnidadMedida_Equiv_conversion" EntityType="Self.in_UnidadMedida_Equiv_conversion" Schema="dbo" store:Type="Tables" />
@@ -1225,14 +1253,15 @@
           <FunctionImport Name="sp_stock" ReturnType="Collection(Model_general.sp_stock_Result)">
           <Parameter Name="IdUsuario" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="sp_get_consumo_semanal" ReturnType="Collection(Model_general.sp_get_consumo_semanal_Result)">
+          <Parameter Name="IdUsuario" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="in_linea" EntityType="Model_general.in_linea" />
           <EntitySet Name="tbl_movimientos_det" EntityType="Model_general.tbl_movimientos_det" />
           <AssociationSet Name="FK_tbl_movimientos_det_tbl_movimientos" Association="Model_general.FK_tbl_movimientos_det_tbl_movimientos">
             <End Role="tbl_movimientos" EntitySet="tbl_movimientos" />
             <End Role="tbl_movimientos_det" EntitySet="tbl_movimientos_det" />
           </AssociationSet>
-          <FunctionImport Name="sp_get_consumo_semanal" ReturnType="Collection(Model_general.sp_get_consumo_semanal_Result)">
-            <Parameter Name="IdUsuario" Mode="In" Type="String" />
-          </FunctionImport>
           </EntityContainer>
         <EntityType Name="in_UnidadMedida_Equiv_conversion">
           <Key>
@@ -1322,6 +1351,50 @@
           <Property Type="String" Name="CodProdProducto" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="CodProdSubcentro" Nullable="true" MaxLength="50" />
         </ComplexType>
+        <ComplexType Name="sp_get_consumo_semanal_Result">
+          <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
+          <Property Type="Int32" Name="IdSucursal" Nullable="false" />
+          <Property Type="Int32" Name="IdBodega" Nullable="false" />
+          <Property Type="Decimal" Name="IdProducto" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="String" Name="IdCentroCosto" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="IdCentroCosto_sub_centro_costo" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="NomProducto" Nullable="false" MaxLength="1000" />
+          <Property Type="String" Name="NomSubCentro" Nullable="false" MaxLength="1000" />
+          <Property Type="Double" Name="LUNES" Nullable="false" />
+          <Property Type="Double" Name="MARTES" Nullable="false" />
+          <Property Type="Double" Name="MIERCOLES" Nullable="false" />
+          <Property Type="Double" Name="JUEVES" Nullable="false" />
+          <Property Type="Double" Name="VIERNES" Nullable="false" />
+          <Property Type="Double" Name="SABADO" Nullable="false" />
+          <Property Type="Double" Name="DOMINGO" Nullable="false" />
+          <Property Type="Double" Name="TOTAL" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="in_linea">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdCategoria" />
+            <PropertyRef Name="IdLinea" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdCategoria" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="IdLinea" Type="Int32" Nullable="false" />
+          <Property Name="cod_linea" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="nom_linea" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="abreviatura" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="observacion" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Transac" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="nom_pc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ip" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="MotiAnula" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
+          <Property Name="MuestraObservacionAPP" Type="Boolean" Nullable="false" />
+          <Property Name="MuestraPesoAPP" Type="Boolean" Nullable="false" />
+        </EntityType>
         <EntityType Name="tbl_movimientos_det">
           <Key>
             <PropertyRef Name="IdSincronizacion" />
@@ -1345,6 +1418,7 @@
           <Property Name="Aprobado" Type="Boolean" Nullable="false" />
           <Property Name="Estado" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="Peso" Type="Double" Nullable="false" />
+          <Property Name="Observacion" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="tbl_movimientos" Relationship="Model_general.FK_tbl_movimientos_det_tbl_movimientos" FromRole="tbl_movimientos_det" ToRole="tbl_movimientos" />
         </EntityType>
         <Association Name="FK_tbl_movimientos_det_tbl_movimientos">
@@ -1359,24 +1433,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <ComplexType Name="sp_get_consumo_semanal_Result">
-          <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
-          <Property Type="Int32" Name="IdSucursal" Nullable="false" />
-          <Property Type="Int32" Name="IdBodega" Nullable="false" />
-          <Property Type="Decimal" Name="IdProducto" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="String" Name="IdCentroCosto" Nullable="false" MaxLength="20" />
-          <Property Type="String" Name="IdCentroCosto_sub_centro_costo" Nullable="false" MaxLength="20" />
-          <Property Type="String" Name="NomProducto" Nullable="false" MaxLength="1000" />
-          <Property Type="String" Name="NomSubCentro" Nullable="false" MaxLength="1000" />
-          <Property Type="Double" Name="LUNES" Nullable="false" />
-          <Property Type="Double" Name="MARTES" Nullable="false" />
-          <Property Type="Double" Name="MIERCOLES" Nullable="false" />
-          <Property Type="Double" Name="JUEVES" Nullable="false" />
-          <Property Type="Double" Name="VIERNES" Nullable="false" />
-          <Property Type="Double" Name="SABADO" Nullable="false" />
-          <Property Type="Double" Name="DOMINGO" Nullable="false" />
-          <Property Type="Double" Name="TOTAL" Nullable="false" />
-        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1723,30 +1779,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="tbl_movimientos_det">
-            <EntityTypeMapping TypeName="Model_general.tbl_movimientos_det">
-              <MappingFragment StoreEntitySet="tbl_movimientos_det">
-                <ScalarProperty Name="Peso" ColumnName="Peso" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="Aprobado" ColumnName="Aprobado" />
-                <ScalarProperty Name="secuencia_oc" ColumnName="secuencia_oc" />
-                <ScalarProperty Name="IdOrdenCompra" ColumnName="IdOrdenCompra" />
-                <ScalarProperty Name="IdSucursal_oc" ColumnName="IdSucursal_oc" />
-                <ScalarProperty Name="IdEmpresa_oc" ColumnName="IdEmpresa_oc" />
-                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
-                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-                <ScalarProperty Name="IdCentroCosto_sub_centro_costo" ColumnName="IdCentroCosto_sub_centro_costo" />
-                <ScalarProperty Name="IdCentroCosto" ColumnName="IdCentroCosto" />
-                <ScalarProperty Name="IdUnidadMedida" ColumnName="IdUnidadMedida" />
-                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
-                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
-                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-                <ScalarProperty Name="IdSecuencia" ColumnName="IdSecuencia" />
-                <ScalarProperty Name="IdSincronizacion" ColumnName="IdSincronizacion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="sp_get_consumo_semanal" FunctionName="Model_general.Store.sp_get_consumo_semanal">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Model_general.sp_get_consumo_semanal_Result">
@@ -1769,6 +1801,56 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="in_linea">
+            <EntityTypeMapping TypeName="Model_general.in_linea">
+              <MappingFragment StoreEntitySet="in_linea">
+                <ScalarProperty Name="MuestraPesoAPP" ColumnName="MuestraPesoAPP" />
+                <ScalarProperty Name="MuestraObservacionAPP" ColumnName="MuestraObservacionAPP" />
+                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
+                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
+                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
+                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
+                <ScalarProperty Name="MotiAnula" ColumnName="MotiAnula" />
+                <ScalarProperty Name="ip" ColumnName="ip" />
+                <ScalarProperty Name="nom_pc" ColumnName="nom_pc" />
+                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="observacion" ColumnName="observacion" />
+                <ScalarProperty Name="abreviatura" ColumnName="abreviatura" />
+                <ScalarProperty Name="nom_linea" ColumnName="nom_linea" />
+                <ScalarProperty Name="cod_linea" ColumnName="cod_linea" />
+                <ScalarProperty Name="IdLinea" ColumnName="IdLinea" />
+                <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_movimientos_det">
+            <EntityTypeMapping TypeName="Model_general.tbl_movimientos_det">
+              <MappingFragment StoreEntitySet="tbl_movimientos_det">
+                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
+                <ScalarProperty Name="Peso" ColumnName="Peso" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Aprobado" ColumnName="Aprobado" />
+                <ScalarProperty Name="secuencia_oc" ColumnName="secuencia_oc" />
+                <ScalarProperty Name="IdOrdenCompra" ColumnName="IdOrdenCompra" />
+                <ScalarProperty Name="IdSucursal_oc" ColumnName="IdSucursal_oc" />
+                <ScalarProperty Name="IdEmpresa_oc" ColumnName="IdEmpresa_oc" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="IdCentroCosto_sub_centro_costo" ColumnName="IdCentroCosto_sub_centro_costo" />
+                <ScalarProperty Name="IdCentroCosto" ColumnName="IdCentroCosto" />
+                <ScalarProperty Name="IdUnidadMedida" ColumnName="IdUnidadMedida" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdSecuencia" ColumnName="IdSecuencia" />
+                <ScalarProperty Name="IdSincronizacion" ColumnName="IdSincronizacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
