@@ -112,11 +112,6 @@ namespace Core.App.ViewModels
             MainViewModel.GetInstance().Egreso = new EgresoViewModel();
             App.Navigator.PushAsync(new EgresoPage());
         }
-
-        public void cargar_combos()
-        {
-            
-        }
         #endregion
     }
 }
