@@ -19,16 +19,23 @@
                         FontAttributes="Bold"
                         Text="Fecha aprobación">
                     </Label>
+                    
                     <DatePicker                            
                         Date="{Binding Ingreso.FechaApro, Mode=TwoWay}">
                         <DatePicker.Format>dd/MM/yyyy</DatePicker.Format>
                     </DatePicker>
-                    <Label
-                        FontAttributes="Bold"
-                        FontSize="Medium"
-                        Text="{Binding Ingreso.IdOrdenCompra, Mode=TwoWay, StringFormat='OC#:{0}'}"
-                        TextColor="Black">
-                    </Label>
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="Medium"
+                            Text="{Binding Ingreso.NomSucursal, Mode=TwoWay, StringFormat='{0}'}"
+                            TextColor="Black">
+                        </Label>
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="Medium"
+                            Text="{Binding Ingreso.IdOrdenCompra, Mode=TwoWay, StringFormat='OC#:{0}'}"
+                            TextColor="Black">
+                        </Label>                    
                     <Label     
                         FontAttributes="Bold"
                         Text="Proveedor">

@@ -35,7 +35,8 @@ namespace Core.Api.Controllers
                            cod_producto = q.pr_codigo,
                            oc_fecha = q.oc_fecha,
                            IdUnidadMedida_Consumo = q.IdUnidadMedida_Consumo,
-                           oc_observacion = q.oc_observacion
+                           oc_observacion = q.oc_observacion,
+                           NomSucursal = q.NomSucursal
                        }).ToList();
             return lst;
         }

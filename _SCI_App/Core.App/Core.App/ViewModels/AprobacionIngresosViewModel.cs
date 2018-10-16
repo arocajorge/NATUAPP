@@ -104,7 +104,8 @@
                 FechaApro = l.FechaApro,
                 IdUnidadMedidaConsumo = l.IdUnidadMedidaConsumo,  
                 CantidadOcConsulta = l.CantidadOcConsulta,
-                PKSQLitePadre = l.PKSQLitePadre
+                PKSQLitePadre = l.PKSQLitePadre,
+                NomSucursal = l.NomSucursal
             });
         }
         public void CargarLista()
@@ -128,7 +129,7 @@
                 this.lst_ingresos = new ObservableCollection<IngresoItemViewModel>(ToIngresoItemViewModel());
             else
                 this.lst_ingresos = new ObservableCollection<IngresoItemViewModel>(
-                    ToIngresoItemViewModel().Where(q => q.NomProducto.ToLower().Contains(filter.ToLower()) || q.IdOrdenCompra.ToString().Contains(filter.ToLower()) || q.NomProveedor.ToLower().Contains(filter.ToLower())).OrderBy(q => q.NomProducto));
+                    ToIngresoItemViewModel().Where(q => q.NomProducto.ToLower().Contains(filter.ToLower()) || q.NomSucursal.ToLower().Contains(filter.ToLower()) || q.IdOrdenCompra.ToString().Contains(filter.ToLower()) || q.NomProveedor.ToLower().Contains(filter.ToLower())).OrderBy(q => q.NomProducto));
         }
         #endregion
     }

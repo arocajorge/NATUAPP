@@ -55,6 +55,12 @@
                                     <StackLayout
                                     Grid.Column="0"
                                     VerticalOptions="Center">
+                                        <Label
+                                                FontAttributes="Bold"
+                                                FontSize="Small"
+                                                Text="{Binding NomSucursal, StringFormat='{0}'}"
+                                                TextColor="Black">
+                                        </Label>
                                         <StackLayout
                                             Orientation="Horizontal">
                                             <Label

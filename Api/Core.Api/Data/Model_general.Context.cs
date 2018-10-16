@@ -25,7 +25,6 @@ namespace Core.Api.Data
         {
             ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = TimeOut;
         }
-
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -55,11 +54,6 @@ namespace Core.Api.Data
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_revisar_estados_oc");
         }
     
-        public virtual ObjectResult<sp_oc_x_aprobar_Result> sp_oc_x_aprobar()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_oc_x_aprobar_Result>("sp_oc_x_aprobar");
-        }
-    
         public virtual ObjectResult<sp_stock_Result> sp_stock(string idUsuario)
         {
             var idUsuarioParameter = idUsuario != null ?
@@ -76,6 +70,11 @@ namespace Core.Api.Data
                 new ObjectParameter("IdUsuario", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_get_consumo_semanal_Result>("sp_get_consumo_semanal", idUsuarioParameter);
+        }
+    
+        public virtual ObjectResult<sp_oc_x_aprobar_Result> sp_oc_x_aprobar()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_oc_x_aprobar_Result>("sp_oc_x_aprobar");
         }
     }
 }

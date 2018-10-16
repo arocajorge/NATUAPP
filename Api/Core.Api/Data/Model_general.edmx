@@ -1249,7 +1249,6 @@
           <EntitySet Name="tbl_movimientos" EntityType="Model_general.tbl_movimientos" />
           <EntitySet Name="tbl_sincronizacion_turno" EntityType="Model_general.tbl_sincronizacion_turno" />
           <FunctionImport Name="sp_revisar_estados_oc" />
-          <FunctionImport Name="sp_oc_x_aprobar" ReturnType="Collection(Model_general.sp_oc_x_aprobar_Result)" />
           <FunctionImport Name="sp_stock" ReturnType="Collection(Model_general.sp_stock_Result)">
           <Parameter Name="IdUsuario" Mode="In" Type="String" />
           </FunctionImport>
@@ -1262,6 +1261,7 @@
             <End Role="tbl_movimientos" EntitySet="tbl_movimientos" />
             <End Role="tbl_movimientos_det" EntitySet="tbl_movimientos_det" />
           </AssociationSet>
+          <FunctionImport Name="sp_oc_x_aprobar" ReturnType="Collection(Model_general.sp_oc_x_aprobar_Result)" />
           </EntityContainer>
         <EntityType Name="in_UnidadMedida_Equiv_conversion">
           <Key>
@@ -1317,26 +1317,6 @@
           <Property Name="EnUso" Type="Boolean" Nullable="false" />
           <Property Name="FechaInicio" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
-        <ComplexType Name="sp_oc_x_aprobar_Result">
-          <Property Type="Int64" Name="IdRow" Nullable="false" />
-          <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
-          <Property Type="Int32" Name="IdSucursal" Nullable="false" />
-          <Property Type="Decimal" Name="IdOrdenCompra" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="Int32" Name="Secuencia" Nullable="false" />
-          <Property Type="Decimal" Name="IdProducto" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="String" Name="IdUnidadMedida" Nullable="false" MaxLength="25" />
-          <Property Type="Decimal" Name="IdProveedor" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="Double" Name="cant_oc" Nullable="false" />
-          <Property Type="Double" Name="cant_in" Nullable="false" />
-          <Property Type="Double" Name="saldo" Nullable="false" />
-          <Property Type="String" Name="pr_descripcion" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="pr_codigo" Nullable="false" MaxLength="40" />
-          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="pe_nombreCompleto" Nullable="false" MaxLength="200" />
-          <Property Type="DateTime" Name="oc_fecha" Nullable="false" Precision="23" />
-          <Property Type="String" Name="oc_observacion" Nullable="false" MaxLength="1000" />
-          <Property Type="String" Name="IdUnidadMedida_Consumo" Nullable="false" MaxLength="25" />
-        </ComplexType>
         <ComplexType Name="sp_stock_Result">
           <Property Type="Decimal" Name="IdRow" Nullable="false" Precision="18" Scale="0" />
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -1433,6 +1413,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="sp_oc_x_aprobar_Result">
+          <Property Type="Int64" Name="IdRow" Nullable="false" />
+          <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
+          <Property Type="Int32" Name="IdSucursal" Nullable="false" />
+          <Property Type="Decimal" Name="IdOrdenCompra" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Int32" Name="Secuencia" Nullable="false" />
+          <Property Type="Decimal" Name="IdProducto" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="String" Name="IdUnidadMedida" Nullable="false" MaxLength="25" />
+          <Property Type="Decimal" Name="IdProveedor" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Double" Name="cant_oc" Nullable="false" />
+          <Property Type="Double" Name="cant_in" Nullable="false" />
+          <Property Type="Double" Name="saldo" Nullable="false" />
+          <Property Type="String" Name="pr_descripcion" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="pr_codigo" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="pe_nombreCompleto" Nullable="false" MaxLength="200" />
+          <Property Type="DateTime" Name="oc_fecha" Nullable="false" Precision="23" />
+          <Property Type="String" Name="oc_observacion" Nullable="false" MaxLength="1000" />
+          <Property Type="String" Name="IdUnidadMedida_Consumo" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="NomSucursal" Nullable="true" MaxLength="1000" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1737,30 +1738,6 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="sp_revisar_estados_oc" FunctionName="Model_general.Store.sp_revisar_estados_oc" />
-          <FunctionImportMapping FunctionImportName="sp_oc_x_aprobar" FunctionName="Model_general.Store.sp_oc_x_aprobar">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Model_general.sp_oc_x_aprobar_Result">
-                <ScalarProperty Name="IdRow" ColumnName="IdRow" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
-                <ScalarProperty Name="IdOrdenCompra" ColumnName="IdOrdenCompra" />
-                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
-                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
-                <ScalarProperty Name="IdUnidadMedida" ColumnName="IdUnidadMedida" />
-                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
-                <ScalarProperty Name="cant_oc" ColumnName="cant_oc" />
-                <ScalarProperty Name="cant_in" ColumnName="cant_in" />
-                <ScalarProperty Name="saldo" ColumnName="saldo" />
-                <ScalarProperty Name="pr_descripcion" ColumnName="pr_descripcion" />
-                <ScalarProperty Name="pr_codigo" ColumnName="pr_codigo" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
-                <ScalarProperty Name="oc_fecha" ColumnName="oc_fecha" />
-                <ScalarProperty Name="oc_observacion" ColumnName="oc_observacion" />
-                <ScalarProperty Name="IdUnidadMedida_Consumo" ColumnName="IdUnidadMedida_Consumo" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_stock" FunctionName="Model_general.Store.sp_stock">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Model_general.sp_stock_Result">
@@ -1851,6 +1828,31 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_oc_x_aprobar" FunctionName="Model_general.Store.sp_oc_x_aprobar">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model_general.sp_oc_x_aprobar_Result">
+                <ScalarProperty Name="IdRow" ColumnName="IdRow" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdOrdenCompra" ColumnName="IdOrdenCompra" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="IdUnidadMedida" ColumnName="IdUnidadMedida" />
+                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
+                <ScalarProperty Name="cant_oc" ColumnName="cant_oc" />
+                <ScalarProperty Name="cant_in" ColumnName="cant_in" />
+                <ScalarProperty Name="saldo" ColumnName="saldo" />
+                <ScalarProperty Name="pr_descripcion" ColumnName="pr_descripcion" />
+                <ScalarProperty Name="pr_codigo" ColumnName="pr_codigo" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
+                <ScalarProperty Name="oc_fecha" ColumnName="oc_fecha" />
+                <ScalarProperty Name="oc_observacion" ColumnName="oc_observacion" />
+                <ScalarProperty Name="IdUnidadMedida_Consumo" ColumnName="IdUnidadMedida_Consumo" />
+                <ScalarProperty Name="NomSucursal" ColumnName="NomSucursal" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

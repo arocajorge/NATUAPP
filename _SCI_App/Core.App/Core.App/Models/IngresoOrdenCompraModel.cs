@@ -60,6 +60,8 @@ namespace Core.App.Models
 
         [JsonProperty("IdUnidadMedida_Consumo")]
         public string IdUnidadMedidaConsumo { get; set; }
+        [JsonProperty("NomSucursal")]
+        public string NomSucursal { get; set; }
 
         public double CantidadApro { get; set; }
         public DateTime FechaApro { get; set; }
