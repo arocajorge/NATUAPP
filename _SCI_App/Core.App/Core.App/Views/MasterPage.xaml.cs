@@ -9,6 +9,7 @@ namespace Core.App.Views
 		public MasterPage ()
 		{
 			InitializeComponent ();
+            this.MasterBehavior = MasterBehavior.Popover;
             App.Navigator = Navigator;
             App.Master = this;
 		}

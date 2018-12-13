@@ -24,6 +24,7 @@
         private void Navigate()
         {
             App.Master.IsPresented = false;
+            App.Master.MasterBehavior = MasterBehavior.Popover;
             switch (this.PageName)
             {                
                 case "LoginPage":

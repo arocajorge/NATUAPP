@@ -21,7 +21,7 @@
             <dxGrid:GridControl x:Name="grid" ItemsSource="{Binding lst_consumos}">
                 <dxGrid:GridControl.Columns>
                     <dxGrid:TextColumn FieldName="NomProducto" Caption="Producto" IsReadOnly="True" IsGrouped="True"/>
-                    <dxGrid:TextColumn FieldName="NomSubCentro" Caption="SubCentro" IsReadOnly="True" Width="150" FixedStyle="Left"/>
+                    <dxGrid:TextColumn FieldName="NomSubCentro" Caption="SubCentro" IsReadOnly="True" Width="200" FixedStyle="Left"/>
                     <dxGrid:NumberColumn FieldName="Sabado" Caption="Sabado" IsReadOnly="True" DisplayFormat="N2"/>
                     <dxGrid:NumberColumn FieldName="Domingo" Caption="Domingo" IsReadOnly="True" DisplayFormat="N2"/>
                     <dxGrid:NumberColumn FieldName="Lunes" Caption="Lunes" IsReadOnly="True" DisplayFormat="N2"/>
@@ -31,6 +31,11 @@
                     <dxGrid:NumberColumn FieldName="Viernes" Caption="Viernes" IsReadOnly="True" DisplayFormat="N2"/>
                     <dxGrid:NumberColumn FieldName="Total" Caption="Total" IsReadOnly="True" DisplayFormat="N2" FixedStyle="Right"/>
                 </dxGrid:GridControl.Columns>
+
+                <dxGrid:GridControl.TotalSummaries>
+                    <dxGrid:GridColumnSummary FieldName="Total" Type="Sum" 
+                                    DisplayFormat= "N2"/>
+                </dxGrid:GridControl.TotalSummaries>
             </dxGrid:GridControl>
         </Grid>
     </ContentPage.Content>
