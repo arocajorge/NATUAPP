@@ -33,8 +33,14 @@
                 </dxGrid:GridControl.Columns>
 
                 <dxGrid:GridControl.TotalSummaries>
-                    <dxGrid:GridColumnSummary FieldName="Total" Type="Sum" 
-                                    DisplayFormat= "N2"/>
+                  <dxGrid:GridColumnSummary FieldName="Sabado" Type="Sum" DisplayFormat= "N2"/>
+                  <dxGrid:GridColumnSummary FieldName="Domingo" Type="Sum" DisplayFormat= "N2"/>
+                  <dxGrid:GridColumnSummary FieldName="Lunes" Type="Sum" DisplayFormat= "N2"/>
+                  <dxGrid:GridColumnSummary FieldName="Martes" Type="Sum" DisplayFormat= "N2"/>
+                  <dxGrid:GridColumnSummary FieldName="Miercoles" Type="Sum" DisplayFormat= "N2"/>
+                  <dxGrid:GridColumnSummary FieldName="Jueves" Type="Sum" DisplayFormat= "N2"/>
+                  <dxGrid:GridColumnSummary FieldName="Viernes" Type="Sum" DisplayFormat= "N2"/>
+                  <dxGrid:GridColumnSummary FieldName="Total" Type="Sum" DisplayFormat= "N2"/>                
                 </dxGrid:GridControl.TotalSummaries>
             </dxGrid:GridControl>
         </Grid>
