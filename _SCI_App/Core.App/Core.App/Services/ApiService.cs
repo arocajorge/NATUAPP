@@ -6,6 +6,7 @@
     using System.Net.Http.Headers;
     using System.Text;
     using System.Threading.Tasks;
+    using Core.App.Helpers;
     using Core.App.Models;
     using Newtonsoft.Json;
     using Plugin.Connectivity;
@@ -14,6 +15,21 @@
     {
         public async Task<Response> CheckConnection(string urlServidor = "")
         {
+            string[] cadena = urlServidor.Split(':');
+            string IPCompleta = string.Empty;
+            IPCompleta = urlServidor;
+            urlServidor = string.Empty;
+            urlServidor = cadena[0] + ":";
+            urlServidor += cadena[1];
+
+            if (string.IsNullOrEmpty(urlServidor))
+            {
+                return new Response
+                {
+                    IsSuccess = false,
+                    Message = "Configuración incorrecta"
+                };
+            }
             if (!CrossConnectivity.Current.IsConnected)
             {
                 return new Response
@@ -29,7 +45,17 @@
                 return new Response
                 {
                     IsSuccess = false,
-                    Message = "El servidor no se encuentra disponible"
+                    Message = "No se puede conectar al servidor"
+                };
+            }
+
+            var response_cs = await GetObject<bool>(IPCompleta, Settings.RutaCarpeta, "ValidarConexion", "");
+            if (!response_cs.IsSuccess)
+            {
+                return new Response
+                {
+                    IsSuccess = false,
+                    Message = "No se puede validar la conexión con la ruta de aplicaciones de el servidor"
                 };
             }
 
@@ -38,7 +64,7 @@
                 IsSuccess = true,
                 Message = "Ok"
             };
-                    
+
         }
 
         public async Task<Response> GetList<T>(
@@ -111,6 +137,46 @@
                     IsSuccess = true,
                     Message = "Envío correcto",
                     Result = newRecord
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Response
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
+        }
+
+        public async Task<Response> GetObject<T>(
+          string urlBase,
+          string servicePrefix,
+          string controller,
+          string parameters)
+        {
+            try
+            {
+                var client = new HttpClient();
+                client.BaseAddress = new Uri(urlBase);
+                var url = string.Format("{0}/{1}", servicePrefix, controller) + (string.IsNullOrEmpty(parameters) ? "" : ("?" + parameters));
+                var response = await client.GetAsync(url);
+                var result = await response.Content.ReadAsStringAsync();
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    return new Response
+                    {
+                        IsSuccess = false,
+                        Message = result
+                    };
+                }
+                var list = JsonConvert.DeserializeObject<T>(result);
+                return new Response
+                {
+                    IsSuccess = true,
+                    Message = "Ok",
+                    Result = list
                 };
             }
             catch (Exception ex)
