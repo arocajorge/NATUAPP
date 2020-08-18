@@ -48,7 +48,7 @@
                     Message = "No se puede conectar al servidor"
                 };
             }
-
+            /*
             var response_cs = await GetObject<bool>(IPCompleta, Settings.RutaCarpeta, "ValidarConexion", "");
             if (!response_cs.IsSuccess)
             {
@@ -58,6 +58,7 @@
                     Message = "No se puede validar la conexión con la ruta de aplicaciones de el servidor"
                 };
             }
+            */
 
             return new Response
             {
