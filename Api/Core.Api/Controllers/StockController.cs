@@ -16,7 +16,7 @@ namespace Core.Api.Controllers
         // GET: api/Stock
         public IEnumerable<vw_stock_model> Get(string IdUsuario = "")
         {
-            db.SetCommandTimeOut(3000);
+            db.Database.CommandTimeout = 3000;
             var lst = (from q in db.sp_stock(IdUsuario)
                        select new vw_stock_model
                        {

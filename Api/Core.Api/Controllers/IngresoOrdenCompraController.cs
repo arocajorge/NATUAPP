@@ -15,7 +15,7 @@ namespace Core.Api.Controllers
         // GET: api/IngresoOrdenCompra
         public IEnumerable<tbl_ingreso_oc_model> Get(string IdUsuario = "")
         {
-            db.SetCommandTimeOut(3000);
+            db.Database.CommandTimeout = 3000;
             var lst = (from q in db.sp_oc_x_aprobar()
                        select new tbl_ingreso_oc_model
                        {

@@ -41,6 +41,7 @@ namespace Core.Api.Data
         public string Estado { get; set; }
         public string MotiAnula { get; set; }
         public Nullable<bool> Es_establecimiento { get; set; }
+        public Nullable<int> IdSucursalContabilizacion { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tb_bodega> tb_bodega { get; set; }

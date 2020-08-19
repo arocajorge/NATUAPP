@@ -31,7 +31,7 @@ namespace Core.Api.Controllers
             {
                 using (Entities_general db = new Entities_general())
                 {
-                    db.SetCommandTimeOut(3000);
+                    db.Database.CommandTimeout = 3000;
 
                     #region Valido turno de sincronizacion
                     if (db.tbl_sincronizacion_turno.Count() > 0)

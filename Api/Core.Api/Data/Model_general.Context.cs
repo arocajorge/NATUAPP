@@ -21,10 +21,7 @@ namespace Core.Api.Data
             : base("name=Entities_general")
         {
         }
-        public void SetCommandTimeOut(int TimeOut)
-        {
-            ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = TimeOut;
-        }
+    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -48,6 +45,7 @@ namespace Core.Api.Data
         public virtual DbSet<tbl_sincronizacion_turno> tbl_sincronizacion_turno { get; set; }
         public virtual DbSet<in_linea> in_linea { get; set; }
         public virtual DbSet<tbl_movimientos_det> tbl_movimientos_det { get; set; }
+        public virtual DbSet<tbl_producto_x_tbl_bodega> tbl_producto_x_tbl_bodega { get; set; }
     
         public virtual int sp_revisar_estados_oc()
         {

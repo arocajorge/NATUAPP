@@ -12,13 +12,17 @@ namespace Core.Api.Controllers
         // GET: api/Producto
         public IEnumerable<tbl_producto_model> Get(string IdUsuario)
         {
-            db.SetCommandTimeOut(3000);
+            db.Database.CommandTimeout = 3000;
             IEnumerable<tbl_producto_model> lst = from p in db.in_Producto
                                                   join tp in db.tbl_producto
                                                   on new { p.IdEmpresa, p.IdProducto} equals new { tp.IdEmpresa, tp.IdProducto}
                                                   join li in db.in_linea
                                                   on new { p.IdEmpresa, p.IdCategoria, p.IdLinea} equals new { li.IdEmpresa, li.IdCategoria, li.IdLinea}
-                                                  where p.Aparece_modu_Inventario == true
+                                                  join pxb in db.tbl_producto_x_tbl_bodega
+                                                  on new { p.IdEmpresa, p.IdProducto} equals new { pxb.IdEmpresa, pxb.IdProducto}
+                                                  join bxu in db.tbl_usuario_x_bodega 
+                                                  on new { pxb.IdEmpresa, pxb.IdSucursal, pxb.IdBodega} equals new { bxu.IdEmpresa, bxu.IdSucursal, bxu.IdBodega}
+                                                  where p.Aparece_modu_Inventario == true && bxu.IdUsuarioSCI == IdUsuario
                                                   select new tbl_producto_model
                                                   {
                                                       IdEmpresa = p.IdEmpresa,
@@ -29,6 +33,17 @@ namespace Core.Api.Controllers
                                                       MuestraObservacionAPP = li.MuestraObservacionAPP,
                                                       MuestraPesoAPP = li.MuestraPesoAPP
                                                   };
+
+            lst = lst.GroupBy(q => new { q.IdEmpresa, q.IdProducto, q.nom_producto, q.IdUnidad_consumo, q.cod_producto, q.MuestraObservacionAPP, q.MuestraPesoAPP }).Select(q=> new tbl_producto_model
+            {
+                IdEmpresa = q.Key.IdEmpresa,
+                IdProducto = q.Key.IdProducto,
+                nom_producto = q.Key.nom_producto,
+                IdUnidad_consumo = q.Key.IdUnidad_consumo,
+                cod_producto = q.Key.cod_producto,
+                MuestraObservacionAPP = q.Key.MuestraObservacionAPP,
+                MuestraPesoAPP = q.Key.MuestraPesoAPP
+            }).ToList();
             return lst;
         }
 
