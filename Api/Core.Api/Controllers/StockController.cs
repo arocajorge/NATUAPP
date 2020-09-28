@@ -17,21 +17,26 @@ namespace Core.Api.Controllers
         public IEnumerable<vw_stock_model> Get(string IdUsuario = "")
         {
             db.Database.CommandTimeout = 3000;
-            var lst = (from q in db.sp_stock(IdUsuario)
-                       select new vw_stock_model
-                       {
-                           IdEmpresa = q.IdEmpresa,
-                           IdSucursal = q.IdSucursal,
-                           IdBodega = q.IdBodega,
-                           IdProducto = q.IdProducto,
-                           CodProducto = q.CodProducto,
-                           NomProducto = q.NomProducto,
-                           IdUnidadMedida_Consumo = q.IdUnidadMedida_Consumo,
-                           Stock = q.Stock,
-                           NomUnidadMedida = q.NomUnidadMedida,
-                           CodProdProducto = q.CodProdProducto
-                       }).ToList();
-            return lst;
+            List<vw_stock_model> Lista = new List<vw_stock_model>();
+            var lst = db.sp_stock(IdUsuario).ToList();
+            
+            foreach (var q in lst)
+            {
+                Lista.Add(new vw_stock_model
+                {
+                    IdEmpresa = q.IdEmpresa,
+                    IdSucursal = q.IdSucursal,
+                    IdBodega = q.IdBodega,
+                    IdProducto = q.IdProducto,
+                    CodProducto = q.CodProducto,
+                    NomProducto = q.NomProducto,
+                    IdUnidadMedida_Consumo = q.IdUnidadMedida_Consumo,
+                    Stock = q.Stock,
+                    NomUnidadMedida = q.NomUnidadMedida,
+                    CodProdProducto = q.CodProdProducto
+                });
+            } 
+            return Lista;
         }
 
         // GET: api/Stock/5

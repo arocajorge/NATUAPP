@@ -8,10 +8,10 @@
         [PrimaryKey]
         public int PKSQLite { get; set; }
         [JsonProperty("IdEmpresa")]
-        public long IdEmpresa { get; set; }
+        public int IdEmpresa { get; set; }
 
         [JsonProperty("IdProducto")]
-        public long IdProducto { get; set; }
+        public decimal IdProducto { get; set; }
 
         [JsonProperty("nom_producto")]
         public string NomProducto { get; set; }
@@ -25,6 +25,13 @@
         public bool MuestraObservacionAPP { get; set; }
         [JsonProperty("MuestraPesoAPP")]
         public bool MuestraPesoAPP { get; set; }
+
+
+        [JsonProperty("IdSucursal")]
+        public long IdSucursal { get; set; }
+        [JsonProperty("IdBodega")]
+        public long IdBodega { get; set; }
+
         public override int GetHashCode()
         {
             return PKSQLite;

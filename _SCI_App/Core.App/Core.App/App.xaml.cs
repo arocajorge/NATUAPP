@@ -42,7 +42,7 @@ namespace Core.App
                 }
                 else
                 {
-                    Productos = data.GetListProducto(Settings.IdEmpresa);
+                    Productos = data.GetListProducto(Settings.IdEmpresa,Settings.IdSucursal, Settings.IdBodega);
                     SubCentros = data.GetListSubCentroCosto(Settings.IdEmpresa, Settings.IdCentroCosto);
                     MainViewModel.GetInstance().Stock = new StockViewModel();
                     MainPage = new MasterPage();

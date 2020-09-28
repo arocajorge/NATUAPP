@@ -22,25 +22,25 @@
                 <dxGrid:GridControl.Columns>
                     <dxGrid:TextColumn FieldName="NomProducto" Caption="Producto" IsReadOnly="True" IsGrouped="True"/>
                     <dxGrid:TextColumn FieldName="NomSubCentro" Caption="SubCentro" IsReadOnly="True" Width="200" FixedStyle="Left"/>
+                    <dxGrid:NumberColumn FieldName="Viernes" Caption="Viernes" IsReadOnly="True" DisplayFormat="N2"/>
                     <dxGrid:NumberColumn FieldName="Sabado" Caption="Sabado" IsReadOnly="True" DisplayFormat="N2"/>
                     <dxGrid:NumberColumn FieldName="Domingo" Caption="Domingo" IsReadOnly="True" DisplayFormat="N2"/>
                     <dxGrid:NumberColumn FieldName="Lunes" Caption="Lunes" IsReadOnly="True" DisplayFormat="N2"/>
                     <dxGrid:NumberColumn FieldName="Martes" Caption="Martes" IsReadOnly="True" DisplayFormat="N2"/>
                     <dxGrid:NumberColumn FieldName="Miercoles" Caption="Miercoles" IsReadOnly="True" DisplayFormat="N2"/>
                     <dxGrid:NumberColumn FieldName="Jueves" Caption="Jueves" IsReadOnly="True" DisplayFormat="N2"/>
-                    <dxGrid:NumberColumn FieldName="Viernes" Caption="Viernes" IsReadOnly="True" DisplayFormat="N2"/>
                     <dxGrid:NumberColumn FieldName="Total" Caption="Total" IsReadOnly="True" DisplayFormat="N2" FixedStyle="Right"/>
                 </dxGrid:GridControl.Columns>
 
                 <dxGrid:GridControl.TotalSummaries>
-                  <dxGrid:GridColumnSummary FieldName="Sabado" Type="Sum" DisplayFormat= "N2"/>
-                  <dxGrid:GridColumnSummary FieldName="Domingo" Type="Sum" DisplayFormat= "N2"/>
-                  <dxGrid:GridColumnSummary FieldName="Lunes" Type="Sum" DisplayFormat= "N2"/>
-                  <dxGrid:GridColumnSummary FieldName="Martes" Type="Sum" DisplayFormat= "N2"/>
-                  <dxGrid:GridColumnSummary FieldName="Miercoles" Type="Sum" DisplayFormat= "N2"/>
-                  <dxGrid:GridColumnSummary FieldName="Jueves" Type="Sum" DisplayFormat= "N2"/>
-                  <dxGrid:GridColumnSummary FieldName="Viernes" Type="Sum" DisplayFormat= "N2"/>
-                  <dxGrid:GridColumnSummary FieldName="Total" Type="Sum" DisplayFormat= "N2"/>                
+                    <dxGrid:GridColumnSummary FieldName="Viernes" Type="Sum" DisplayFormat= "N2"/>
+                    <dxGrid:GridColumnSummary FieldName="Sabado" Type="Sum" DisplayFormat= "N2"/>
+                    <dxGrid:GridColumnSummary FieldName="Domingo" Type="Sum" DisplayFormat= "N2"/>
+                    <dxGrid:GridColumnSummary FieldName="Lunes" Type="Sum" DisplayFormat= "N2"/>
+                    <dxGrid:GridColumnSummary FieldName="Martes" Type="Sum" DisplayFormat= "N2"/>
+                    <dxGrid:GridColumnSummary FieldName="Miercoles" Type="Sum" DisplayFormat= "N2"/>
+                    <dxGrid:GridColumnSummary FieldName="Jueves" Type="Sum" DisplayFormat= "N2"/>
+                    <dxGrid:GridColumnSummary FieldName="Total" Type="Sum" DisplayFormat= "N2"/>                
                 </dxGrid:GridControl.TotalSummaries>
             </dxGrid:GridControl>
         </Grid>

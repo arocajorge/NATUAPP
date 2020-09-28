@@ -261,7 +261,7 @@ namespace Core.App.ViewModels
             Settings.IdCentroCosto = SelectedCentroCosto.IdCentroCosto;
             Settings.NomCentroCosto = SelectedCentroCosto.Nom_centro_costo;
 
-            App.Productos = data.GetListProducto(Settings.IdEmpresa);
+            App.Productos = data.GetListProducto(Settings.IdEmpresa, Settings.IdSucursal,Settings.IdBodega);
             App.SubCentros = data.GetListSubCentroCosto(Settings.IdEmpresa, Settings.IdCentroCosto);
 
             MainViewModel.GetInstance().Stock = new StockViewModel();

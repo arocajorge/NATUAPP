@@ -36,6 +36,13 @@
                     Text="{Binding usuario, Mode=TwoWay}"
                     Placeholder="Ingrese el usuario">
                 </Entry>
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="Large"   
+                    HorizontalOptions="Center"
+                    TextColor="Blue"
+                    Text="{Binding MensajeSincronizacion, Mode=TwoWay}">
+                </Label>
                 <ActivityIndicator
                     VerticalOptions="CenterAndExpand"
                     IsRunning="{Binding IsRunning, Mode=TwoWay}">                    

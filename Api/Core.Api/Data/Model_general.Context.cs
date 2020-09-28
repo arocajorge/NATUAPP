@@ -21,7 +21,10 @@ namespace Core.Api.Data
             : base("name=Entities_general")
         {
         }
-    
+        public void SetCommandTimeOut(int TimeOut)
+        {
+            ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = TimeOut;
+        }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();

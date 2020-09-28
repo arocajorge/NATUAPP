@@ -158,6 +158,7 @@
     <Compile Include="Controllers\IngresoOrdenCompraController.cs" />
     <Compile Include="Controllers\MovimientoController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
+    <Compile Include="Controllers\ProductoPorBodegaController.cs" />
     <Compile Include="Controllers\StockController.cs" />
     <Compile Include="Controllers\SubCentroCostoController.cs" />
     <Compile Include="Controllers\SucursalController.cs" />
@@ -287,6 +288,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\" />
+    <Folder Include="Views\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

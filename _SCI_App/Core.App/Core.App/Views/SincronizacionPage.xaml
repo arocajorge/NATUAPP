@@ -30,6 +30,13 @@
                     HorizontalOptions="Center"
                     Text="{Binding TotalEgresos, StringFormat='{0} EGRESOS'}">
                 </Label>
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="Large"   
+                    HorizontalOptions="Center"
+                    TextColor="Blue"
+                    Text="{Binding MensajeSincronizacion, Mode=TwoWay}">
+                </Label>
                 <ActivityIndicator
                     VerticalOptions="CenterAndExpand"
                     IsRunning="{Binding IsRunning, Mode=TwoWay}">

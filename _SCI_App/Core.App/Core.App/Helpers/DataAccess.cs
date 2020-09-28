@@ -417,9 +417,9 @@
             return this.connection.Table<SubCentroCostoModel>().Where(q => q.IdEmpresa == IdEmpresa && q.IdCentroCosto == IdCentroCosto).OrderBy(q=>q.Nom_subcentro).ToList();
         }
 
-        public List<ProductoModel> GetListProducto(int IdEmpresa)
+        public List<ProductoModel> GetListProducto(int IdEmpresa, int IdSucursal, int IdBodega)
         {
-            return this.connection.Table<ProductoModel>().Where(q=>q.IdEmpresa == IdEmpresa).OrderBy(q=>q.NomProducto).ToList();
+            return this.connection.Table<ProductoModel>().Where(q=>q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.IdBodega == IdBodega).OrderBy(q=>q.NomProducto).ToList();
         }
 
         public List<IngresoOrdenCompraModel> GetListIngresoOrdenCompra(int IdEmpresa, int IdSucursal, int IdBodega, bool MostrarAprobados = false)
@@ -427,7 +427,43 @@
             List<IngresoOrdenCompraModel> Lista;
             if (!MostrarAprobados)
             {
-                Lista = this.connection.Table<IngresoOrdenCompraModel>().Where(q => q.IdEmpresa == IdEmpresa && q.CantidadApro == 0 && q.Saldo > 0).OrderBy(q => q.NomProducto).ToList();
+                Lista = new List<IngresoOrdenCompraModel>();
+                //Lista = this.connection.Table<IngresoOrdenCompraModel>().Where(q => q.IdEmpresa == IdEmpresa && q.CantidadApro == 0 && q.Saldo > 0).OrderBy(q => q.NomProducto).ToList();
+                var lst = this.connection.Table<IngresoOrdenCompraModel>().Where(q => q.IdEmpresa == IdEmpresa && q.CantidadApro == 0 && q.Saldo > 0).OrderBy(q => q.NomProducto).ToList();
+                var lstPxB = this.connection.Table<ProductoModel>().Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.IdBodega == IdBodega).ToList();
+                Lista = (from a in lst
+                         join b in lstPxB
+                         on new { IdEmpresa = a.IdEmpresa, IdProducto = a.IdProducto } equals new { IdEmpresa = b.IdEmpresa, IdProducto = b.IdProducto }
+                         where b.IdEmpresa == IdEmpresa && b.IdSucursal == IdSucursal && b.IdBodega == IdBodega
+                         select new IngresoOrdenCompraModel
+                         {
+                             PKSQLite = a.PKSQLite,
+                             IdEmpresa = a.IdEmpresa,
+                             IdSucursal = a.IdSucursal,
+                             IdOrdenCompra = a.IdOrdenCompra,
+                             Secuencia = a.Secuencia,
+                             IdProducto = a.IdProducto,
+                             IdUnidadMedida = a.IdUnidadMedida,
+                             CantidadIn = a.CantidadIn,
+                             CantidadOc = a.CantidadOc,
+                             Saldo = a.Saldo,
+                             IdProveedor = a.IdProveedor,
+                             NomUnidadMedida = a.NomUnidadMedida,
+                             NomProveedor = a.NomProveedor,
+                             CodProducto = a.CodProducto,
+                             OcFecha = a.OcFecha,
+                             OcObservacion = a.OcObservacion,
+                             IdUnidadMedidaConsumo = a.IdUnidadMedidaConsumo,
+                             NomSucursal = a.NomSucursal,
+                             NomProducto = a.NomProducto,
+                             CantidadApro = a.CantidadApro,
+                             FechaApro = a.FechaApro,
+                             IdSucursal_apro = a.IdSucursal_apro,
+                             IdBodega = a.IdBodega,
+                             CantidadApro_convertida = a.CantidadApro_convertida,
+                             CantidadOcConsulta = a.CantidadOcConsulta,
+                             PKSQLitePadre = a.PKSQLitePadre
+                         }).ToList();
             }
             else
             {

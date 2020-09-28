@@ -14,5 +14,7 @@ namespace Core.Api.Models
         public string IdUnidad_consumo { get; set; }
         public bool MuestraObservacionAPP { get; set; }
         public bool MuestraPesoAPP { get; set; }
+        public int IdBodega { get; internal set; }
+        public int IdSucursal { get; internal set; }
     }
 }
